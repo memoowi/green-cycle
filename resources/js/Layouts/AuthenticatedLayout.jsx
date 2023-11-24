@@ -90,7 +90,7 @@ export default function Authenticated({ user, header, children }) {
                     </div>
                 </div>
 
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden absolute right-0 min-w-[70%] h-full bg-blue-400 bg-opacity-25 backdrop-blur-sm'}>
+                <div className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0') + ' sm:hidden absolute right-0 min-w-[70%] h-full bg-blue-400 bg-opacity-25 backdrop-blur-sm transition duration-700 ease-in-out'}>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
