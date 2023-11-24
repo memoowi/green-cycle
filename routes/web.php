@@ -36,3 +36,15 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Route::get('/admin', function () {
+//     return Inertia::render('Admin/DashboardAdmin');
+// })->middleware(['auth', 'verified'])->name('admin');
+
+Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(function () {
+    require __DIR__.'/admin.php';
+});
+
+// Route::prefix('/')->middleware(['auth','user'])->name('user.')->group(function () {
+//     require __DIR__.'/user.php';
+// });
