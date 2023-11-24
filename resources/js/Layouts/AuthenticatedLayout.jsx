@@ -20,14 +20,32 @@ export default function Authenticated({ user, header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden space-x-6 md:-my-px sm:ms-10 md:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
+                                </NavLink>
+                                <NavLink>
+                                    Posts
+                                </NavLink>
+                                <NavLink>
+                                    Users
+                                </NavLink>
+                                <NavLink>
+                                    Items
+                                </NavLink>
+                                <NavLink>
+                                    Recycle Facilities
+                                </NavLink>
+                                <NavLink>
+                                    Rewards
+                                </NavLink>
+                                <NavLink>
+                                    Recycled Reports
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
+                        <div className="hidden md:flex md:items-center md:ms-6">
                             <div className="ms-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -64,7 +82,7 @@ export default function Authenticated({ user, header, children }) {
                             </div>
                         </div>
 
-                        <div className="-me-2 flex items-center sm:hidden">
+                        <div className="-me-2 flex items-center md:hidden">
                             <button
                                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none  transition duration-150 ease-in-out"
@@ -90,7 +108,7 @@ export default function Authenticated({ user, header, children }) {
                     </div>
                 </div>
 
-                <div className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0') + ' sm:hidden absolute right-0 min-w-[70%] h-full bg-blue-400 bg-opacity-25 backdrop-blur-sm transition duration-700 ease-in-out'}>
+                <div className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0') + ' md:hidden absolute right-0 min-w-[70%] h-full bg-blue-400 bg-opacity-25 backdrop-blur-sm transition duration-700 ease-in-out'}>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
