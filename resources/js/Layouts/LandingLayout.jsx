@@ -29,11 +29,11 @@ export default function Landing({ user, header, children }) {
                             </div>
                         </div>
 
-                        <div className="hidden md:flex md:items-center md:ms-6">
-                            <div className="mt-1">
+                        <div className="flex md:items-center md:ms-6">
+                            <div className="self-center mt-1 mx-2">
                                 <DarkModeToggle />
                             </div>
-                            <div className="ms-3 relative">
+                            <div className="hidden md:flex items-center ms-3 relative">
                                 { user ? (
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -88,17 +88,16 @@ export default function Landing({ user, header, children }) {
                                 </div>
                                 )}
                             </div>
+
+                            <div className="-me-2 flex items-center md:hidden">
+                                <ResponsiveButton
+                                    handleClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
+                                    showIconClass={showingNavigationDropdown ? 'hidden' : 'inline-flex'}
+                                    closeIconClass={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                />
+                            </div>
                         </div>
 
-                        {user && 
-                        <div className="-me-2 flex items-center md:hidden">
-                            <ResponsiveButton
-                                handleClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                showIconClass={showingNavigationDropdown ? 'hidden' : 'inline-flex'}
-                                closeIconClass={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                            />
-                        </div>
-                        }
                     </div>
                 </div>
 
@@ -109,6 +108,7 @@ export default function Landing({ user, header, children }) {
                         </ResponsiveNavLink>
                     </div>
 
+                    {user ? (
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
                             <div className="font-medium text-base text-gray-800">{user && user.name}</div>
@@ -117,11 +117,24 @@ export default function Landing({ user, header, children }) {
 
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                            { user.role === 1 && (
+                            <ResponsiveNavLink href={route('admin.dashboard')}>Admin Panel</ResponsiveNavLink>
+                            )}
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
                                 Log Out
                             </ResponsiveNavLink>
                         </div>
                     </div>
+                    ):(
+                        <div>
+                            <ResponsiveNavLink href={route('login')}>
+                                Log in
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('register')}>
+                                Register
+                            </ResponsiveNavLink>
+                        </div>
+                    )}
                 </div>
             </nav>
 
