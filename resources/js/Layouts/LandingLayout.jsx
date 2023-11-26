@@ -4,14 +4,15 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import DarkModeToggle from '@/Components/DarkModeToggle';
 import ResponsiveButton from '@/Components/ResponsiveButton';
 
-export default function Authenticated({ user, header, children }) {
+export default function Landing({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100 relative overflow-hidden">
-            <nav className="bg-white border-b border-gray-100">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 relative overflow-hidden">
+            <nav className="bg-white border-b border-gray-100 dark:bg-slate-700 dark:border-slate-600">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -23,13 +24,17 @@ export default function Authenticated({ user, header, children }) {
 
                             <div className="hidden space-x-6 md:-my-px sm:ms-10 md:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
+                                    Home
                                 </NavLink>
                             </div>
                         </div>
 
                         <div className="hidden md:flex md:items-center md:ms-6">
+                            <div className="mt-1">
+                                <DarkModeToggle />
+                            </div>
                             <div className="ms-3 relative">
+                                { user ? (
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
@@ -57,14 +62,35 @@ export default function Authenticated({ user, header, children }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                                        { user.role === 1 && (
+                                        <Dropdown.Link href={route('admin.dashboard')}>Admin Panel</Dropdown.Link>
+                                        )}
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
+                                ) : (
+                                <div>
+                                    <Link
+                                        href={route('login')}
+                                        className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                    >
+                                        Log in
+                                    </Link>
+
+                                    <Link
+                                        href={route('register')}
+                                        className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                    >
+                                        Register
+                                    </Link>
+                                </div>
+                                )}
                             </div>
                         </div>
 
+                        {user && 
                         <div className="-me-2 flex items-center md:hidden">
                             <ResponsiveButton
                                 handleClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
@@ -72,6 +98,7 @@ export default function Authenticated({ user, header, children }) {
                                 closeIconClass={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
                             />
                         </div>
+                        }
                     </div>
                 </div>
 
@@ -84,8 +111,8 @@ export default function Authenticated({ user, header, children }) {
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
+                            <div className="font-medium text-base text-gray-800">{user && user.name}</div>
+                            <div className="font-medium text-sm text-gray-500">{user && user.email}</div>
                         </div>
 
                         <div className="mt-3 space-y-1">

@@ -1,50 +1,39 @@
 import { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import AdminSideBar from './Partials/AdminSideBar';
+import ResponsiveButton from '@/Components/ResponsiveButton';
 
 export default function AdminPanel({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100 relative overflow-hidden">
+        <div className='flex relative'>
+        
+        <AdminSideBar 
+            className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0')}
+            handleClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
+            username={user.name}
+            email={user.email}
+        />
+
+        <div className="min-h-screen w-full bg-gray-100 relative overflow-hidden">
             <nav className="bg-white border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
+                        <div className='flex items-center'>
+                            <div className="me-2 flex items-center md:hidden">
+                                <ResponsiveButton
+                                    handleClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
+                                    showIconClass={showingNavigationDropdown ? 'hidden' : 'inline-flex'}
+                                    closeIconClass={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                />
                             </div>
-
-                            <div className="hidden space-x-6 md:-my-px sm:ms-10 md:flex">
-                                <NavLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                                <NavLink>
-                                    Posts
-                                </NavLink>
-                                <NavLink>
-                                    Users
-                                </NavLink>
-                                <NavLink>
-                                    Items
-                                </NavLink>
-                                <NavLink>
-                                    Recycle Facilities
-                                </NavLink>
-                                <NavLink>
-                                    Rewards
-                                </NavLink>
-                                <NavLink>
-                                    Recycled Reports
-                                </NavLink>
-                            </div>
+                            {header && (
+                                <header>
+                                    {header}
+                                </header>
+                            )}
                         </div>
-
                         <div className="hidden md:flex md:items-center md:ms-6">
                             <div className="ms-3 relative">
                                 <Dropdown>
@@ -81,63 +70,11 @@ export default function AdminPanel({ user, header, children }) {
                                 </Dropdown>
                             </div>
                         </div>
-
-                        <div className="-me-2 flex items-center md:hidden">
-                            <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none  transition duration-150 ease-in-out"
-                            >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0') + ' md:hidden absolute right-0 min-w-[70%] h-full bg-blue-400 bg-opacity-25 backdrop-blur-sm transition duration-700 ease-in-out'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
                     </div>
                 </div>
             </nav>
-
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )}
-
             <main>{children}</main>
+        </div>
         </div>
     );
 }
