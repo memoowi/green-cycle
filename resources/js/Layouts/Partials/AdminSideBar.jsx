@@ -1,19 +1,20 @@
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/react';
+import SidebarLink from '@/Components/SidebarLink';
 
 export default function AdminSideBar({ className='', handleClick, username, email}) {
     return (
-        <aside className={className + ' md:translate-x-0 md:opacity-100 absolute md:static z-10 left-0 min-w-[250px] h-screen bg-blue-400 bg-opacity-25 md:bg-opacity-100 backdrop-blur-sm transition duration-500 ease-in-out'}>
-            <div className='flex items-center justify-between px-4 h-16 border-b border-gray-100'>
+        <aside className={className + ' md:translate-x-0 md:opacity-100 absolute md:static z-10 min-w-[270px] h-screen bg-white bg-opacity-50 md:bg-opacity-100 dark:bg-slate-800 backdrop-blur-sm transition duration-500 ease-in-out'}>
+            <div className='flex items-center justify-between px-4 h-16 border-b border-gray-100 dark:border-slate-600'>
                 <Link href='/'>
-                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
                 </Link>
                 <button
                     onClick={handleClick}
-                    className="inline-flex md:hidden items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none  transition duration-150 ease-in-out"
+                    className="inline-flex md:hidden items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-slate-700 focus:outline-none  transition duration-150 ease-in-out"
                 >
-                    <svg className="h-6 w-6" stroke="black" fill="none" viewBox="0 0 24 24">
+                    <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -24,47 +25,47 @@ export default function AdminSideBar({ className='', handleClick, username, emai
                 </button>
             </div>
             <div className="p-4">
-                <div className="font-medium text-base text-gray-800">{username}</div>
-                <div className="font-medium text-sm text-gray-500">{email}</div>
+                <div className="font-medium text-base text-gray-800 dark:text-white">{username}</div>
+                <div className="font-medium text-sm text-gray-500 dark:text-gray-400">{email}</div>
             </div>
             <ul>
                 <li>
-                    <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
+                    <SidebarLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
                         Dashboard
-                    </ResponsiveNavLink>
+                    </SidebarLink>
                 </li>
                 <li>
-                    <ResponsiveNavLink>
+                    <SidebarLink>
                         Posts
-                    </ResponsiveNavLink>
+                    </SidebarLink>
                 </li>
                 <li>
-                    <ResponsiveNavLink>
+                    <SidebarLink>
                         Users
-                    </ResponsiveNavLink>
+                    </SidebarLink>
                 </li>
                 <li>
-                    <ResponsiveNavLink>
+                    <SidebarLink>
                         Items
-                    </ResponsiveNavLink>
+                    </SidebarLink>
                 </li>
                 <li>
-                    <ResponsiveNavLink>
+                    <SidebarLink>
                         Recycle Facilities
-                    </ResponsiveNavLink>
+                    </SidebarLink>
                 </li>
                 <li>
-                    <ResponsiveNavLink>
+                    <SidebarLink>
                         Rewards
-                    </ResponsiveNavLink>
+                    </SidebarLink>
                 </li>
                 <li>
-                    <ResponsiveNavLink>
+                    <SidebarLink>
                         Recycled Reports
-                    </ResponsiveNavLink>
+                    </SidebarLink>
                 </li>
             </ul>
-            <div className="pt-2 pb-1 border-t border-gray-200">
+            <div className="pt-2 pb-1 border-t border-gray-200 dark:border-slate-600">
                 <div className="mt-3 space-y-1">
                     <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
                     <ResponsiveNavLink method="post" href={route('logout')} as="button">

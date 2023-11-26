@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const DarkModeToggle = () => {
+const DarkModeToggle = ({ className }) => {
   // Mengambil nilai tema dari localStorage saat komponen pertama kali dimuat
   const storedDarkMode = localStorage.getItem('darkMode') === 'true';
   const [isDarkMode, setIsDarkMode] = useState(storedDarkMode);
@@ -24,7 +24,7 @@ const DarkModeToggle = () => {
   };
 
   return (
-    <div>
+    <div className={className}>
       <button onClick={toggleDarkMode}>
         {isDarkMode ? (
             // Moon Icon

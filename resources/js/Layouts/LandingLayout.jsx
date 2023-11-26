@@ -12,27 +12,43 @@ export default function Landing({ user, header, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 relative overflow-hidden">
-            <nav className="bg-white border-b border-gray-100 dark:bg-slate-700 dark:border-slate-600">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
+            <nav className="flex justify-center w-full fixed bg-white bg-opacity-90 backdrop-blur-sm">
+                <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between h-20">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
                                 </Link>
-                            </div>
-
-                            <div className="hidden space-x-6 md:-my-px sm:ms-10 md:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Home
-                                </NavLink>
                             </div>
                         </div>
 
+                        <div className="hidden space-x-6 md:-my-px sm:ms-10 md:flex">
+                            <NavLink href='/'>
+                                Home
+                            </NavLink>
+                            <NavLink href='/'>
+                                Recycle an Item
+                            </NavLink>
+                            <NavLink href='/'>
+                                Where to Recycle
+                            </NavLink>
+                            <NavLink href='/'>
+                                How it works
+                            </NavLink>
+                            <NavLink href='/'>
+                                Blog
+                            </NavLink>
+                            <NavLink href='/'>
+                                How to recycle
+                            </NavLink>
+                            <NavLink href='/'>
+                                About GreenCycle
+                            </NavLink>
+                        </div>
+
                         <div className="flex md:items-center md:ms-6">
-                            <div className="self-center mt-1 mx-2">
-                                <DarkModeToggle />
-                            </div>
+                            <DarkModeToggle className='self-center mt-1 mx-2'/>
                             <div className="hidden md:flex items-center ms-3 relative">
                                 { user ? (
                                 <Dropdown>
@@ -101,7 +117,7 @@ export default function Landing({ user, header, children }) {
                     </div>
                 </div>
 
-                <div className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0') + ' md:hidden absolute right-0 min-w-[70%] h-full bg-blue-400 bg-opacity-25 backdrop-blur-sm transition duration-700 ease-in-out'}>
+                <div className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0') + ' md:hidden fixed right-0 min-w-[70%] h-full mt-20 bg-blue-400 bg-opacity-25 backdrop-blur-sm transition duration-700 ease-in-out'}>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
@@ -139,8 +155,8 @@ export default function Landing({ user, header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                <header className="bg-emerald-600 shadow">
+                    <div className="flex justify-center items-center h-[90vh] md:h-screen">{header}</div>
                 </header>
             )}
 
