@@ -44,6 +44,22 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the user's profile soical media links.
+     */
+    public function updateLink(Request $request): RedirectResponse
+    {
+        $request->user()->website_link = $request->input('website_link');
+        $request->user()->social_link1 = $request->input('social_link1');
+        $request->user()->social_link2 = $request->input('social_link2');
+        $request->user()->social_link3 = $request->input('social_link3');
+        $request->user()->social_link4 = $request->input('social_link4');
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit');
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse

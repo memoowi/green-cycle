@@ -109,7 +109,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         rows="4"
                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                         onChange={(e) => setData('bio', e.target.value)}
-                        value={data.bio}
+                        value={data.bio || ''}
                     />
 
 
