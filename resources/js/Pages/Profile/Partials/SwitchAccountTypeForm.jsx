@@ -1,43 +1,40 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
 
-export default function UpdateProfilePhoto({ className = '' }) {
+export default function SwitchAccountType({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Update Profile Photo</h2>
+                <h2 className="text-lg font-medium text-gray-900">Switch Account Type</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Add or change your profile photo
+                    Update your account type.
                 </p>
             </header>
+
             <form className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="profile_photo" value="Profile Photo" />
-                    
-                    <TextInput
-                        id="profile_photo"
-                        type="file"
-                        name="profile_photo"
-                        accept="image/*"
-                        className="mt-1 block w-full  file:mr-4 file:py-2 file:px-4
-                        file:rounded-lg file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-emerald-100 file:text-emerald-700
-                        hover:file:bg-emerald-200"
-                        // value={data.name}
-                        // onChange={(e) => setData('name', e.target.value)}
-                    />
+                    <InputLabel htmlFor="type" value="Switch Account Type" />
+                    <select
+                        id="type"
+                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        // value={data.email}
+                        // onChange={(e) => setData('email', e.target.value)}
+                        required
+                        autoComplete="type"
+                    >
+                        <option value="0">Basic</option>
+                        <option value="1">Bussiness</option>
+                    </select>
 
                     <InputError 
                     className="mt-2" 
-                    // message={errors.name} 
+                    // message={errors.email} 
                     />
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                     <PrimaryButton 
                     // disabled={processing}

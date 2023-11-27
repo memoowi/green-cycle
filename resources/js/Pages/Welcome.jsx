@@ -146,7 +146,7 @@ export default function DashboardAdmin({ auth }) {
                     <div className='w-1/12 h-1 bg-emerald-600 mb-8'></div>
                     <div className='flex flex-wrap justify-evenly gap-4'>
                         
-                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-2 border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
+                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-[1px] border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                             <div className="flex flex-col items-center gap-4 p-6 text-gray-800 dark:text-gray-100">
                                 <svg className='w-10 h-10 fill-yellow-600' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M13.744 8s1.522-8-3.335-8h-8.409v24h20v-13c0-3.419-5.247-3.745-8.256-3zm.256 11h-8v-1h8v1zm4-3h-12v-1h12v1zm0-3h-12v-1h12v1zm-3.432-12.925c2.202 1.174 5.938 4.883 7.432 6.881-1.286-.9-4.044-1.657-6.091-1.179.222-1.468-.185-4.534-1.341-5.702z"/>
@@ -155,7 +155,7 @@ export default function DashboardAdmin({ auth }) {
                             </div>
                         </div>
                         
-                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-2 border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
+                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-[1px] border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                             <div className="flex flex-col items-center gap-4 p-6 text-gray-800 dark:text-gray-100">
                                 <svg className='w-10 h-10 fill-yellow-600' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M13.744 8s1.522-8-3.335-8h-8.409v24h20v-13c0-3.419-5.247-3.745-8.256-3zm.256 11h-8v-1h8v1zm4-3h-12v-1h12v1zm0-3h-12v-1h12v1zm-3.432-12.925c2.202 1.174 5.938 4.883 7.432 6.881-1.286-.9-4.044-1.657-6.091-1.179.222-1.468-.185-4.534-1.341-5.702z"/>
@@ -164,7 +164,7 @@ export default function DashboardAdmin({ auth }) {
                             </div>
                         </div>
                         
-                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-2 border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
+                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-[1px] border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                             <div className="flex flex-col items-center gap-4 p-6 text-gray-800 dark:text-gray-100">
                                 <svg className='w-10 h-10 fill-yellow-600' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M13.744 8s1.522-8-3.335-8h-8.409v24h20v-13c0-3.419-5.247-3.745-8.256-3zm.256 11h-8v-1h8v1zm4-3h-12v-1h12v1zm0-3h-12v-1h12v1zm-3.432-12.925c2.202 1.174 5.938 4.883 7.432 6.881-1.286-.9-4.044-1.657-6.091-1.179.222-1.468-.185-4.534-1.341-5.702z"/>
@@ -173,7 +173,7 @@ export default function DashboardAdmin({ auth }) {
                             </div>
                         </div>
                         
-                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-2 border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
+                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-[1px] border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                             <div className="flex flex-col items-center gap-4 p-6 text-gray-800 dark:text-gray-100">
                                 <svg className='w-10 h-10 fill-yellow-600' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M13.744 8s1.522-8-3.335-8h-8.409v24h20v-13c0-3.419-5.247-3.745-8.256-3zm.256 11h-8v-1h8v1zm4-3h-12v-1h12v1zm0-3h-12v-1h12v1zm-3.432-12.925c2.202 1.174 5.938 4.883 7.432 6.881-1.286-.9-4.044-1.657-6.091-1.179.222-1.468-.185-4.534-1.341-5.702z"/>
@@ -182,7 +182,7 @@ export default function DashboardAdmin({ auth }) {
                             </div>
                         </div>
                         
-                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-2 border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
+                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-[1px] border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                             <div className="flex flex-col items-center gap-4 p-6 text-gray-800 dark:text-gray-100">
                                 <svg className='w-10 h-10 fill-yellow-600' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M13.744 8s1.522-8-3.335-8h-8.409v24h20v-13c0-3.419-5.247-3.745-8.256-3zm.256 11h-8v-1h8v1zm4-3h-12v-1h12v1zm0-3h-12v-1h12v1zm-3.432-12.925c2.202 1.174 5.938 4.883 7.432 6.881-1.286-.9-4.044-1.657-6.091-1.179.222-1.468-.185-4.534-1.341-5.702z"/>
@@ -191,7 +191,7 @@ export default function DashboardAdmin({ auth }) {
                             </div>
                         </div>
                         
-                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-2 border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
+                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-[1px] border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                             <div className="flex flex-col items-center gap-4 p-6 text-gray-800 dark:text-gray-100">
                                 <svg className='w-10 h-10 fill-yellow-600' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M13.744 8s1.522-8-3.335-8h-8.409v24h20v-13c0-3.419-5.247-3.745-8.256-3zm.256 11h-8v-1h8v1zm4-3h-12v-1h12v1zm0-3h-12v-1h12v1zm-3.432-12.925c2.202 1.174 5.938 4.883 7.432 6.881-1.286-.9-4.044-1.657-6.091-1.179.222-1.468-.185-4.534-1.341-5.702z"/>
@@ -200,7 +200,7 @@ export default function DashboardAdmin({ auth }) {
                             </div>
                         </div>
                         
-                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-2 border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
+                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-[1px] border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                             <div className="flex flex-col items-center gap-4 p-6 text-gray-800 dark:text-gray-100">
                                 <svg className='w-10 h-10 fill-yellow-600' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M13.744 8s1.522-8-3.335-8h-8.409v24h20v-13c0-3.419-5.247-3.745-8.256-3zm.256 11h-8v-1h8v1zm4-3h-12v-1h12v1zm0-3h-12v-1h12v1zm-3.432-12.925c2.202 1.174 5.938 4.883 7.432 6.881-1.286-.9-4.044-1.657-6.091-1.179.222-1.468-.185-4.534-1.341-5.702z"/>
@@ -209,7 +209,7 @@ export default function DashboardAdmin({ auth }) {
                             </div>
                         </div>
                         
-                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-2 border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
+                        <div className="flex justify-center items-center w-[40%] sm:w-[48%] md:w-[23%] h-40 mx-3 sm:mx-0 bg-white border-[1px] border-gray-700 dark:bg-slate-800 overflow-hidden shadow-sm rounded hover:shadow-[-10px_10px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[-10px_10px_0px_0px_rgb(5,150,105)] hover:translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                             <div className="flex flex-col items-center gap-4 p-6 text-gray-800 dark:text-gray-100">
                                 <svg className='w-10 h-10 fill-yellow-600' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M13.744 8s1.522-8-3.335-8h-8.409v24h20v-13c0-3.419-5.247-3.745-8.256-3zm.256 11h-8v-1h8v1zm4-3h-12v-1h12v1zm0-3h-12v-1h12v1zm-3.432-12.925c2.202 1.174 5.938 4.883 7.432 6.881-1.286-.9-4.044-1.657-6.091-1.179.222-1.468-.185-4.534-1.341-5.702z"/>
