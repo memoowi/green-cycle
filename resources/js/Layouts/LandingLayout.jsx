@@ -27,9 +27,6 @@ export default function Landing({ user, header, children }) {
 
                         <div className="hidden space-x-6 md:-my-px sm:ms-10 md:flex">
                             <NavLink href='/'>
-                                Home
-                            </NavLink>
-                            <NavLink href='/'>
                                 Recycle an Item
                             </NavLink>
                             <NavLink href='/'>
@@ -61,14 +58,14 @@ export default function Landing({ user, header, children }) {
                                 <div>
                                     <Link
                                         href={route('login')}
-                                        className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                        className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                                     >
                                         Log in
                                     </Link>
 
                                     <Link
                                         href={route('register')}
-                                        className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                        className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                                     >
                                         Register
                                     </Link>
