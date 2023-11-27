@@ -35,6 +35,9 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+        $request->user()->date_of_birth = $request->input('date_of_birth');
+        $request->user()->bio = $request->input('bio');
+
         $request->user()->save();
 
         return Redirect::route('profile.edit');

@@ -11,11 +11,14 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,
+        date_of_birth: user.date_of_birth,
+        bio: user.bio,
     });
 
     const submit = (e) => {
         e.preventDefault();
 
+        // console.log(data);
         patch(route('profile.update'));
     };
 
@@ -85,19 +88,17 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 )}
 
                 <div>
-                    <InputLabel htmlFor="date" value="Date of Birth" />
+                    <InputLabel htmlFor="date_of_birth" value="Date of Birth" />
 
                     <TextInput
-                        id="date"
+                        id="date_of_birth"
                         type="date"
                         className="mt-1 block w-full"
-                        // value={data.email}
-                        // onChange={(e) => setData('email', e.target.value)}
-                        required
-                        autoComplete="date"
+                        value={data.date_of_birth}
+                        onChange={(e) => setData('date_of_birth', e.target.value)}
                     />
 
-                    <InputError className="mt-2" message={errors.email} />
+                    <InputError className="mt-2" message={errors.date_of_birth} />
                 </div>
 
                 <div>
@@ -106,14 +107,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <textarea
                         id="bio"
                         rows="4"
-                        name="bio"
                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        // value={data.email}
-                        // onChange={(e) => setData('email', e.target.value)}
-                        autoComplete="bio"
+                        onChange={(e) => setData('bio', e.target.value)}
+                        value={data.bio}
                     />
 
-                    <InputError className="mt-2" message={errors.email} />
+
+                    <InputError className="mt-2" message={errors.bio} />
                 </div>
 
                 <div className="flex items-center gap-4">

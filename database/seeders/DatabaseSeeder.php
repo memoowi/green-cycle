@@ -24,5 +24,12 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'role' => 1,
         ]);
+
+        \App\Models\User::create([
+            'name' => 'Misbach',
+            'email' => 'misbach@gmail.com',
+            'password' => bcrypt('12345678'),
+            'role' => 0,
+        ]);
     }
 }
