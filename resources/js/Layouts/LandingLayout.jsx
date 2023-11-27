@@ -6,19 +6,21 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import DarkModeToggle from '@/Components/DarkModeToggle';
 import ResponsiveButton from '@/Components/ResponsiveButton';
+import NavDropdown from '@/Components/NavDropdown';
 
 export default function Landing({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 relative overflow-hidden">
-            <nav className="flex justify-center w-full fixed bg-white bg-opacity-90 backdrop-blur-sm">
+            <nav className="flex justify-center w-full fixed z-50 bg-white dark:bg-slate-800 bg-opacity-90 backdrop-blur-sm">
                 <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-20">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">
+                                <Link href="/" className='flex gap-3'>
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
+                                    <span className='text-2xl font-bold hidden lg:block text-gray-800 dark:text-white'>GreenCycle</span>
                                 </Link>
                             </div>
                         </div>
@@ -51,41 +53,10 @@ export default function Landing({ user, header, children }) {
                             <DarkModeToggle className='self-center mt-1 mx-2'/>
                             <div className="hidden md:flex items-center ms-3 relative">
                                 { user ? (
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        { user.role === 1 && (
-                                        <Dropdown.Link href={route('admin.dashboard')}>Admin Panel</Dropdown.Link>
-                                        )}
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
+                                <NavDropdown 
+                                name={user.name} 
+                                role={user.role}
+                                />
                                 ) : (
                                 <div>
                                     <Link
@@ -117,7 +88,7 @@ export default function Landing({ user, header, children }) {
                     </div>
                 </div>
 
-                <div className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0') + ' md:hidden fixed right-0 min-w-[70%] h-full mt-20 bg-blue-400 bg-opacity-25 backdrop-blur-sm transition duration-700 ease-in-out'}>
+                <div className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0') + ' md:hidden fixed right-0 min-w-[250px] h-screen mt-20 bg-white dark:bg-slate-800 bg-opacity-90 backdrop-blur-sm transition duration-700 ease-in-out'}>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
@@ -156,7 +127,7 @@ export default function Landing({ user, header, children }) {
 
             {header && (
                 <header className="bg-emerald-600 shadow">
-                    <div className="flex justify-center items-center h-[90vh] md:h-screen">{header}</div>
+                    <div className="flex justify-center items-center h-[90vh] sm:h-screen">{header}</div>
                 </header>
             )}
 
