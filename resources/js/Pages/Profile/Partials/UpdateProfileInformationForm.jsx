@@ -30,6 +30,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -39,7 +40,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         required
-                        isFocused
                         autoComplete="name"
                     />
 
@@ -83,6 +83,125 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         )}
                     </div>
                 )}
+
+                <div>
+                    <InputLabel htmlFor="date" value="Date of Birth" />
+
+                    <TextInput
+                        id="date"
+                        type="date"
+                        className="mt-1 block w-full"
+                        // value={data.email}
+                        // onChange={(e) => setData('email', e.target.value)}
+                        required
+                        autoComplete="date"
+                    />
+
+                    <InputError className="mt-2" message={errors.email} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="bio" value="Bio" />
+
+                    <textarea
+                        id="bio"
+                        rows="4"
+                        name="bio"
+                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        // value={data.email}
+                        // onChange={(e) => setData('email', e.target.value)}
+                        autoComplete="bio"
+                    />
+
+                    <InputError className="mt-2" message={errors.email} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="type" value="Switch Account Type" />
+                    <select
+                        id="type"
+                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        // value={data.email}
+                        // onChange={(e) => setData('email', e.target.value)}
+                        required
+                        autoComplete="type"
+                    >
+                        <option value="0">Basic</option>
+                        <option value="1">Bussiness</option>
+                    </select>
+
+                    <InputError className="mt-2" message={errors.email} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="website_link" value="Website Link" />
+
+                    <TextInput
+                        id="website_link"
+                        type="url"
+                        className="mt-1 block w-full"
+                        // value={data.name}
+                        // onChange={(e) => setData('name', e.target.value)}
+                    />
+
+                    <InputError className="mt-2" message={errors.name} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="social_link1" value="Social Link 1" />
+
+                    <TextInput
+                        id="social_link1"
+                        type="url"
+                        className="mt-1 block w-full"
+                        // value={data.name}
+                        // onChange={(e) => setData('name', e.target.value)}
+                    />
+
+                    <InputError className="mt-2" message={errors.name} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="social_link2" value="Social Link 2" />
+
+                    <TextInput
+                        id="social_link2"
+                        type="url"
+                        className="mt-1 block w-full"
+                        // value={data.name}
+                        // onChange={(e) => setData('name', e.target.value)}
+                    />
+
+                    <InputError className="mt-2" message={errors.name} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="social_link3" value="Social Link 3" />
+
+                    <TextInput
+                        id="social_link3"
+                        type="url"
+                        className="mt-1 block w-full"
+                        // value={data.name}
+                        // onChange={(e) => setData('name', e.target.value)}
+                    />
+
+                    <InputError className="mt-2" message={errors.name} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="social_link4" value="Social Link 4" />
+
+                    <TextInput
+                        id="social_link4"
+                        type="url"
+                        className="mt-1 block w-full"
+                        // value={data.name}
+                        // onChange={(e) => setData('name', e.target.value)}
+                    />
+
+                    <InputError className="mt-2" message={errors.name} />
+                </div>
 
                 <div className="flex items-center gap-4">
                     <PrimaryButton disabled={processing}>Save</PrimaryButton>
