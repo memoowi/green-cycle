@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,13 +37,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile3', [ProfileController::class, 'updateType'])->name('profile.updatetype');
     Route::post('/profile4', [ProfileController::class, 'updatePhoto'])->name('profile.updatephoto');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::patch('/location/new', [LocationController::class, 'newLocation'])->name('location.new');
 });
+
 
 require __DIR__.'/auth.php';
 
 Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(function () {
     require __DIR__.'/admin.php';
 });
+
+// Route::prefix('/business')->middleware(['auth','business'])->name('business.')->group(function () {
+//     require __DIR__.'/business.php';
+// });
 
 // Route::prefix('/')->middleware(['auth','user'])->name('user.')->group(function () {
 //     require __DIR__.'/user.php';

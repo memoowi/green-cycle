@@ -114,14 +114,4 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-
-    public function upload()
-    {
-        return Inertia::render('Upload/Upload');
-    }
-
-    public function uploadFoto(Request $request)
-    {
-        dd($request->all());
-    }
 }
