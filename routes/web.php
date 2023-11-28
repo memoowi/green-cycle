@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile2', [ProfileController::class, 'updateLink'])->name('profile.updatelink');
     Route::patch('/profile3', [ProfileController::class, 'updateType'])->name('profile.updatetype');
+    Route::patch('/profile4', [ProfileController::class, 'updatePhoto'])->name('profile.updatephoto');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

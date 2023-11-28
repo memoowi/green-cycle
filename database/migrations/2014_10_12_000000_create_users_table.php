@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('role')->default(0); // 0 = user, 1 = admin
             $table->integer('type')->default(0); // 0 = basic, 1 = bussiness
-            $table->string('profile_image')->nullable();
+            $table->string('profile_photo')->nullable();
             $table->text('bio')->nullable();
             $table->string('website_link')->nullable();
             $table->string('social_link1')->nullable();

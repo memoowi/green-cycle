@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -67,6 +68,28 @@ class ProfileController extends Controller
         $request->user()->type = $request->input('type');
 
         $request->user()->save();
+
+        return Redirect::route('profile.edit');
+    }
+
+    /**
+     * Update the user's profile photo.
+     */
+    public function updatePhoto(Request $request): RedirectResponse
+    {
+        $request->validate(['profile_photo' => ['required']]);
+
+        if ($request->user()->profile_photo) {
+            Storage::delete($request->user()->profile_photo->getPath());
+        }
+
+        $file = $request->file('profile_photo');
+
+        // if ($file) {
+            $path = $file->store('profile_photos');
+            $request->user()->profile_photo = $path;
+            $request->user()->save();
+        // }
 
         return Redirect::route('profile.edit');
     }
