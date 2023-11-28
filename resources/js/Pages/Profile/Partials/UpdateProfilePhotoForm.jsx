@@ -32,9 +32,17 @@ export default function UpdateProfilePhoto({ className = '' }) {
                 <h2 className="text-lg font-medium text-gray-900">Update Profile Photo</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Add or change your profile photo
+                    Add or change your profile photo.<br />
+                    For better results, use an image with 1x1 aspect ratio.
                 </p>
             </header>
+            <div className="mt-6 ms-6">
+                <img
+                    src={user.profile_photo ? ('/storage/profile-photos/' + user.profile_photo) : ('/storage/profile-photos/default.jpg')}
+                    alt={user.name}
+                    className="w-20 h-20 rounded-full border-2"
+                />
+            </div>
             <form onSubmit={submit} className="mt-6 space-y-6" encType="multipart/form-data">
                 <div>
                     <InputLabel htmlFor="profile_photo" value="Profile Photo" />

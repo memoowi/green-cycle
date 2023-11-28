@@ -78,9 +78,12 @@ class ProfileController extends Controller
     public function updatePhoto(Request $request): RedirectResponse
     {
         $request->validate(['profile_photo' => ['required', 'image']]);
-        
+
         if ($request->hasFile('profile_photo')) {
-            $filename = time() . '.' . $request->profile_photo->extension();
+            if(Storage::exists('profile-photos/' . $request->user()->profile_photo)){   // Delete old profile photo
+                Storage::delete('profile-photos/' . $request->user()->profile_photo);
+            }
+            $filename = time() . '_' . rand(1000, 9999) . '.' . $request->profile_photo->extension();
             $request->profile_photo->storeAs('profile-photos', $filename);
             // dd($request->all());
 
