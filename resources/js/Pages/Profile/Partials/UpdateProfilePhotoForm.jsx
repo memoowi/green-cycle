@@ -14,7 +14,7 @@ export default function UpdateProfilePhoto({ className = '' }) {
 
     const submit = (e) => {
         e.preventDefault();
-
+        
         // console.log(data);
         patch(route('profile.updatephoto'));
     };
@@ -42,7 +42,7 @@ export default function UpdateProfilePhoto({ className = '' }) {
                         file:text-sm file:font-semibold
                         file:bg-emerald-100 file:text-emerald-700
                         hover:file:bg-emerald-200"
-                        value={data.profile_photo || ''}
+                        // value={data.profile_photo || ''}
                         onChange={(e) => setData('profile_photo', e.target.value)}
                     />
 

@@ -79,17 +79,10 @@ class ProfileController extends Controller
     {
         $request->validate(['profile_photo' => ['required']]);
 
-        if ($request->user()->profile_photo) {
-            Storage::delete($request->user()->profile_photo->getPath());
-        }
+        $request->user()->profile_photo = $request->input('profile_photo');
+        dd($request->user()->profile_photo);
 
-        $file = $request->file('profile_photo');
-
-        // if ($file) {
-            $path = $file->store('profile_photos');
-            $request->user()->profile_photo = $path;
-            $request->user()->save();
-        // }
+        $request->user()->save();
 
         return Redirect::route('profile.edit');
     }
