@@ -60,6 +60,18 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the user's account type.
+     */
+    public function updateType(Request $request): RedirectResponse
+    {
+        $request->user()->type = $request->input('type');
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit');
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
