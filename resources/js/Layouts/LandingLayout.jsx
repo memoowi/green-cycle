@@ -53,6 +53,7 @@ export default function Landing({ user, header, children }) {
                                 <NavDropdown 
                                 name={user.name} 
                                 role={user.role}
+                                photo={user.profile_photo}
                                 />
                                 ) : (
                                 <div>
@@ -93,10 +94,19 @@ export default function Landing({ user, header, children }) {
                     </div>
 
                     {user ? (
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user && user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user && user.email}</div>
+                    <div className="pt-4 pb-1 border-t border-gray-300 dark:border-gray-600">
+                        <div className="flex px-4">
+                            <div className="flex-shrink-0 mr-3">
+                                <img
+                                    src={user.profile_photo ? ('/storage/profile-photos/' + user.profile_photo) : ('/storage/profile-photos/default.jpg')}
+                                    alt={user.name}
+                                    className="h-10 w-10 rounded-full border-2"
+                                />
+                            </div>
+                            <div>
+                                <div className="font-medium text-base text-gray-800 dark:text-white">{user && user.name}</div>
+                                <div className="font-medium text-sm text-gray-500 dark:text-gray-400">{user && user.email}</div>
+                            </div>
                         </div>
 
                         <div className="mt-3 space-y-1">
@@ -110,7 +120,7 @@ export default function Landing({ user, header, children }) {
                         </div>
                     </div>
                     ):(
-                        <div>
+                        <div className="pt-4 pb-1 border-t border-gray-300 dark:border-gray-600">
                             <ResponsiveNavLink href={route('login')}>
                                 Log in
                             </ResponsiveNavLink>

@@ -1,6 +1,6 @@
 import Dropdown from "./Dropdown";
 
-export default function NavDropdown({name, role}){
+export default function NavDropdown({name, role, photo}) {
     return (
         <Dropdown>
             <Dropdown.Trigger>
@@ -9,6 +9,13 @@ export default function NavDropdown({name, role}){
                         type="button"
                         className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 dark:hover:bg-slate-700 dark:text-gray-300 dark:hover:text-gray-200  focus:outline-none transition ease-in-out duration-150"
                     >
+                        <div className="flex items-center me-2 shrink-0">
+                            <img 
+                                className="h-8 w-8 rounded-full border-2 bg-contain" 
+                                src={photo ? ('/storage/profile-photos/' + photo) : ('/storage/profile-photos/default.jpg')} 
+                                alt="user" 
+                            />
+                        </div>
                         {name}
 
                         <svg
