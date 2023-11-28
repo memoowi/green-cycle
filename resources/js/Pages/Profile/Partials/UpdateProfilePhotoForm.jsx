@@ -8,15 +8,22 @@ import { useForm, usePage } from "@inertiajs/react";
 export default function UpdateProfilePhoto({ className = '' }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        profile_photo: user.profile_photo,
+    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
+        profile_photo: null,
     });
 
     const submit = (e) => {
         e.preventDefault();
         
         // console.log(data);
-        patch(route('profile.updatephoto'));
+        // console.log(data.profile_photo);
+        post(route('profile.updatephoto'));
+
+        e.target.reset(); // Reset the form
+    };
+
+    const handleFileChange = (e) => {
+        setData('profile_photo', e.target.files[0]);
     };
 
     return (
@@ -43,7 +50,7 @@ export default function UpdateProfilePhoto({ className = '' }) {
                         file:bg-emerald-100 file:text-emerald-700
                         hover:file:bg-emerald-200"
                         // value={data.profile_photo || ''}
-                        onChange={(e) => setData('profile_photo', e.target.value)}
+                        onChange={handleFileChange}
                     />
 
                     <InputError 

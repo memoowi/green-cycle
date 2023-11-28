@@ -77,12 +77,16 @@ class ProfileController extends Controller
      */
     public function updatePhoto(Request $request): RedirectResponse
     {
-        $request->validate(['profile_photo' => ['required']]);
+        $request->validate(['profile_photo' => ['required', 'image']]);
+        
+        if ($request->hasFile('profile_photo')) {
+            $filename = time() . '.' . $request->profile_photo->extension();
+            $request->profile_photo->storeAs('profile-photos', $filename);
+            // dd($request->all());
 
-        $request->user()->profile_photo = $request->input('profile_photo');
-        dd($request->user()->profile_photo);
-
-        $request->user()->save();
+            $request->user()->profile_photo = $filename;
+            $request->user()->save();
+          }
 
         return Redirect::route('profile.edit');
     }
@@ -106,5 +110,15 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function upload()
+    {
+        return Inertia::render('Upload/Upload');
+    }
+
+    public function uploadFoto(Request $request)
+    {
+        dd($request->all());
     }
 }

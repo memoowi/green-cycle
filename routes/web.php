@@ -34,15 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile2', [ProfileController::class, 'updateLink'])->name('profile.updatelink');
     Route::patch('/profile3', [ProfileController::class, 'updateType'])->name('profile.updatetype');
-    Route::patch('/profile4', [ProfileController::class, 'updatePhoto'])->name('profile.updatephoto');
+    Route::post('/profile4', [ProfileController::class, 'updatePhoto'])->name('profile.updatephoto');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
-
-// Route::get('/admin', function () {
-//     return Inertia::render('Admin/DashboardAdmin');
-// })->middleware(['auth', 'verified'])->name('admin');
 
 Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(function () {
     require __DIR__.'/admin.php';
