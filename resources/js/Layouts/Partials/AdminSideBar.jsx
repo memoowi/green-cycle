@@ -2,8 +2,9 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/react';
 import SidebarLink from '@/Components/SidebarLink';
+import ResponsiveUserInformation from '@/Components/ResponsiveUserInformation';
 
-export default function AdminSideBar({ className='', handleClick, username, email}) {
+export default function AdminSideBar({ className='', handleClick, username, email, photo }) {
     return (
         <aside className={className + ' md:translate-x-0 md:opacity-100 absolute md:static z-10 min-w-[270px] h-screen bg-white bg-opacity-50 md:bg-opacity-100 dark:bg-slate-800 backdrop-blur-sm transition duration-500 ease-in-out'}>
             <div className='flex items-center justify-between px-4 h-16 border-b border-gray-100 dark:border-slate-600'>
@@ -24,9 +25,12 @@ export default function AdminSideBar({ className='', handleClick, username, emai
                     </svg>
                 </button>
             </div>
-            <div className="p-4">
-                <div className="font-medium text-base text-gray-800 dark:text-white">{username}</div>
-                <div className="font-medium text-sm text-gray-500 dark:text-gray-400">{email}</div>
+            <div className="py-4">
+                <ResponsiveUserInformation
+                    username={username}
+                    email={email}
+                    photo={photo}
+                />
             </div>
             <ul>
                 <li>

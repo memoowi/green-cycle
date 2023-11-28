@@ -16,6 +16,7 @@ export default function AdminPanel({ user, header, children }) {
             handleClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
             username={user.name}
             email={user.email}
+            photo={user.profile_photo}
         />
 
         <div className="min-h-screen w-full bg-slate-200 dark:bg-slate-900 relative overflow-hidden transition duration-500 ease-in-out">
@@ -43,6 +44,7 @@ export default function AdminPanel({ user, header, children }) {
                                 <NavDropdown
                                 name={user.name} 
                                 role={user.role}
+                                photo={user.profile_photo}
                                 />
                             </div>
                         </div>

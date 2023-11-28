@@ -7,6 +7,7 @@ import { Link } from '@inertiajs/react';
 import DarkModeToggle from '@/Components/DarkModeToggle';
 import ResponsiveButton from '@/Components/ResponsiveButton';
 import NavDropdown from '@/Components/NavDropdown';
+import ResponsiveUserInformation from '@/Components/ResponsiveUserInformation';
 
 export default function Landing({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -95,19 +96,11 @@ export default function Landing({ user, header, children }) {
 
                     {user ? (
                     <div className="pt-4 pb-1 border-t border-gray-300 dark:border-gray-600">
-                        <div className="flex px-4">
-                            <div className="flex-shrink-0 mr-3">
-                                <img
-                                    src={user.profile_photo ? ('/storage/profile-photos/' + user.profile_photo) : ('/storage/profile-photos/default.jpg')}
-                                    alt={user.name}
-                                    className="h-10 w-10 rounded-full border-2"
-                                />
-                            </div>
-                            <div>
-                                <div className="font-medium text-base text-gray-800 dark:text-white">{user && user.name}</div>
-                                <div className="font-medium text-sm text-gray-500 dark:text-gray-400">{user && user.email}</div>
-                            </div>
-                        </div>
+                        <ResponsiveUserInformation
+                            username={user.name}
+                            email={user.email}
+                            photo={user.profile_photo}
+                        />
 
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
