@@ -35,6 +35,8 @@ export default function NavDropdown({name, role, photo}) {
             </Dropdown.Trigger>
 
             <Dropdown.Content>
+                <Dropdown.Link href={route('location.edit')}>Location</Dropdown.Link>
+                <hr className="border-gray-500 dark:border-gray-300 w-10/12 mx-auto my-1"/>
                 <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
                 { role === 1 && (
                 <Dropdown.Link href={route('admin.dashboard')}>Admin Panel</Dropdown.Link>

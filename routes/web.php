@@ -38,7 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile4', [ProfileController::class, 'updatePhoto'])->name('profile.updatephoto');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::patch('/location/new', [LocationController::class, 'newLocation'])->name('location.new');
+    Route::get('/location', [LocationController::class, 'edit'])->name('location.edit');
+    Route::patch('/location/update', [LocationController::class, 'update'])->name('location.update');
 });
 
 

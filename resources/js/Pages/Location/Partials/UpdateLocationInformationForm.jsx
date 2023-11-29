@@ -1,0 +1,244 @@
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
+import { Link, useForm, usePage } from '@inertiajs/react';
+import { Transition } from '@headlessui/react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+export default function UpdateLocationInformation({ className = '' }) {
+    const user = usePage().props.auth.user;
+
+    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+        address: user.address,
+        province: user.province,
+    });
+
+    const [provinceOptions, setProvinceOptions] = useState([]);
+    const [regencyOptions, setRegencyOptions] = useState([]);
+    const [districtOptions, setDistrictOptions] = useState([]);
+
+    useEffect(() => {
+        const fetchProvinceOptions = async () => {
+            try {
+                const apiKey = '3f186c55e75f77bf6d20929f93d71dafb3e0a0f4ca1031680b5eb31602d1dc37';
+                const apiUrl = `https://api.binderbyte.com/wilayah/provinsi?api_key=${apiKey}`;
+
+                const response = await axios.get(apiUrl);
+                const data = response.data;
+                // console.log(data);
+                setProvinceOptions(Object.values(data[ 'value' ]));
+                // console.log(Object.values(data[ 'value' ]));
+            } catch (error) {
+                console.error('Error fetching province options:', error);
+            }
+        };
+
+        fetchProvinceOptions();
+    }, []);
+
+    useEffect(() => {
+        const fetchRegencyOptions = async () => {
+            try {
+                const apiKey = '3f186c55e75f77bf6d20929f93d71dafb3e0a0f4ca1031680b5eb31602d1dc37';
+                const prov = { province: data.province };
+                const apiUrl = `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${prov.province}`;
+    
+                const response = await axios.get(apiUrl);
+                const regencyData = response.data; // Use a different variable name here
+                setRegencyOptions(Object.values(regencyData['value']));
+            } catch (error) {
+                console.error('Error fetching regency options:', error);
+            }
+        };
+    
+        if (data.province) {
+            fetchRegencyOptions();
+        } else {
+            // Reset regency options if no province is selected
+            setRegencyOptions([]);
+        }
+    }, [data.province]);
+    
+
+    useEffect(() => {
+        const fetchDistrictOptions = async () => {
+            try {
+                const apiKey = '3f186c55e75f77bf6d20929f93d71dafb3e0a0f4ca1031680b5eb31602d1dc37';
+                const regen = { regency: data.regency };
+                const apiUrl = `https://api.binderbyte.com/wilayah/kecamatan?api_key=${apiKey}&id_kabupaten=${regen.regency}`;
+    
+                const response = await axios.get(apiUrl);
+                const districtData = response.data; // Use a different variable name here
+                setDistrictOptions(Object.values(districtData['value']));
+            } catch (error) {
+                console.error('Error fetching district options:', error);
+            }
+        };
+    
+        if (data.regency) {
+            fetchDistrictOptions();
+        } else {
+            // Reset district options if no regency is selected
+            setDistrictOptions([]);
+        }
+    }, [data.regency]);
+    
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        // console.log(data);
+        patch(route('profile.update'));
+    };
+
+    return (
+        <section className={className}>
+            <header>
+                <h2 className="text-lg font-medium text-gray-900">Location Information</h2>
+
+                <p className="mt-1 text-sm text-gray-600">
+                    Update your account's profile information and email address.
+                </p>
+            </header>
+
+            <form onSubmit={submit} className="mt-6 space-y-6">
+
+                <div>
+                    <InputLabel htmlFor="address" value="Address" />
+
+                    <TextInput
+                        id="address"
+                        type="text"
+                        className="mt-1 block w-full"
+                        value={data.address || ''}
+                        onChange={(e) => setData('address', e.target.value)}
+                        required
+                        autoComplete="address"
+                    />
+
+                    <InputError className="mt-2" 
+                    message={errors.address} 
+                    />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="province" value="Province" />
+
+                    <select
+                        id="province"
+                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        value={data.province || ''}
+                        onChange={(e) => setData('province', e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>-- SELECT PROVINCE --</option>
+                    {provinceOptions.map((province) => (
+                        <option key={province.id} value={province.id}>{province.name}</option>
+                    ))}
+                    </select>
+
+                    <InputError className="mt-2" 
+                    message={errors.province} 
+                    />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="regency" value="Regency" />
+
+                    <select
+                        id="regency"
+                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        value={data.regency}
+                        onChange={(e) => setData('regency', e.target.value)}
+                        required
+                        {...(data.province ? { disabled: false } : { disabled: true })}
+                    >
+                    {regencyOptions.length === 0 && <option value="">-- SELECT REGENCY --</option>}
+                    {regencyOptions.map((regency) => (
+                        <option key={regency.id} value={regency.id}>{regency.name}</option>
+                    ))}
+                    </select>
+
+                    <InputError className="mt-2" 
+                    message={errors.regency} 
+                    />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="district" value="District" />
+
+                    <select
+                        id="district"
+                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        value={data.district}
+                        onChange={(e) => setData('district', e.target.value)}
+                        required 
+                        {...(data.regency ? { disabled: false } : { disabled: true })}
+                    >
+                    {districtOptions.length === 0 && <option value="">-- SELECT DISTRICT --</option>}
+                    {districtOptions.map((district) => (
+                        <option key={district.id} value={district.id}>{district.name}</option>
+                    ))}
+                    </select>
+
+                    <InputError className="mt-2" 
+                    message={errors.district} 
+                    />
+                </div>
+
+                
+
+                <div>
+                    <InputLabel htmlFor="postal_code" value="Postal Code" />
+
+                    <TextInput
+                        id="postal_code"
+                        className="mt-1 block w-full"
+                        // value={data.name}
+                        // onChange={(e) => setData('name', e.target.value)}
+                        required
+                        autoComplete="postal_code"
+                    />
+
+                    <InputError className="mt-2" 
+                    // message={errors.name} 
+                    />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="phone_number" value="Phone Number" />
+
+                    <TextInput
+                        id="phone_number"
+                        type='tel'
+                        className="mt-1 block w-full"
+                        // value={data.name}
+                        // onChange={(e) => setData('name', e.target.value)}
+                        required
+                        autoComplete="phone_number"
+                    />
+
+                    <InputError className="mt-2" 
+                    // message={errors.name} 
+                    />
+                </div>
+
+                <div className="flex items-center gap-4">
+                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+
+                    <Transition
+                        show={recentlySuccessful}
+                        enter="transition ease-in-out"
+                        enterFrom="opacity-0"
+                        leave="transition ease-in-out"
+                        leaveTo="opacity-0"
+                    >
+                        <p className="text-sm text-gray-600">Saved.</p>
+                    </Transition>
+                </div>
+            </form>
+        </section>
+    );
+}
