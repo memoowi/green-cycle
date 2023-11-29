@@ -25,11 +25,19 @@ class DatabaseSeeder extends Seeder
             'role' => 1,
         ]);
 
+        \App\Models\Location::create([
+            'user_id' => 1,
+        ]);
+
         \App\Models\User::create([
             'name' => 'Misbach',
             'email' => 'misbach@gmail.com',
             'password' => bcrypt('12345678'),
             'role' => 0,
+        ]);
+
+        \App\Models\Location::create([
+            'user_id' => 2,
         ]);
     }
 }

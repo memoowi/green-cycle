@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('address');
-            $table->string('district');
-            $table->string('regency');
-            $table->string('province');
-            $table->string('postal_code');
-            $table->string('phone_number');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('address')->nullable();
+            $table->string('district')->nullable();
+            $table->string('regency')->nullable();
+            $table->string('province')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
         });
     }

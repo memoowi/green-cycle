@@ -94,7 +94,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         id="date_of_birth"
                         type="date"
                         className="mt-1 block w-full"
-                        value={data.date_of_birth}
+                        value={data.date_of_birth || ''}
                         onChange={(e) => setData('date_of_birth', e.target.value)}
                     />
 

@@ -2,22 +2,25 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function UpdateLocationInformation({ className = '' }) {
-    const user = usePage().props.auth.user;
+    // const user = usePage().props.auth.user;
+    const location = usePage().props.location;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        address: user.address,
-        province: user.province,
-        regency: user.regency,
-        district: user.district,
-        postal_code: user.postal_code,
-        phone_number: user.phone_number
+        address: location.address,
+        province: location.province,
+        regency: location.regency,
+        district: location.district,
+        postal_code: location.postal_code,
+        phone_number: location.phone_number
     });
+
+    // console.log(location.postal_code);
 
     const [provinceOptions, setProvinceOptions] = useState([]);
     const [regencyOptions, setRegencyOptions] = useState([]);
@@ -94,7 +97,7 @@ export default function UpdateLocationInformation({ className = '' }) {
         e.preventDefault();
 
         // console.log(data);
-        patch(route('profile.update'));
+        patch(route('location.update'));
     };
 
     return (
@@ -136,12 +139,12 @@ export default function UpdateLocationInformation({ className = '' }) {
                     <select
                         id="regency"
                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        value={data.regency}
+                        value={data.regency || ''}
                         onChange={(e) => setData('regency', e.target.value)}
                         required
                         {...(data.province ? { disabled: false } : { disabled: true })}
                     >
-                    {regencyOptions.length === 0 && <option value="">-- SELECT REGENCY --</option>}
+                        <option value="" disabled>-- SELECT REGENCY --</option>
                     {regencyOptions.map((regency) => (
                         <option key={regency.id} value={regency.id}>{regency.name}</option>
                     ))}
@@ -158,12 +161,12 @@ export default function UpdateLocationInformation({ className = '' }) {
                     <select
                         id="district"
                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        value={data.district}
+                        value={data.district || ''}
                         onChange={(e) => setData('district', e.target.value)}
                         required 
                         {...(data.regency ? { disabled: false } : { disabled: true })}
                     >
-                    {districtOptions.length === 0 && <option value="">-- SELECT DISTRICT --</option>}
+                        <option value="" disabled>-- SELECT DISTRICT --</option>
                     {districtOptions.map((district) => (
                         <option key={district.id} value={district.id}>{district.name}</option>
                     ))}
@@ -191,7 +194,7 @@ export default function UpdateLocationInformation({ className = '' }) {
                     message={errors.address} 
                     />
                 </div>
-                
+
                 <div>
                     <InputLabel htmlFor="postal_code" value="Postal Code" />
 
