@@ -16,7 +16,10 @@ export default function Guest({ children }) {
 
             <div className='mt-4'>
                 <h1 className='text-3xl font-bold text-black dark:text-emerald-500'>
-                    {route().current('login') ? 'Login' : 'Register'}
+                    {route().current('login') && 'Login'}
+                    {route().current('register') && 'Register'}
+                    {route().current('password.request') && 'Forgot Password'}
+                    {route().current('business.create') && 'Register New Business'}
                 </h1>
             </div>
 

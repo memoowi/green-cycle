@@ -7,14 +7,16 @@ export default function DashboardAdmin({ auth }) {
         <LandingLayout
             user={auth.user}
             header={(
-                <div className='md:flex md:justify-between max-w-7xl w-full px-8 pt-20'>
-                    <div className='self-center space-y-6 text-white'>
-                        <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl leading-tight animate-[bounce_2s_infinite]">
-                            GreenCycle for<br />Everyone
-                        </h1>
-                        <p className='text-2xl'>Turning Waste into a Greener Tomorrow!</p>
+                <div className='flex justify-center items-center h-[90vh] sm:h-screen bg-emerald-600'>
+                    <div className='md:flex md:justify-between max-w-7xl w-full px-8 pt-20'>
+                        <div className='self-center space-y-6 text-white'>
+                            <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl leading-tight animate-[bounce_2s_infinite]">
+                                GreenCycle for<br />Everyone
+                            </h1>
+                            <p className='text-2xl'>Turning Waste into a Greener Tomorrow!</p>
+                        </div>
+                        <img src={'/images/home1.svg'} className="md:w-1/2 mt-10 md:mt-4" />
                     </div>
-                    <img src={'/images/home1.svg'} className="md:w-1/2 mt-10 md:mt-4" />
                 </div>
                 )}
         >

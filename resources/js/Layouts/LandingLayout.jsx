@@ -14,7 +14,7 @@ export default function Landing({ user, header, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 relative overflow-hidden">
-            <nav className="flex justify-center w-full fixed z-50 bg-white dark:bg-slate-800 bg-opacity-90 backdrop-blur-sm">
+            <nav className="flex justify-center w-full fixed z-50 bg-white dark:bg-slate-800 bg-opacity-90 backdrop-blur-sm border-b border-gray-300 dark:border-slate-700">
                 <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-20">
                         <div className="flex">
@@ -55,6 +55,7 @@ export default function Landing({ user, header, children }) {
                                 name={user.name} 
                                 role={user.role}
                                 photo={user.profile_photo}
+                                type={user.type}
                                 />
                                 ) : (
                                 <div>
@@ -126,8 +127,8 @@ export default function Landing({ user, header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-emerald-600 shadow">
-                    <div className="flex justify-center items-center h-[90vh] sm:h-screen">{header}</div>
+                <header>
+                    <div>{header}</div>
                 </header>
             )}
 

@@ -1,14 +1,17 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import UpdateLocationInformation from './Partials/UpdateLocationInformationForm';
+import LandingLayout from '@/Layouts/LandingLayout';
 
 export default function Edit({ auth }) {
     return (
-        <AuthenticatedLayout
+        <LandingLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit Location</h2>}
+            header={(
+                <div className='mt-16'>
+                </div>
+            )}
         >
-            <Head title="Location" />
+            <Head title="Edit Location" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -17,6 +20,6 @@ export default function Edit({ auth }) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </LandingLayout>
     );
 }

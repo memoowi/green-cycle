@@ -6,6 +6,7 @@ import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 export default function UpdateLocationInformation({ className = '' }) {
     // const user = usePage().props.auth.user;
@@ -19,17 +20,17 @@ export default function UpdateLocationInformation({ className = '' }) {
         postal_code: location.postal_code,
         phone_number: location.phone_number
     });
-
+    
     // console.log(location.postal_code);
-
+    
     const [provinceOptions, setProvinceOptions] = useState([]);
     const [regencyOptions, setRegencyOptions] = useState([]);
     const [districtOptions, setDistrictOptions] = useState([]);
-
+    const apiKey = '3f186c55e75f77bf6d20929f93d71dafb3e0a0f4ca1031680b5eb31602d1dc37';
+    
     useEffect(() => {
         const fetchProvinceOptions = async () => {
             try {
-                const apiKey = '3f186c55e75f77bf6d20929f93d71dafb3e0a0f4ca1031680b5eb31602d1dc37';
                 const apiUrl = `https://api.binderbyte.com/wilayah/provinsi?api_key=${apiKey}`;
 
                 const response = await axios.get(apiUrl);
@@ -48,7 +49,6 @@ export default function UpdateLocationInformation({ className = '' }) {
     useEffect(() => {
         const fetchRegencyOptions = async () => {
             try {
-                const apiKey = '3f186c55e75f77bf6d20929f93d71dafb3e0a0f4ca1031680b5eb31602d1dc37';
                 const prov = { province: data.province };
                 const apiUrl = `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${prov.province}`;
     
@@ -72,7 +72,6 @@ export default function UpdateLocationInformation({ className = '' }) {
     useEffect(() => {
         const fetchDistrictOptions = async () => {
             try {
-                const apiKey = '3f186c55e75f77bf6d20929f93d71dafb3e0a0f4ca1031680b5eb31602d1dc37';
                 const regen = { regency: data.regency };
                 const apiUrl = `https://api.binderbyte.com/wilayah/kecamatan?api_key=${apiKey}&id_kabupaten=${regen.regency}`;
     
@@ -228,6 +227,25 @@ export default function UpdateLocationInformation({ className = '' }) {
                     <InputError className="mt-2" 
                     message={errors.phone_number} 
                     />
+                </div>
+
+                <div>
+                    <LoadScript
+                        googleMapsApiKey={'AIzaSyD769lwJj6tjdoWTo5tsBy7SXmPYp602vA'}
+                    >
+                        <GoogleMap
+                            mapContainerStyle={{ height: '400px', width: '100%' }}
+                            center={{ lat: -6.1944, lng: 106.8229 }}
+                            zoom={8}
+                        >
+
+                            <Marker
+                                draggable
+                                position={{ lat: -6.1944, lng: 106.8229 }}
+                            />
+                        </GoogleMap>
+                    </LoadScript>
+
                 </div>
 
                 <div className="flex items-center gap-4">

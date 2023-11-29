@@ -49,9 +49,9 @@ Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(fun
     require __DIR__.'/admin.php';
 });
 
-// Route::prefix('/business')->middleware(['auth','business'])->name('business.')->group(function () {
-//     require __DIR__.'/business.php';
-// });
+Route::prefix('/business')->middleware(['auth','business'])->name('business.')->group(function () {
+    require __DIR__.'/business.php';
+});
 
 // Route::prefix('/')->middleware(['auth','user'])->name('user.')->group(function () {
 //     require __DIR__.'/user.php';

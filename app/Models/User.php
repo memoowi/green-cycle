@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Location::class);
     }
+
+    public function business(): HasOne
+    {
+        return $this->hasOne(Business::class);
+    }
 }

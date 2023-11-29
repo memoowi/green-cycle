@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import AdminSideBar from './Partials/AdminSideBar';
 import ResponsiveButton from '@/Components/ResponsiveButton';
 import DarkModeToggle from '@/Components/DarkModeToggle';
 import NavDropdown from '@/Components/NavDropdown';
+import BusinessSideBar from './Partials/BusinessSideBar';
 
-export default function AdminPanel({ user, header, children }) {
+export default function BusinessPanel({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
         <div className='flex relative'>
         
-        <AdminSideBar 
+        <BusinessSideBar 
             className={(showingNavigationDropdown ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0')}
             handleClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
             username={user.name}
