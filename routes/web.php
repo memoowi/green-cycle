@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -51,6 +52,10 @@ Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(fun
 
 Route::prefix('/business')->middleware(['auth','business'])->name('business.')->group(function () {
     require __DIR__.'/business.php';
+});
+Route::prefix('/business/register')->middleware(['auth','business.exist'])->name('business.new.')->group(function () {
+    Route::get('/', [BusinessController::class, 'create'])->name('create');
+    Route::post('/', [BusinessController::class, 'store']);
 });
 
 // Route::prefix('/')->middleware(['auth','user'])->name('user.')->group(function () {

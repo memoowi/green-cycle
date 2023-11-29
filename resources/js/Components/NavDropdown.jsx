@@ -39,7 +39,7 @@ export default function NavDropdown({name, role, photo, type}) {
                 <hr className="border-gray-500 dark:border-gray-300 w-10/12 mx-auto my-1"/>
                 <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
                 { type === 1 && (
-                <Dropdown.Link href={route('business.profile')}>Business Panel</Dropdown.Link>
+                <Dropdown.Link href={route('business.dashboard')}>Business Panel</Dropdown.Link>
                 )}
                 { role === 1 && (
                 <Dropdown.Link href={route('admin.dashboard')}>Admin Panel</Dropdown.Link>

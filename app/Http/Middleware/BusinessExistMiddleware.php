@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class BusinessMiddleware
+class BusinessExistMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,9 +19,8 @@ class BusinessMiddleware
         if (!auth()->check() || auth()->user()->type != 1) {
             abort(403);
         }
-
-        if (!Business::where('user_id', auth()->user()->id)->exists()) {
-            return redirect()->route('business.new.create');
+        if (Business::where('user_id', auth()->user()->id)->exists()) {
+            return redirect()->route('business.dashboard');
         }
         return $next($request);
     }

@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/new', function () {
-    return Inertia::render('Business/CreateBusiness');
-})->name('create');
 
 Route::get('/profile', function () {
     return Inertia::render('Business/BusinessProfile');

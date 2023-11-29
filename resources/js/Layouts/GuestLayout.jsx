@@ -8,7 +8,7 @@ export default function Guest({ children }) {
             <DarkModeToggle 
                 className='absolute top-5 right-5'
             />
-            <div>
+            <div className='mt-6'>
                 <Link href="/">
                     <ApplicationLogo className="w-20 h-20 fill-current text-gray-700 dark:text-emerald-500" />
                 </Link>
@@ -19,11 +19,11 @@ export default function Guest({ children }) {
                     {route().current('login') && 'Login'}
                     {route().current('register') && 'Register'}
                     {route().current('password.request') && 'Forgot Password'}
-                    {route().current('business.create') && 'Register New Business'}
+                    {route().current('business.new.create') && 'Register New Business'}
                 </h1>
             </div>
 
-            <div className="w-full max-w-md mt-6 px-6 py-4 bg-white dark:bg-slate-300 border-2 border-black dark:border-gray-500 overflow-hidden rounded-2xl shadow-[-10px_10px_0_0_rgb(0,0,0)] dark:shadow-[-10px_10px_0_0_rgb(5,150,105)]">
+            <div className="w-full max-w-md my-6 px-6 py-4 bg-white dark:bg-slate-300 border-2 border-black dark:border-gray-500 overflow-hidden rounded-2xl shadow-[-10px_10px_0_0_rgb(0,0,0)] dark:shadow-[-10px_10px_0_0_rgb(5,150,105)]">
                 {children}
             </div>
         </div>
