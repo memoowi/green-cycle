@@ -13,6 +13,10 @@ export default function UpdateLocationInformation({ className = '' }) {
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         address: user.address,
         province: user.province,
+        regency: user.regency,
+        district: user.district,
+        postal_code: user.postal_code,
+        phone_number: user.phone_number
     });
 
     const [provinceOptions, setProvinceOptions] = useState([]);
@@ -106,24 +110,6 @@ export default function UpdateLocationInformation({ className = '' }) {
             <form onSubmit={submit} className="mt-6 space-y-6">
 
                 <div>
-                    <InputLabel htmlFor="address" value="Address" />
-
-                    <TextInput
-                        id="address"
-                        type="text"
-                        className="mt-1 block w-full"
-                        value={data.address || ''}
-                        onChange={(e) => setData('address', e.target.value)}
-                        required
-                        autoComplete="address"
-                    />
-
-                    <InputError className="mt-2" 
-                    message={errors.address} 
-                    />
-                </div>
-
-                <div>
                     <InputLabel htmlFor="province" value="Province" />
 
                     <select
@@ -188,22 +174,38 @@ export default function UpdateLocationInformation({ className = '' }) {
                     />
                 </div>
 
-                
+                <div>
+                    <InputLabel htmlFor="address" value="Address" />
 
+                    <TextInput
+                        id="address"
+                        type="text"
+                        className="mt-1 block w-full"
+                        value={data.address || ''}
+                        onChange={(e) => setData('address', e.target.value)}
+                        required
+                        autoComplete="address"
+                    />
+
+                    <InputError className="mt-2" 
+                    message={errors.address} 
+                    />
+                </div>
+                
                 <div>
                     <InputLabel htmlFor="postal_code" value="Postal Code" />
 
                     <TextInput
                         id="postal_code"
                         className="mt-1 block w-full"
-                        // value={data.name}
-                        // onChange={(e) => setData('name', e.target.value)}
+                        value={data.postal_code || ''}
+                        onChange={(e) => setData('postal_code', e.target.value)}
                         required
                         autoComplete="postal_code"
                     />
 
                     <InputError className="mt-2" 
-                    // message={errors.name} 
+                    message={errors.postal_code} 
                     />
                 </div>
 
@@ -214,14 +216,14 @@ export default function UpdateLocationInformation({ className = '' }) {
                         id="phone_number"
                         type='tel'
                         className="mt-1 block w-full"
-                        // value={data.name}
-                        // onChange={(e) => setData('name', e.target.value)}
+                        value={data.phone_number || ''}
+                        onChange={(e) => setData('phone_number', e.target.value)}
                         required
                         autoComplete="phone_number"
                     />
 
                     <InputError className="mt-2" 
-                    // message={errors.name} 
+                    message={errors.phone_number} 
                     />
                 </div>
 
