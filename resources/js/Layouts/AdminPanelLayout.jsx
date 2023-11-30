@@ -18,7 +18,7 @@ export default function AdminPanel({ user, header, children }) {
             photo={user.profile_photo}
         />
 
-        <div className="min-h-screen w-full bg-slate-200 dark:bg-slate-900 relative overflow-hidden transition duration-500 ease-in-out">
+        <div className="min-h-screen w-full md:ms-[270px] bg-slate-200 dark:bg-slate-900 relative overflow-hidden transition duration-500 ease-in-out">
             <nav className="bg-white border-b border-gray-100 dark:bg-slate-800 dark:border-slate-700 transition duration-500 ease-in-out">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">

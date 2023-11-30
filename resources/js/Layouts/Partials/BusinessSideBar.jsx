@@ -7,7 +7,7 @@ import ResponsiveBusinessInformation from '@/Components/ResponsiveBusinessInform
 
 export default function BusinessSideBar({ className='', handleClick, username, email, photo, bname, bemail, bphoto }) {
     return (
-        <aside className={className + ' md:translate-x-0 md:opacity-100 absolute md:static z-10 min-w-[270px] h-screen bg-white bg-opacity-50 md:bg-opacity-100 dark:bg-slate-800 backdrop-blur-sm transition duration-500 ease-in-out'}>
+        <aside className={className + ' md:translate-x-0 md:opacity-100 fixed z-50 min-w-[270px] h-screen bg-white bg-opacity-90 md:bg-opacity-100 dark:bg-slate-800 backdrop-blur-sm transition duration-500 ease-in-out'}>
             <div className='flex items-center justify-between px-4 h-16 border-b border-gray-100 dark:border-slate-600'>
                 <Link href='/'>
                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
