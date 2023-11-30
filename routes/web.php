@@ -18,6 +18,7 @@ use Inertia\Inertia;
 |
 */
 
+// Route Landing Page
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,10 +28,12 @@ Route::get('/', function () {
     ]);
 });
 
+// ROUTE GAJE 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route yang butuh login
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -43,21 +46,22 @@ Route::middleware('auth')->group(function () {
     Route::patch('/location/update', [LocationController::class, 'update'])->name('location.update');
 });
 
-
+// Route per-regist-login-an-logout jg 
 require __DIR__.'/auth.php';
 
+// Route Admin Only
 Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(function () {
     require __DIR__.'/admin.php';
 });
 
+// Route Business Only
 Route::prefix('/business')->middleware(['auth','business'])->name('business.')->group(function () {
     require __DIR__.'/business.php';
 });
+
+//Route Create Business klo belum exist
 Route::prefix('/business/register')->middleware(['auth','business.exist'])->name('business.new.')->group(function () {
     Route::get('/', [BusinessController::class, 'create'])->name('create');
     Route::post('/', [BusinessController::class, 'store']);
 });
 
-// Route::prefix('/')->middleware(['auth','user'])->name('user.')->group(function () {
-//     require __DIR__.'/user.php';
-// });

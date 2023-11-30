@@ -4,7 +4,7 @@ import DarkModeToggle from '@/Components/DarkModeToggle';
 import NavDropdown from '@/Components/NavDropdown';
 import BusinessSideBar from './Partials/BusinessSideBar';
 
-export default function BusinessPanel({ user, header, children }) {
+export default function BusinessPanel({ user, business, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -15,7 +15,10 @@ export default function BusinessPanel({ user, header, children }) {
             handleClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
             username={user.name}
             email={user.email}
-            photo={user.profile_photo}
+            photo={user.profile_photo} 
+            bname={business.business_name}
+            bemail={business.business_email}
+            bphoto={business.business_photo}
         />
 
         <div className="min-h-screen w-full bg-slate-200 dark:bg-slate-900 relative overflow-hidden transition duration-500 ease-in-out">
