@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -31,6 +32,11 @@ class BusinessController extends Controller
         $request->user()->business()->create($request->all());
 
         return Redirect::route('business.profile');
+    }
+
+    public function edit(): Response
+    {
+        return Inertia::render('Business/BusinessProfile');
     }
 
 }
