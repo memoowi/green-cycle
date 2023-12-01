@@ -5,7 +5,7 @@ export default function ResponsiveUserInformation({ className = '', username, em
                 <img
                     src={photo ? ('/storage/profile-photos/' + photo) : ('/storage/profile-photos/default.jpg')}
                     alt={username}
-                    className="h-10 w-10 rounded-full border-2"
+                    className="h-10 w-10 rounded-full border-2 object-cover"
                 />
             </div>
             <div>

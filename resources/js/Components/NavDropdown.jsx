@@ -11,7 +11,7 @@ export default function NavDropdown({name, role, photo, type}) {
                     >
                         <div className="flex items-center me-2 shrink-0">
                             <img 
-                                className="h-8 w-8 rounded-full border-2 bg-contain" 
+                                className="h-8 w-8 rounded-full border-2 object-cover" 
                                 src={photo ? ('/storage/profile-photos/' + photo) : ('/storage/profile-photos/default.jpg')} 
                                 alt="user" 
                             />

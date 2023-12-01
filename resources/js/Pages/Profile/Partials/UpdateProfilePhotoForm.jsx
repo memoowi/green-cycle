@@ -40,7 +40,7 @@ export default function UpdateProfilePhoto({ className = '' }) {
                 <img
                     src={user.profile_photo ? ('/storage/profile-photos/' + user.profile_photo) : ('/storage/profile-photos/default.jpg')}
                     alt={user.name}
-                    className="w-20 h-20 rounded-full border-2"
+                    className="w-20 h-20 rounded-full border-2 object-cover"
                 />
             </div>
             <form onSubmit={submit} className="mt-6 space-y-6" encType="multipart/form-data">
