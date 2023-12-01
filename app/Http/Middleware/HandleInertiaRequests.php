@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use App\Models\Business;
+use App\Models\Item;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -35,7 +37,9 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'users' => User::all(),
                 'business' => Business::where('user_id', auth()->id())->first(),
+                'item' => Item::all(),
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

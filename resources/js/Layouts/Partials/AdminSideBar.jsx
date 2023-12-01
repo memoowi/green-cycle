@@ -39,32 +39,32 @@ export default function AdminSideBar({ className='', handleClick, username, emai
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink>
+                    <SidebarLink href={route('admin.posts')} active={route().current('admin.posts')}>
                         Posts
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink>
+                    <SidebarLink href={route('admin.users')} active={route().current('admin.users')}>
                         Users
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink>
+                    <SidebarLink href={route('admin.items')} active={route().current('admin.items')}>
                         Items
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink>
+                    <SidebarLink href={route('admin.recycle-facilities')} active={route().current('admin.recycle-facilities')}>
                         Recycle Facilities
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink>
+                    <SidebarLink href={route('admin.rewards')} active={route().current('admin.rewards')}>
                         Rewards
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink>
+                    <SidebarLink href={route('admin.recycled-reports')} active={route().current('admin.recycled-reports')}>
                         Recycled Reports
                     </SidebarLink>
                 </li>
