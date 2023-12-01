@@ -65,4 +65,22 @@ class User extends Authenticatable
     {
         return $this->hasOne(Business::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($user) {
+            // Check if the user's type is being set to 0
+            if ($user->type == 0) {
+                // Find the associated business and update its status to 0
+                $business = $user->business;
+                if ($business) {
+                    $business->status = 0;
+                    $business->save();
+                }
+            }
+        });
+    }
+
 }
