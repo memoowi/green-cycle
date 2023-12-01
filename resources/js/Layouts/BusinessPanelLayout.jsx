@@ -19,6 +19,7 @@ export default function BusinessPanel({ user, business, header, children }) {
             bname={business.business_name}
             bemail={business.business_email}
             bphoto={business.business_photo}
+            bstatus={business.status}
         />
 
         <div className="min-h-screen w-full md:ms-[270px] bg-slate-200 dark:bg-slate-900 relative overflow-hidden transition duration-500 ease-in-out">

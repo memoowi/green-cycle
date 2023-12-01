@@ -6,6 +6,7 @@ use Inertia\Inertia;
 
 
 Route::get('/profile', [BusinessController::class, 'edit'])->name('profile');
+Route::post('/profile/update', [BusinessController::class, 'update'])->name('profile.update');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Business/BusinessDashboard');

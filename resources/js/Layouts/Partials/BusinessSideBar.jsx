@@ -5,7 +5,7 @@ import SidebarLink from '@/Components/SidebarLink';
 import ResponsiveUserInformation from '@/Components/ResponsiveUserInformation';
 import ResponsiveBusinessInformation from '@/Components/ResponsiveBusinessInformation';
 
-export default function BusinessSideBar({ className='', handleClick, username, email, photo, bname, bemail, bphoto }) {
+export default function BusinessSideBar({ className='', handleClick, username, email, photo, bname, bemail, bphoto, bstatus }) {
     return (
         <aside className={className + ' md:translate-x-0 md:opacity-100 fixed z-50 min-w-[270px] h-screen bg-white bg-opacity-90 md:bg-opacity-100 dark:bg-slate-800 backdrop-blur-sm transition duration-500 ease-in-out'}>
             <div className='flex items-center justify-between px-4 h-16 border-b border-gray-100 dark:border-slate-600'>
@@ -37,7 +37,8 @@ export default function BusinessSideBar({ className='', handleClick, username, e
                 <ResponsiveBusinessInformation
                     bname={bname}
                     bemail={bemail}
-                    bphoto={bphoto}
+                    bphoto={bphoto} 
+                    bstatus={bstatus}
                 />
             </div>
             <ul>
