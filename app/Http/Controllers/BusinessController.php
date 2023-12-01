@@ -84,5 +84,18 @@ class BusinessController extends Controller
         return Redirect::route('business.profile');
     }
 
+    public function setting(): Response
+    {
+        return Inertia::render('Business/BusinessSetting');
+    }
+
+    public function updateSetting(Request $request): RedirectResponse
+    {
+        $request->user()->business()->status = $request->status;
+        $request->user()->business()->update($request->all());
+
+        return Redirect::route('business.setting');
+    }
+
 }
 

@@ -51,6 +51,7 @@ export default function BusinessSideBar({ className='', handleClick, username, e
             <div className="pt-2 pb-1 border-t border-gray-200 dark:border-slate-600">
                 <div className="mt-3 space-y-1">
                     <ResponsiveNavLink href={route('business.profile')} active={route().current('business.profile')}>Business Profile</ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('business.setting')} active={route().current('business.setting')}>Setting</ResponsiveNavLink>
                     <ResponsiveNavLink method="post" href={route('logout')} as="button">
                         Log Out
                     </ResponsiveNavLink>
