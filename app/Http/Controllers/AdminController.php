@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -33,5 +34,14 @@ class AdminController extends Controller
         // dd($request->all());
         $selectedUser = User::findOrFail($user);
         $selectedUser->update($request->all());
+    }
+
+    public function removePhoto($user)
+    {
+        $selectedUser = User::findOrFail($user);
+        if(Storage::exists('profile-photos/' . $selectedUser->profile_photo)){
+            Storage::delete('profile-photos/' . $selectedUser->profile_photo);
+        }
+        $selectedUser->update(['profile_photo' => null]);
     }
 }

@@ -33,23 +33,25 @@ export default function UsersTable() {
     const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
 
     const [showModal, setShowModal] = useState(false);
+    const [showModalRemove, setShowModalRemove] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    const { data, setData, patch, processing, errors, recentlySuccessful } = useForm({
-        name: "",
-        email: "",
-        role: "",
-        type: "",
-        profile_photo: "",
-        bio: "",
-        website_link: "",
-        social_link1: "",
-        social_link2: "",
-        social_link3: "",
-        social_link4: "",
-        total_earned: "",
-        is_ban: "",
-    });
+    const { data, setData, patch, processing, errors, recentlySuccessful } =
+        useForm({
+            name: "",
+            email: "",
+            role: "",
+            type: "",
+            profile_photo: "",
+            bio: "",
+            website_link: "",
+            social_link1: "",
+            social_link2: "",
+            social_link3: "",
+            social_link4: "",
+            total_earned: "",
+            is_ban: "",
+        });
 
     useEffect(() => {
         if (selectedUser) {
@@ -72,13 +74,29 @@ export default function UsersTable() {
         setShowModal(false);
     };
 
+    const openModalRemove = (user) => {
+        setSelectedUser(user);
+        setShowModalRemove(true);
+    };
+
+    const closeModalRemove = () => {
+        setSelectedUser(null);
+        setShowModalRemove(false);
+    };
+
     const submit = (e) => {
         e.preventDefault();
 
         // console.log(data);
+        patch(route("admin.users.update", selectedUser.id));
+    };
 
-        patch(route("admin.users.update", selectedUser.id), {
-            // onSuccess: () => closeModal(),
+    const submitRemovePhoto = (e) => {
+        e.preventDefault();
+
+        // console.log(data);
+        patch(route("admin.users.removephoto", selectedUser.id), {
+            onSuccess: () => closeModalRemove(),
         });
     };
 
@@ -184,7 +202,7 @@ export default function UsersTable() {
                                     {user.is_ban ? "Banned" : "Active"}
                                 </div>
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 flex flex-row gap-1">
                                 {/* Modal toggle */}
                                 <button
                                     onClick={() => openModal(user)}
@@ -199,6 +217,32 @@ export default function UsersTable() {
                                         viewBox="0 0 20 20"
                                     >
                                         <path d="M7.75 4H19M7.75 4a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 4h2.25m13.5 6H19m-2.25 0a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 10h11.25m-4.5 6H19M7.75 16a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 16h2.25" />
+                                    </svg>
+                                </button>
+                                <button
+                                    onClick={() => openModalRemove(user)}
+                                    className="text-white bg-yellow-600 hover:bg-yellow-700 font-medium rounded-lg text-sm p-3 text-center"
+                                    type="button"
+                                >
+                                    <svg
+                                        className="w-5 h-4 fill-current"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 640 512"
+                                    >
+                                        <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM471 143c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+                                    </svg>
+                                </button>
+                                <button
+                                    onClick={() => openModal(user)}
+                                    className="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm p-3 text-center"
+                                    type="button"
+                                >
+                                    <svg
+                                        className="w-4 h-4 fill-current"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 512 512"
+                                    >
+                                        <path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z" />
                                     </svg>
                                 </button>
                             </td>
@@ -529,6 +573,75 @@ export default function UsersTable() {
                             </Transition>
                         </div>
                     </form>
+                </div>
+            </Modal>
+            {/* Remove Profile Modal */}
+            <Modal
+                show={showModalRemove}
+                onClose={closeModalRemove}
+                maxWidth="sm"
+            >
+                <div className="max-h-full w-[92vw] sm:w-full bg-white dark:bg-gray-700">
+                    {/* Modal content */}
+                    <div className="flex items-start justify-between p-4 border-b dark:border-gray-600">
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                            Remove Profile Photo
+                        </h3>
+                        <button
+                            type="button"
+                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            onClick={closeModalRemove}
+                        >
+                            <svg
+                                className="w-3 h-3"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 14 14"
+                            >
+                                <path
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                />
+                            </svg>
+                            <span className="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <div className="flex justify-center p-5">
+                        <svg
+                            className="w-24 h-24 text-yellow-500 dark:text-yellow-400"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                            />
+                        </svg>
+                    </div>
+                    <p className="text-center text-lg text-gray-600 dark:text-gray-300">
+                        Are you sure ?
+                    </p>
+                    <div className="flex p-6 justify-center gap-4">
+                        <form onSubmit={submitRemovePhoto}>
+                            <button className="text-white bg-red-700 hover:bg-red-800 font-medium rounded-xl px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700">
+                                Yes
+                            </button>
+                        </form>
+                        <button
+                            onClick={closeModalRemove}
+                            className="text-white bg-gray-500 hover:bg-gray-600 font-medium rounded-xl px-5 py-2.5 text-center dark:bg-gray-400 dark:hover:bg-gray-500"
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             </Modal>
         </div>
