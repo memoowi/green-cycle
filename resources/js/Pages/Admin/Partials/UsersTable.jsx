@@ -1,7 +1,9 @@
+import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
@@ -33,41 +35,30 @@ export default function UsersTable() {
     const [showModal, setShowModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    const { data, setData, patch, processing, errors, reset } = useForm({
-        name: '',
-        date_of_birth: '',
-        email: '',
-        role: '',
-        type: '',
-        profile_photo: '',
-        bio: '',
-        website_link: '',
-        social_link1: '',
-        social_link2: '',
-        social_link3: '',
-        social_link4: '',
-        total_earned: '',
-        is_ban: '',
+    const { data, setData, patch, processing, errors, recentlySuccessful } = useForm({
+        name: "",
+        email: "",
+        role: "",
+        type: "",
+        profile_photo: "",
+        bio: "",
+        website_link: "",
+        social_link1: "",
+        social_link2: "",
+        social_link3: "",
+        social_link4: "",
+        total_earned: "",
+        is_ban: "",
     });
 
     useEffect(() => {
         if (selectedUser) {
             setData({
-                name: selectedUser.name,
-                date_of_birth: selectedUser.date_of_birth,
-                email: selectedUser.email,
-                role: selectedUser.role,
-                type: selectedUser.type,
-                profile_photo: selectedUser.profile_photo,
-                bio: selectedUser.bio,
-                website_link: selectedUser.website_link,
-                social_link1: selectedUser.social_link1,
-                social_link2: selectedUser.social_link2,
-                social_link3: selectedUser.social_link3,
-                social_link4: selectedUser.social_link4,
-                total_earned: selectedUser.total_earned,
-                is_ban: selectedUser.is_ban,
-            })
+                ...selectedUser,
+            });
+            Object.keys(errors).forEach((key) => {
+                errors[key] = null;
+            });
         }
     }, [selectedUser]);
 
@@ -83,19 +74,17 @@ export default function UsersTable() {
 
     const submit = (e) => {
         e.preventDefault();
-        
-        console.log(selectedUser);
 
-        if (selectedUser) {
-            patch(route('admin.users.update', selectedUser.id), {
-                onSuccess: () => closeModal(),
-            });
-        }
-    }
+        // console.log(data);
+
+        patch(route("admin.users.update", selectedUser.id), {
+            // onSuccess: () => closeModal(),
+        });
+    };
 
     return (
         <div className="relative overflow-x-auto sm:rounded-lg">
-            <div className="flex items-center justify-between ms-1 flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+            <div className="flex items-center justify-between ms-1 flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4">
                 <label htmlFor="table-search" className="sr-only">
                     Search
                 </label>
@@ -199,9 +188,18 @@ export default function UsersTable() {
                                 {/* Modal toggle */}
                                 <button
                                     onClick={() => openModal(user)}
-                                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                    className="text-white bg-emerald-600 hover:bg-emerald-700 font-medium rounded-lg text-sm p-3 text-center"
+                                    type="button"
                                 >
-                                    Edit
+                                    <svg
+                                        className="w-4 h-4 stroke-current stroke-2"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path d="M7.75 4H19M7.75 4a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 4h2.25m13.5 6H19m-2.25 0a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 10h11.25m-4.5 6H19M7.75 16a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 16h2.25" />
+                                    </svg>
                                 </button>
                             </td>
                         </tr>
@@ -231,15 +229,15 @@ export default function UsersTable() {
 
             {/* Edit user modal */}
             <Modal show={showModal} onClose={closeModal}>
-                <div className="relative w-full sm:min-w-fit max-h-full">
+                <div className="relative max-h-full">
                     {/* Modal content */}
                     <div className="flex items-start justify-between p-4 border-b bg-white dark:bg-gray-700 dark:border-gray-600">
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            Edit user 
+                            Edit user
                         </h3>
                         <button
                             type="button"
-                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                             onClick={closeModal}
                         >
                             <svg
@@ -260,10 +258,13 @@ export default function UsersTable() {
                             <span className="sr-only">Close modal</span>
                         </button>
                     </div>
-                    <form onSubmit={submit} className="relative bg-white  shadow dark:bg-gray-700 w-full">
-                    {/* Modal header */}
+                    <form
+                        onSubmit={submit}
+                        className="relative bg-white  shadow dark:bg-gray-700 w-full"
+                    >
+                        {/* Modal header */}
                         {/* Modal body */}
-                        <div className="p-6 space-y-6 max-h-[600px] overflow-y-auto">
+                        <div className="p-6 space-y-6 w-[92vw] sm:w-full max-h-[600px] overflow-y-auto">
                             <div className="grid grid-cols-12 gap-4">
                                 <div className="col-span-12 sm:col-span-6">
                                     <InputLabel
@@ -272,12 +273,18 @@ export default function UsersTable() {
                                         value="Name"
                                     />
                                     <TextInput
-                                        id="name" 
-                                        type='text'
-                                        className='w-full'
-                                        value={data.name} 
-                                        onChange={(e) => setData("name", e.target.value)}
+                                        id="name"
+                                        type="text"
+                                        className="w-full"
+                                        value={data.name}
+                                        onChange={(e) =>
+                                            setData("name", e.target.value)
+                                        }
                                         required
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.name}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -287,12 +294,18 @@ export default function UsersTable() {
                                         value="Email"
                                     />
                                     <TextInput
-                                        id="email" 
-                                        type='email'
-                                        className='w-full'
-                                        value={data.email} 
-                                        onChange={(e) => setData("email", e.target.value)}
-                                        required 
+                                        id="email"
+                                        type="email"
+                                        className="w-full"
+                                        value={data.email}
+                                        onChange={(e) =>
+                                            setData("email", e.target.value)
+                                        }
+                                        required
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.email}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -302,12 +315,18 @@ export default function UsersTable() {
                                         value="Role"
                                     />
                                     <TextInput
-                                        id="role" 
-                                        type='text'
-                                        className='w-full'
-                                        value={data.role} 
-                                        onChange={(e) => setData("role", e.target.value)}
-                                        required 
+                                        id="role"
+                                        type="text"
+                                        className="w-full"
+                                        value={data.role}
+                                        onChange={(e) =>
+                                            setData("role", e.target.value)
+                                        }
+                                        required
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.role}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -317,41 +336,18 @@ export default function UsersTable() {
                                         value="Type"
                                     />
                                     <TextInput
-                                        id="type" 
-                                        type='text'
-                                        className='w-full'
-                                        value={data.type} 
-                                        onChange={(e) => setData("type", e.target.value)}
-                                        required 
+                                        id="type"
+                                        type="text"
+                                        className="w-full"
+                                        value={data.type}
+                                        onChange={(e) =>
+                                            setData("type", e.target.value)
+                                        }
+                                        required
                                     />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="profile_photo"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Profile Photo"
-                                    />
-                                    <TextInput
-                                        id="profile_photo" 
-                                        type='file'
-                                        className='w-full'
-                                        accept="image/*"
-                                        // value={data.profile_photo} 
-                                        onChange={(e) => setData("profile_photo", e.target.value)}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="bio"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Bio"
-                                    />
-                                    <TextInput
-                                        id="bio" 
-                                        type='text'
-                                        className='w-full'
-                                        value={data.bio || ""} 
-                                        onChange={(e) => setData("bio", e.target.value)}
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.type}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -361,11 +357,20 @@ export default function UsersTable() {
                                         value="Website Link"
                                     />
                                     <TextInput
-                                        id="website_link" 
-                                        type='url'
-                                        className='w-full'
-                                        value={data.website_link || ""} 
-                                        onChange={(e) => setData("website_link", e.target.value)}
+                                        id="website_link"
+                                        type="url"
+                                        className="w-full"
+                                        value={data.website_link || ""}
+                                        onChange={(e) =>
+                                            setData(
+                                                "website_link",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.website_link}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -375,11 +380,20 @@ export default function UsersTable() {
                                         value="Social Link 1"
                                     />
                                     <TextInput
-                                        id="social_link1" 
-                                        type='url'
-                                        className='w-full'
-                                        value={data.social_link1 || ""} 
-                                        onChange={(e) => setData("social_link1", e.target.value)}
+                                        id="social_link1"
+                                        type="url"
+                                        className="w-full"
+                                        value={data.social_link1 || ""}
+                                        onChange={(e) =>
+                                            setData(
+                                                "social_link1",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.social_link1}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -389,11 +403,20 @@ export default function UsersTable() {
                                         value="Social Link 2"
                                     />
                                     <TextInput
-                                        id="social_link2" 
-                                        type='url'
-                                        className='w-full'
-                                        value={data.social_link2 || ""} 
-                                        onChange={(e) => setData("social_link2", e.target.value)}
+                                        id="social_link2"
+                                        type="url"
+                                        className="w-full"
+                                        value={data.social_link2 || ""}
+                                        onChange={(e) =>
+                                            setData(
+                                                "social_link2",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.social_link2}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -403,11 +426,20 @@ export default function UsersTable() {
                                         value="Social Link 3"
                                     />
                                     <TextInput
-                                        id="social_link3" 
-                                        type='url'
-                                        className='w-full'
-                                        value={data.social_link3 || ""} 
-                                        onChange={(e) => setData("social_link3", e.target.value)}
+                                        id="social_link3"
+                                        type="url"
+                                        className="w-full"
+                                        value={data.social_link3 || ""}
+                                        onChange={(e) =>
+                                            setData(
+                                                "social_link3",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.social_link3}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -417,11 +449,20 @@ export default function UsersTable() {
                                         value="Social Link 4"
                                     />
                                     <TextInput
-                                        id="social_link4" 
-                                        type='url'
-                                        className='w-full'
-                                        value={data.social_link4 || ""} 
-                                        onChange={(e) => setData("social_link4", e.target.value)}
+                                        id="social_link4"
+                                        type="url"
+                                        className="w-full"
+                                        value={data.social_link4 || ""}
+                                        onChange={(e) =>
+                                            setData(
+                                                "social_link4",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.social_link4}
                                     />
                                 </div>
                                 <div className="col-span-12 sm:col-span-6">
@@ -431,11 +472,40 @@ export default function UsersTable() {
                                         value="Total Earned"
                                     />
                                     <TextInput
-                                        id="total_earned" 
-                                        type='number'
-                                        className='w-full'
-                                        value={data.total_earned} 
-                                        onChange={(e) => setData("total_earned", e.target.value)}
+                                        id="total_earned"
+                                        type="number"
+                                        className="w-full"
+                                        value={data.total_earned}
+                                        onChange={(e) =>
+                                            setData(
+                                                "total_earned",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.total_earned}
+                                    />
+                                </div>
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="bio"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                        value="Bio"
+                                    />
+                                    <TextInput
+                                        id="bio"
+                                        type="text"
+                                        className="w-full"
+                                        value={data.bio || ""}
+                                        onChange={(e) =>
+                                            setData("bio", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.bio}
                                     />
                                 </div>
                             </div>
@@ -448,6 +518,15 @@ export default function UsersTable() {
                             >
                                 Save All
                             </PrimaryButton>
+                            <Transition
+                                show={recentlySuccessful}
+                                enter="transition ease-in-out"
+                                enterFrom="opacity-0"
+                                leave="transition ease-in-out"
+                                leaveTo="opacity-0"
+                            >
+                                <p className="text-sm text-gray-600">Saved.</p>
+                            </Transition>
                         </div>
                     </form>
                 </div>

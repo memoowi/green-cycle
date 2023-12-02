@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,9 +12,8 @@ Route::get('/posts', function () {
     return Inertia::render('Admin/PostsAdmin');
 })->name('posts');
 
-Route::get('/users', function () {
-    return Inertia::render('Admin/UsersAdmin');
-})->name('users');
+Route::get('/users', [AdminController::class, 'users'])->name('users');
+Route::patch('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
 
 Route::get('/items', function () {
     return Inertia::render('Admin/ItemsAdmin');
