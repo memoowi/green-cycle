@@ -1,5 +1,9 @@
-import { usePage } from "@inertiajs/react";
-import { useState } from "react";
+import InputLabel from "@/Components/InputLabel";
+import Modal from "@/Components/Modal";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import { useForm, usePage } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
 export default function UsersTable() {
     const users = usePage().props.auth.users;
@@ -19,7 +23,6 @@ export default function UsersTable() {
     // Calculate the start and end indices for the current page
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    console.log(endIndex);
 
     // Filter and paginate the users array based on the search term
     const filteredUsers = sortedUsers.filter((user) =>
@@ -27,9 +30,72 @@ export default function UsersTable() {
     );
     const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
 
+    const [showModal, setShowModal] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        name: '',
+        date_of_birth: '',
+        email: '',
+        role: '',
+        type: '',
+        profile_photo: '',
+        bio: '',
+        website_link: '',
+        social_link1: '',
+        social_link2: '',
+        social_link3: '',
+        social_link4: '',
+        total_earned: '',
+        is_ban: '',
+    });
+
+    useEffect(() => {
+        if (selectedUser) {
+            setData({
+                name: selectedUser.name,
+                date_of_birth: selectedUser.date_of_birth,
+                email: selectedUser.email,
+                role: selectedUser.role,
+                type: selectedUser.type,
+                profile_photo: selectedUser.profile_photo,
+                bio: selectedUser.bio,
+                website_link: selectedUser.website_link,
+                social_link1: selectedUser.social_link1,
+                social_link2: selectedUser.social_link2,
+                social_link3: selectedUser.social_link3,
+                social_link4: selectedUser.social_link4,
+                total_earned: selectedUser.total_earned,
+                is_ban: selectedUser.is_ban,
+            })
+        }
+    }, [selectedUser]);
+
+    const openModal = (user) => {
+        setSelectedUser(user);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setSelectedUser(null);
+        setShowModal(false);
+    };
+
+    const submit = (e) => {
+        e.preventDefault();
+        
+        console.log(selectedUser);
+
+        if (selectedUser) {
+            patch(route('admin.users.update', selectedUser.id), {
+                onSuccess: () => closeModal(),
+            });
+        }
+    }
+
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <div className="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+        <div className="relative overflow-x-auto sm:rounded-lg">
+            <div className="flex items-center justify-between ms-1 flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
                 <label htmlFor="table-search" className="sr-only">
                     Search
                 </label>
@@ -131,224 +197,261 @@ export default function UsersTable() {
                             </td>
                             <td className="px-6 py-4">
                                 {/* Modal toggle */}
-                                <a
-                                    href="#"
-                                    type="button"
-                                    data-modal-target="editUserModal"
-                                    data-modal-show="editUserModal"
+                                <button
+                                    onClick={() => openModal(user)}
                                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                 >
-                                    Edit user
-                                </a>
+                                    Edit
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
             {/* Pagination Control */}
-            <div className="flex items-center justify-end mt-4">
+            <div className="flex items-center justify-end mt-4 text-gray-500 dark:text-gray-400 select-none">
                 <button
                     onClick={() => setCurrentPage(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="pl-5 pr-3 py-1 text-gray-600 border border-gray-300 hover:text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:bg-gray-100 disabled:hover:text-gray-600 rounded-s-full mr-2"
+                    className="pl-5 pr-3 py-1  border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:disabled:bg-gray-700 rounded-s-full mr-2"
                 >
                     Previous
                 </button>
-                <span className="text-gray-700">
+                <span>
                     Page {currentPage} of {Math.ceil(users.length / pageSize)}
                 </span>
                 <button
                     onClick={() => setCurrentPage(currentPage + 1)}
                     disabled={endIndex >= users.length}
-                    className="pl-3 pr-5 py-1 text-gray-600 border border-gray-300 hover:text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:bg-gray-100 disabled:hover:text-gray-600 rounded-e-full ml-2"
+                    className="pl-3 pr-5 py-1  border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:disabled:bg-gray-700 rounded-e-full ml-2"
                 >
                     Next
                 </button>
             </div>
 
             {/* Edit user modal */}
-            <div
-                id="editUserModal"
-                tabIndex={-1}
-                aria-hidden="true"
-                className="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
-            >
-                <div className="relative w-full max-w-2xl max-h-full">
+            <Modal show={showModal} onClose={closeModal}>
+                <div className="relative w-full sm:min-w-fit max-h-full">
                     {/* Modal content */}
-                    <form className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        {/* Modal header */}
-                        <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                                Edit user
-                            </h3>
-                            <button
-                                type="button"
-                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-hide="editUserModal"
+                    <div className="flex items-start justify-between p-4 border-b bg-white dark:bg-gray-700 dark:border-gray-600">
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                            Edit user 
+                        </h3>
+                        <button
+                            type="button"
+                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                            onClick={closeModal}
+                        >
+                            <svg
+                                className="w-3 h-3"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 14 14"
                             >
-                                <svg
-                                    className="w-3 h-3"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 14 14"
-                                >
-                                    <path
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                    />
-                                </svg>
-                                <span className="sr-only">Close modal</span>
-                            </button>
-                        </div>
+                                <path
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                />
+                            </svg>
+                            <span className="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <form onSubmit={submit} className="relative bg-white  shadow dark:bg-gray-700 w-full">
+                    {/* Modal header */}
                         {/* Modal body */}
-                        <div className="p-6 space-y-6">
-                            <div className="grid grid-cols-6 gap-6">
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                        htmlFor="first-name"
+                        <div className="p-6 space-y-6 max-h-[600px] overflow-y-auto">
+                            <div className="grid grid-cols-12 gap-4">
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="name"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        First Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="first-name"
-                                        id="first-name"
-                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Bonnie"
+                                        value="Name"
+                                    />
+                                    <TextInput
+                                        id="name" 
+                                        type='text'
+                                        className='w-full'
+                                        value={data.name} 
+                                        onChange={(e) => setData("name", e.target.value)}
                                         required
                                     />
                                 </div>
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                        htmlFor="last-name"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Last Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="last-name"
-                                        id="last-name"
-                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Green"
-                                        required
-                                    />
-                                </div>
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
                                         htmlFor="email"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Email
-                                    </label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        id="email"
-                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="example@company.com"
-                                        required
+                                        value="Email"
+                                    />
+                                    <TextInput
+                                        id="email" 
+                                        type='email'
+                                        className='w-full'
+                                        value={data.email} 
+                                        onChange={(e) => setData("email", e.target.value)}
+                                        required 
                                     />
                                 </div>
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                        htmlFor="phone-number"
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="role"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="number"
-                                        name="phone-number"
-                                        id="phone-number"
-                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="e.g. +(12)3456 789"
-                                        required
+                                        value="Role"
+                                    />
+                                    <TextInput
+                                        id="role" 
+                                        type='text'
+                                        className='w-full'
+                                        value={data.role} 
+                                        onChange={(e) => setData("role", e.target.value)}
+                                        required 
                                     />
                                 </div>
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                        htmlFor="department"
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="type"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Department
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="department"
-                                        id="department"
-                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Development"
-                                        required
+                                        value="Type"
+                                    />
+                                    <TextInput
+                                        id="type" 
+                                        type='text'
+                                        className='w-full'
+                                        value={data.type} 
+                                        onChange={(e) => setData("type", e.target.value)}
+                                        required 
                                     />
                                 </div>
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                        htmlFor="company"
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="profile_photo"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Company
-                                    </label>
-                                    <input
-                                        type="number"
-                                        name="company"
-                                        id="company"
-                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder={123456}
-                                        required
+                                        value="Profile Photo"
+                                    />
+                                    <TextInput
+                                        id="profile_photo" 
+                                        type='file'
+                                        className='w-full'
+                                        accept="image/*"
+                                        // value={data.profile_photo} 
+                                        onChange={(e) => setData("profile_photo", e.target.value)}
                                     />
                                 </div>
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                        htmlFor="current-password"
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="bio"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Current Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        name="current-password"
-                                        id="current-password"
-                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="••••••••"
-                                        required
+                                        value="Bio"
+                                    />
+                                    <TextInput
+                                        id="bio" 
+                                        type='text'
+                                        className='w-full'
+                                        value={data.bio || ""} 
+                                        onChange={(e) => setData("bio", e.target.value)}
                                     />
                                 </div>
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                        htmlFor="new-password"
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="website_link"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        New Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        name="new-password"
-                                        id="new-password"
-                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="••••••••"
-                                        required
+                                        value="Website Link"
+                                    />
+                                    <TextInput
+                                        id="website_link" 
+                                        type='url'
+                                        className='w-full'
+                                        value={data.website_link || ""} 
+                                        onChange={(e) => setData("website_link", e.target.value)}
+                                    />
+                                </div>
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="social_link1"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                        value="Social Link 1"
+                                    />
+                                    <TextInput
+                                        id="social_link1" 
+                                        type='url'
+                                        className='w-full'
+                                        value={data.social_link1 || ""} 
+                                        onChange={(e) => setData("social_link1", e.target.value)}
+                                    />
+                                </div>
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="social_link2"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                        value="Social Link 2"
+                                    />
+                                    <TextInput
+                                        id="social_link2" 
+                                        type='url'
+                                        className='w-full'
+                                        value={data.social_link2 || ""} 
+                                        onChange={(e) => setData("social_link2", e.target.value)}
+                                    />
+                                </div>
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="social_link3"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                        value="Social Link 3"
+                                    />
+                                    <TextInput
+                                        id="social_link3" 
+                                        type='url'
+                                        className='w-full'
+                                        value={data.social_link3 || ""} 
+                                        onChange={(e) => setData("social_link3", e.target.value)}
+                                    />
+                                </div>
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="social_link4"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                        value="Social Link 4"
+                                    />
+                                    <TextInput
+                                        id="social_link4" 
+                                        type='url'
+                                        className='w-full'
+                                        value={data.social_link4 || ""} 
+                                        onChange={(e) => setData("social_link4", e.target.value)}
+                                    />
+                                </div>
+                                <div className="col-span-12 sm:col-span-6">
+                                    <InputLabel
+                                        htmlFor="total_earned"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                        value="Total Earned"
+                                    />
+                                    <TextInput
+                                        id="total_earned" 
+                                        type='number'
+                                        className='w-full'
+                                        value={data.total_earned} 
+                                        onChange={(e) => setData("total_earned", e.target.value)}
                                     />
                                 </div>
                             </div>
                         </div>
                         {/* Modal footer */}
                         <div className="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
-                            <button
-                                type="submit"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            <PrimaryButton
+                                disabled={processing}
+                                onClick={submit}
                             >
-                                Save all
-                            </button>
+                                Save All
+                            </PrimaryButton>
                         </div>
                     </form>
                 </div>
-            </div>
+            </Modal>
         </div>
     );
 }

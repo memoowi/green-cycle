@@ -4,6 +4,7 @@ import Modal from "@/Components/Modal";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
+import TogglesButton from "@/Components/TogglesButton";
 import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
@@ -104,17 +105,17 @@ export default function SettingForm() {
                         </div>
 
                         <div className="mt-4">
-                            <InputLabel className="relative inline-flex items-center cursor-pointer">
-                                <TextInput type="checkbox" value={data.status} className="sr-only peer" onChange={(e) => setData('status', e.target.checked ? 1 : 0)} checked={data.status == 1} />
-                                <div className="w-11 h-6 bg-red-400  rounded-full peer dark:bg-red-400 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-white peer-checked:bg-emerald-600"></div>
-                                <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Change Status</span>
-                            </InputLabel>
+                            <TogglesButton
+                                value={data.status}
+                                onChange={(e) => setData("status", e.target.checked ? 1 : 0)}
+                                checked={data.status == 1}
+                                label={'Change Status'}
+                            />
 
                             <InputError
                                 message={errors.status}
                                 className="mt-2"
                             />
-
                         </div>
 
                     </div>

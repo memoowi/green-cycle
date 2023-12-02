@@ -89,7 +89,7 @@ class ProfileController extends Controller
 
             $request->user()->profile_photo = $filename;
             $request->user()->save();
-          }
+        }
 
         return Redirect::route('profile.edit');
     }
