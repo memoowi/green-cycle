@@ -19,9 +19,9 @@ export default function Landing({ user, header, children }) {
                     <div className="flex justify-between h-20">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/" className='flex gap-3'>
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
-                                    <span className='text-2xl font-bold hidden lg:block text-gray-800 dark:text-white'>GreenCycle</span>
+                                <Link href="/" className='flex gap-3  text-gray-800 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-500'>
+                                    <ApplicationLogo className="block h-9 w-auto fill-current" />
+                                    <span className='text-2xl font-bold hidden lg:block'>GreenCycle</span>
                                 </Link>
                             </div>
                         </div>

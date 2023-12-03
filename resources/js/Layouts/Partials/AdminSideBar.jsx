@@ -8,9 +8,9 @@ export default function AdminSideBar({ className='', handleClick, username, emai
     return (
         <aside className={className + ' md:translate-x-0 md:opacity-100 fixed z-50 min-w-[270px] h-screen bg-white bg-opacity-90 md:bg-opacity-100 dark:bg-slate-800 backdrop-blur-sm transition duration-500 ease-in-out'}>
             <div className='flex items-center justify-between px-4 h-16 border-b border-gray-100 dark:border-slate-600'>
-                <Link href='/' className='flex gap-4 items-center'>
-                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
-                    <span className='text-2xl font-bold text-gray-800 dark:text-white'>GreenCycle</span>
+                <Link href='/' className='flex gap-3 items-center text-gray-800 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-500'>
+                    <ApplicationLogo className="block h-9 w-auto fill-current" />
+                    <span className='text-2xl font-bold'>GreenCycle</span>
                 </Link>
                 <button
                     onClick={handleClick}
