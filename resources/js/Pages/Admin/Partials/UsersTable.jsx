@@ -2,6 +2,7 @@ import BanIconButton from "@/Components/BanIconButton";
 import ConfirmationModal from "@/Components/ConfirmationModal";
 import EditIconButton from "@/Components/EditIconButton";
 import FeaturedTable from "@/Components/FeaturedTable";
+import FormModal from "@/Components/FormModal";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
@@ -134,7 +135,7 @@ export default function UsersTable() {
                 previousClick={() => setCurrentPage(currentPage - 1)}
                 disabledPrevious={currentPage === 1}
                 nextClick={() => setCurrentPage(currentPage + 1)}
-                disabledNext={ filteredUsers.length <= pageSize }
+                disabledNext={filteredUsers.length <= pageSize}
                 paginationInfo={
                     "Page " +
                     currentPage +
@@ -224,15 +225,18 @@ export default function UsersTable() {
                                 />
                                 <BanIconButton
                                     onClick={() => openModalBan(user)}
-                                    className={(user.is_ban ? "-hue-rotate-180" : "") + " text-white bg-red-600 hover:bg-red-700"}
+                                    className={
+                                        (user.is_ban ? "-hue-rotate-180" : "") +
+                                        " text-white bg-red-600 hover:bg-red-700"
+                                    }
                                     title="Ban / Unban User"
                                 />
                             </td>
                         </tr>
                     ))}
                     {paginatedUsers.length === 0 && (
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
-                            <td colSpan={5} className="px-6 py-4 text-center" >
+                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td colSpan={5} className="px-6 py-4 text-center">
                                 No users found
                             </td>
                         </tr>
@@ -241,309 +245,215 @@ export default function UsersTable() {
             </FeaturedTable>
 
             {/* Edit user modal */}
-            <Modal show={showModal} onClose={closeModal}>
-                <div className="relative max-h-full">
-                    {/* Modal content */}
-                    <div className="flex items-start justify-between p-4 border-b bg-white dark:bg-gray-700 dark:border-gray-600">
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            Edit user
-                        </h3>
-                        <button
-                            type="button"
-                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                            onClick={closeModal}
-                        >
-                            <svg
-                                className="w-3 h-3"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 14 14"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                />
-                            </svg>
-                            <span className="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <form
-                        onSubmit={submit}
-                        className="relative bg-white  shadow dark:bg-gray-700 w-full"
-                    >
-                        {/* Modal header */}
-                        {/* Modal body */}
-                        <div className="p-6 space-y-6 w-[92vw] sm:w-full max-h-[600px] overflow-y-auto">
-                            <div className="grid grid-cols-12 gap-4">
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="name"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Name"
-                                    />
-                                    <TextInput
-                                        id="name"
-                                        type="text"
-                                        className="w-full"
-                                        value={data.name}
-                                        onChange={(e) =>
-                                            setData("name", e.target.value)
-                                        }
-                                        required
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.name}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="email"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Email"
-                                    />
-                                    <TextInput
-                                        id="email"
-                                        type="email"
-                                        className="w-full"
-                                        value={data.email}
-                                        onChange={(e) =>
-                                            setData("email", e.target.value)
-                                        }
-                                        required
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.email}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="role"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Role"
-                                    />
-                                    <TextInput
-                                        id="role"
-                                        type="text"
-                                        className="w-full"
-                                        value={data.role}
-                                        onChange={(e) =>
-                                            setData("role", e.target.value)
-                                        }
-                                        required
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.role}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="type"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Type"
-                                    />
-                                    <TextInput
-                                        id="type"
-                                        type="text"
-                                        className="w-full"
-                                        value={data.type}
-                                        onChange={(e) =>
-                                            setData("type", e.target.value)
-                                        }
-                                        required
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.type}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="website_link"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Website Link"
-                                    />
-                                    <TextInput
-                                        id="website_link"
-                                        type="url"
-                                        className="w-full"
-                                        value={data.website_link || ""}
-                                        onChange={(e) =>
-                                            setData(
-                                                "website_link",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.website_link}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="social_link1"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Social Link 1"
-                                    />
-                                    <TextInput
-                                        id="social_link1"
-                                        type="url"
-                                        className="w-full"
-                                        value={data.social_link1 || ""}
-                                        onChange={(e) =>
-                                            setData(
-                                                "social_link1",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.social_link1}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="social_link2"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Social Link 2"
-                                    />
-                                    <TextInput
-                                        id="social_link2"
-                                        type="url"
-                                        className="w-full"
-                                        value={data.social_link2 || ""}
-                                        onChange={(e) =>
-                                            setData(
-                                                "social_link2",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.social_link2}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="social_link3"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Social Link 3"
-                                    />
-                                    <TextInput
-                                        id="social_link3"
-                                        type="url"
-                                        className="w-full"
-                                        value={data.social_link3 || ""}
-                                        onChange={(e) =>
-                                            setData(
-                                                "social_link3",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.social_link3}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="social_link4"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Social Link 4"
-                                    />
-                                    <TextInput
-                                        id="social_link4"
-                                        type="url"
-                                        className="w-full"
-                                        value={data.social_link4 || ""}
-                                        onChange={(e) =>
-                                            setData(
-                                                "social_link4",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.social_link4}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="total_earned"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Total Earned"
-                                    />
-                                    <TextInput
-                                        id="total_earned"
-                                        type="number"
-                                        className="w-full"
-                                        value={data.total_earned}
-                                        onChange={(e) =>
-                                            setData(
-                                                "total_earned",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.total_earned}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <InputLabel
-                                        htmlFor="bio"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        value="Bio"
-                                    />
-                                    <TextInput
-                                        id="bio"
-                                        type="text"
-                                        className="w-full"
-                                        value={data.bio || ""}
-                                        onChange={(e) =>
-                                            setData("bio", e.target.value)
-                                        }
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.bio}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        {/* Modal footer */}
-                        <div className="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
-                            <PrimaryButton
-                                disabled={processing}
-                                onClick={submit}
-                            >
-                                Save All
-                            </PrimaryButton>
-                            <Transition
-                                show={recentlySuccessful}
-                                enter="transition ease-in-out"
-                                enterFrom="opacity-0"
-                                leave="transition ease-in-out"
-                                leaveTo="opacity-0"
-                            >
-                                <p className="text-sm text-gray-600">Saved.</p>
-                            </Transition>
-                        </div>
-                    </form>
+            <FormModal
+                title='Edit User'
+                show={showModal}
+                onClose={closeModal}
+                onSubmit={submit}
+                processing={processing}
+                recentlySuccessful={recentlySuccessful}
+            >
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="name"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Name"
+                    />
+                    <TextInput
+                        id="name"
+                        type="text"
+                        className="w-full"
+                        value={data.name}
+                        onChange={(e) => setData("name", e.target.value)}
+                        required
+                    />
+                    <InputError className="mt-2" message={errors.name} />
                 </div>
-            </Modal>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Email"
+                    />
+                    <TextInput
+                        id="email"
+                        type="email"
+                        className="w-full"
+                        value={data.email}
+                        onChange={(e) => setData("email", e.target.value)}
+                        required
+                    />
+                    <InputError className="mt-2" message={errors.email} />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="role"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Role"
+                    />
+                    <TextInput
+                        id="role"
+                        type="text"
+                        className="w-full"
+                        value={data.role}
+                        onChange={(e) => setData("role", e.target.value)}
+                        required
+                    />
+                    <InputError className="mt-2" message={errors.role} />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="type"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Type"
+                    />
+                    <TextInput
+                        id="type"
+                        type="text"
+                        className="w-full"
+                        value={data.type}
+                        onChange={(e) => setData("type", e.target.value)}
+                        required
+                    />
+                    <InputError className="mt-2" message={errors.type} />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="website_link"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Website Link"
+                    />
+                    <TextInput
+                        id="website_link"
+                        type="url"
+                        className="w-full"
+                        value={data.website_link || ""}
+                        onChange={(e) =>
+                            setData("website_link", e.target.value)
+                        }
+                    />
+                    <InputError
+                        className="mt-2"
+                        message={errors.website_link}
+                    />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="social_link1"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Social Link 1"
+                    />
+                    <TextInput
+                        id="social_link1"
+                        type="url"
+                        className="w-full"
+                        value={data.social_link1 || ""}
+                        onChange={(e) =>
+                            setData("social_link1", e.target.value)
+                        }
+                    />
+                    <InputError
+                        className="mt-2"
+                        message={errors.social_link1}
+                    />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="social_link2"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Social Link 2"
+                    />
+                    <TextInput
+                        id="social_link2"
+                        type="url"
+                        className="w-full"
+                        value={data.social_link2 || ""}
+                        onChange={(e) =>
+                            setData("social_link2", e.target.value)
+                        }
+                    />
+                    <InputError
+                        className="mt-2"
+                        message={errors.social_link2}
+                    />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="social_link3"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Social Link 3"
+                    />
+                    <TextInput
+                        id="social_link3"
+                        type="url"
+                        className="w-full"
+                        value={data.social_link3 || ""}
+                        onChange={(e) =>
+                            setData("social_link3", e.target.value)
+                        }
+                    />
+                    <InputError
+                        className="mt-2"
+                        message={errors.social_link3}
+                    />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="social_link4"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Social Link 4"
+                    />
+                    <TextInput
+                        id="social_link4"
+                        type="url"
+                        className="w-full"
+                        value={data.social_link4 || ""}
+                        onChange={(e) =>
+                            setData("social_link4", e.target.value)
+                        }
+                    />
+                    <InputError
+                        className="mt-2"
+                        message={errors.social_link4}
+                    />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="total_earned"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Total Earned"
+                    />
+                    <TextInput
+                        id="total_earned"
+                        type="number"
+                        className="w-full"
+                        value={data.total_earned}
+                        onChange={(e) =>
+                            setData("total_earned", e.target.value)
+                        }
+                    />
+                    <InputError
+                        className="mt-2"
+                        message={errors.total_earned}
+                    />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="bio"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Bio"
+                    />
+                    <TextInput
+                        id="bio"
+                        type="text"
+                        className="w-full"
+                        value={data.bio || ""}
+                        onChange={(e) => setData("bio", e.target.value)}
+                    />
+                    <InputError className="mt-2" message={errors.bio} />
+                </div>
+            </FormModal>
+
             {/* Remove Profile Modal */}
             <ConfirmationModal
                 show={showModalRemove}
