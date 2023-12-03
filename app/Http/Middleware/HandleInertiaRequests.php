@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
                 'users' => User::all(),
                 'business' => Business::where('user_id', auth()->id())->first(),
-                'item' => Item::all(),
+                'items' => Item::all(),
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

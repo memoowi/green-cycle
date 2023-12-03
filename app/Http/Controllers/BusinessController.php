@@ -51,6 +51,10 @@ class BusinessController extends Controller
             'postal_code' => 'required|max:255',
             'business_number' => 'required|max:255',
             'business_email' => 'required|email|max:255',
+            'website_link' => 'nullable|url',
+            'social_link1' => 'nullable|url',
+            'social_link2' => 'nullable|url',
+            'social_link3' => 'nullable|url',
         ]);
         // dd($request->all());
 

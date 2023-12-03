@@ -1,8 +1,13 @@
+import BanIconButton from "@/Components/BanIconButton";
+import ConfirmationModal from "@/Components/ConfirmationModal";
+import EditIconButton from "@/Components/EditIconButton";
+import FeaturedTable from "@/Components/FeaturedTable";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import XUserIconButton from "@/Components/XUserIconButton";
 import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
@@ -121,40 +126,22 @@ export default function UsersTable() {
     };
 
     return (
-        <div className="relative overflow-x-auto sm:rounded-lg">
-            <div className="flex items-center justify-between ms-1 flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4">
-                <label htmlFor="table-search" className="sr-only">
-                    Search
-                </label>
-                <div className="relative">
-                    <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg
-                            className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                            />
-                        </svg>
-                    </div>
-                    <input
-                        type="text"
-                        id="table-search-users"
-                        className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for users"
-                        value={searchTerm || ""}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-            </div>
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <div>
+            <FeaturedTable
+                placeholderSearch="Search for Users"
+                valueInputSearch={searchTerm || ""}
+                onChangeSearch={(e) => setSearchTerm(e.target.value)}
+                previousClick={() => setCurrentPage(currentPage - 1)}
+                disabledPrevious={currentPage === 1}
+                nextClick={() => setCurrentPage(currentPage + 1)}
+                disabledNext={ filteredUsers.length <= pageSize }
+                paginationInfo={
+                    "Page " +
+                    currentPage +
+                    " of " +
+                    Math.ceil(filteredUsers.length / pageSize)
+                }
+            >
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
@@ -224,72 +211,34 @@ export default function UsersTable() {
                             </td>
                             <td className="px-6 py-4 flex flex-row gap-1">
                                 {/* Modal toggle */}
-                                <button
+                                <EditIconButton
                                     onClick={() => openModal(user)}
-                                    className="text-white bg-emerald-600 hover:bg-emerald-700 font-medium rounded-lg text-sm p-3 text-center"
-                                    type="button"
-                                >
-                                    <svg
-                                        className="w-4 h-4 stroke-current stroke-2"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path d="M7.75 4H19M7.75 4a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 4h2.25m13.5 6H19m-2.25 0a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 10h11.25m-4.5 6H19M7.75 16a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 16h2.25" />
-                                    </svg>
-                                </button>
-                                <button
+                                    className="text-white bg-emerald-600 hover:bg-emerald-700"
+                                    title="Edit User"
+                                />
+                                <XUserIconButton
                                     onClick={() => openModalRemove(user)}
-                                    className="text-white bg-yellow-600 hover:bg-yellow-700 font-medium rounded-lg text-sm p-3 text-center"
-                                    type="button"
-                                >
-                                    <svg
-                                        className="w-5 h-4 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 640 512"
-                                    >
-                                        <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM471 143c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
-                                    </svg>
-                                </button>
-                                <button
+                                    className="text-white bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-400"
+                                    title="Remove Profile Photo"
+                                    disabled={user.profile_photo === null}
+                                />
+                                <BanIconButton
                                     onClick={() => openModalBan(user)}
-                                    className="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm p-3 text-center"
-                                    type="button"
-                                >
-                                    <svg
-                                        className="w-4 h-4 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512"
-                                    >
-                                        <path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z" />
-                                    </svg>
-                                </button>
+                                    className={(user.is_ban ? "-hue-rotate-180" : "") + " text-white bg-red-600 hover:bg-red-700"}
+                                    title="Ban / Unban User"
+                                />
                             </td>
                         </tr>
                     ))}
+                    {paginatedUsers.length === 0 && (
+                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+                            <td colSpan={5} className="px-6 py-4 text-center" >
+                                No users found
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
-            </table>
-            {/* Pagination Control */}
-            <div className="flex items-center justify-end mt-4 text-gray-500 dark:text-gray-400 select-none">
-                <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="pl-5 pr-3 py-1  border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:disabled:bg-gray-700 rounded-s-full mr-2"
-                >
-                    Previous
-                </button>
-                <span>
-                    Page {currentPage} of {Math.ceil(users.length / pageSize)}
-                </span>
-                <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={endIndex >= users.length}
-                    className="pl-3 pr-5 py-1  border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:disabled:bg-gray-700 rounded-e-full ml-2"
-                >
-                    Next
-                </button>
-            </div>
+            </FeaturedTable>
 
             {/* Edit user modal */}
             <Modal show={showModal} onClose={closeModal}>
@@ -596,143 +545,21 @@ export default function UsersTable() {
                 </div>
             </Modal>
             {/* Remove Profile Modal */}
-            <Modal
+            <ConfirmationModal
                 show={showModalRemove}
                 onClose={closeModalRemove}
-                maxWidth="sm"
-            >
-                <div className="max-h-full w-[92vw] sm:w-full bg-white dark:bg-gray-700">
-                    {/* Modal content */}
-                    <div className="flex items-start justify-between p-4 border-b dark:border-gray-600">
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            Remove Profile Photo
-                        </h3>
-                        <button
-                            type="button"
-                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                            onClick={closeModalRemove}
-                        >
-                            <svg
-                                className="w-3 h-3"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 14 14"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                />
-                            </svg>
-                            <span className="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <div className="flex justify-center p-5">
-                        <svg
-                            className="w-24 h-24 text-yellow-500 dark:text-yellow-400"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                            />
-                        </svg>
-                    </div>
-                    <p className="text-center text-lg text-gray-600 dark:text-gray-300">
-                        Are you sure ?
-                    </p>
-                    <div className="flex p-6 justify-center gap-4">
-                        <form onSubmit={submitRemovePhoto}>
-                            <button className="text-white bg-red-700 hover:bg-red-800 font-medium rounded-xl px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700">
-                                Yes
-                            </button>
-                        </form>
-                        <button
-                            onClick={closeModalRemove}
-                            className="text-white bg-gray-500 hover:bg-gray-600 font-medium rounded-xl px-5 py-2.5 text-center dark:bg-gray-400 dark:hover:bg-gray-500"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            </Modal>
+                title="Remove Profile Photo"
+                content={"Are you sure ?"}
+                onSubmit={submitRemovePhoto}
+            />
             {/* Toggle Ban Modal */}
-            <Modal
+            <ConfirmationModal
                 show={showModalBan}
                 onClose={closeModalBan}
-                maxWidth="sm"
-            >
-                <div className="max-h-full w-[92vw] sm:w-full bg-white dark:bg-gray-700">
-                    {/* Modal content */}
-                    <div className="flex items-start justify-between p-4 border-b dark:border-gray-600">
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            {data.is_ban ? "Unban User" : "Ban User"}
-                        </h3>
-                        <button
-                            type="button"
-                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                            onClick={closeModalBan}
-                        >
-                            <svg
-                                className="w-3 h-3"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 14 14"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                />
-                            </svg>
-                            <span className="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <div className="flex justify-center p-5">
-                        <svg
-                            className="w-24 h-24 text-yellow-500 dark:text-yellow-400"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                            />
-                        </svg>
-                    </div>
-                    <p className="text-center text-lg text-gray-600 dark:text-gray-300">
-                        Are you sure ?
-                    </p>
-                    <div className="flex p-6 justify-center gap-4">
-                        <form onSubmit={submitBan}>
-                            <button className="text-white bg-red-700 hover:bg-red-800 font-medium rounded-xl px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700">
-                                Yes
-                            </button>
-                        </form>
-                        <button
-                            onClick={closeModalBan}
-                            className="text-white bg-gray-500 hover:bg-gray-600 font-medium rounded-xl px-5 py-2.5 text-center dark:bg-gray-400 dark:hover:bg-gray-500"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            </Modal>
+                title={data.is_ban ? "Unban User" : "Ban User"}
+                content={"Are you sure ?"}
+                onSubmit={submitBan}
+            />
         </div>
     );
 }

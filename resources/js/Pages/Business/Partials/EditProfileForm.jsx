@@ -113,6 +113,9 @@ export default function EditProfileForm({ auth }) {
         if (photoRef.current) {
             photoRef.current.value = '';
         }
+        Object.keys(errors).forEach((key) => {
+            errors[key] = null;
+        });
 
         setEdit(false);
     }
@@ -220,10 +223,8 @@ export default function EditProfileForm({ auth }) {
                                 disabled={!edit} 
                                 required
                             />
-                            <InputError className="mt-2" 
-                                message={errors.business_name} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.business_name} />
                     </div>
 
                     <div className='text-gray-900 dark:text-white'>
@@ -237,10 +238,8 @@ export default function EditProfileForm({ auth }) {
                                 onChange={(e) => setData('description', e.target.value)}
                                 disabled={!edit} 
                             />
-                            <InputError className="mt-2" 
-                                message={errors.description} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.description} />
                     </div>
 
                     <div className='text-gray-900 dark:text-white'>
@@ -256,10 +255,8 @@ export default function EditProfileForm({ auth }) {
                                 disabled={!edit} 
                                 required
                             />
-                            <InputError className="mt-2" 
-                                message={errors.address} 
-                            />
                         </div>
+                        <InputError className="mt-2"  message={errors.address} />
                     </div>
 
                     <div className='text-gray-900 dark:text-white'>
@@ -280,10 +277,8 @@ export default function EditProfileForm({ auth }) {
                                 ))}
                             </select>
         
-                            <InputError className="mt-2" 
-                            message={errors.province} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.province} />
                     </div>
 
                     <div className='text-gray-900 dark:text-white'>
@@ -304,10 +299,8 @@ export default function EditProfileForm({ auth }) {
                                 ))}
                             </select>
         
-                            <InputError className="mt-2" 
-                            message={errors.regency} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.regency} />
                     </div>
 
                     <div className='text-gray-900 dark:text-white'>
@@ -328,10 +321,8 @@ export default function EditProfileForm({ auth }) {
                                 ))}
                             </select>
         
-                            <InputError className="mt-2" 
-                            message={errors.district} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.district} />
                     </div>
 
                     <div className='text-gray-900 dark:text-white'>
@@ -347,10 +338,8 @@ export default function EditProfileForm({ auth }) {
                                 disabled={!edit} 
                                 required
                             />
-                            <InputError className="mt-2" 
-                                message={errors.postal_code} 
-                            />
                         </div>
+                        <InputError className="mt-2"  message={errors.postal_code} />
                     </div>
 
                     <div className='text-gray-900 dark:text-white'>
@@ -366,10 +355,8 @@ export default function EditProfileForm({ auth }) {
                                 disabled={!edit} 
                                 required
                             />
-                            <InputError className="mt-2" 
-                                message={errors.business_number} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.business_number} />
                     </div>
                     
                     <div className='text-gray-900 dark:text-white'>
@@ -385,10 +372,8 @@ export default function EditProfileForm({ auth }) {
                                 disabled={!edit} 
                                 required
                             />
-                            <InputError className="mt-2" 
-                                message={errors.business_email} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.business_email} />
                     </div>
                     
                     <div className='text-gray-900 dark:text-white'>
@@ -403,10 +388,8 @@ export default function EditProfileForm({ auth }) {
                                 onChange={(e) => setData('website_link', e.target.value)}
                                 disabled={!edit} 
                             />
-                            <InputError className="mt-2" 
-                                message={errors.website_link} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.website_link} />
                     </div>
                     
                     <div className='text-gray-900 dark:text-white'>
@@ -421,10 +404,8 @@ export default function EditProfileForm({ auth }) {
                                 onChange={(e) => setData('social_link1', e.target.value)}
                                 disabled={!edit} 
                             />
-                            <InputError className="mt-2" 
-                                message={errors.social_link1} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.social_link1} />
                     </div>
                     
                     <div className='text-gray-900 dark:text-white'>
@@ -439,10 +420,8 @@ export default function EditProfileForm({ auth }) {
                                 onChange={(e) => setData('social_link2', e.target.value)}
                                 disabled={!edit} 
                             />
-                            <InputError className="mt-2" 
-                                message={errors.social_link2} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.social_link2} />
                     </div>
                     
                     <div className='text-gray-900 dark:text-white'>
@@ -457,10 +436,8 @@ export default function EditProfileForm({ auth }) {
                                 onChange={(e) => setData('social_link3', e.target.value)}
                                 disabled={!edit} 
                             />
-                            <InputError className="mt-2" 
-                                message={errors.social_link3} 
-                            />
                         </div>
+                        <InputError className="mt-2" message={errors.social_link3} />
                     </div>
 
                 </div>

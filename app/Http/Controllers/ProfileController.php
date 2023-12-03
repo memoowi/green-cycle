@@ -49,6 +49,13 @@ class ProfileController extends Controller
      */
     public function updateLink(Request $request): RedirectResponse
     {
+        $request->validate([
+            'website_link' => ['nullable', 'url'], 
+            'social_link1' => ['nullable', 'url'], 
+            'social_link2' => ['nullable', 'url'], 
+            'social_link3' => ['nullable', 'url'], 
+            'social_link4' => ['nullable', 'url']
+        ]);
         $request->user()->website_link = $request->input('website_link');
         $request->user()->social_link1 = $request->input('social_link1');
         $request->user()->social_link2 = $request->input('social_link2');
@@ -80,7 +87,7 @@ class ProfileController extends Controller
         $request->validate(['profile_photo' => ['required', 'image']]);
 
         if ($request->hasFile('profile_photo')) {
-            if(Storage::exists('profile-photos/' . $request->user()->profile_photo)){   // Delete old profile photo
+            if (Storage::exists('profile-photos/' . $request->user()->profile_photo)) {   // Delete old profile photo
                 Storage::delete('profile-photos/' . $request->user()->profile_photo);
             }
             $filename = time() . '_' . rand(1000, 9999) . '.' . $request->profile_photo->extension();
