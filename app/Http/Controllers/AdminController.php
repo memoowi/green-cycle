@@ -44,4 +44,10 @@ class AdminController extends Controller
         }
         $selectedUser->update(['profile_photo' => null]);
     }
+
+    public function banUser($user)
+    {
+        $selectedUser = User::findOrFail($user);
+        $selectedUser->update(['is_ban' => !$selectedUser->is_ban]);
+    }
 }

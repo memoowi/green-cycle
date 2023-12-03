@@ -15,6 +15,7 @@ Route::get('/posts', function () {
 Route::get('/users', [AdminController::class, 'users'])->name('users');
 Route::patch('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
 Route::patch('/users/{user}/photo', [AdminController::class, 'removePhoto'])->name('users.removephoto');
+Route::patch('/users/{user}/ban',[AdminController::class, 'banUser'])->name('users.ban');
 
 Route::get('/items', function () {
     return Inertia::render('Admin/ItemsAdmin');
