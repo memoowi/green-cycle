@@ -49,7 +49,7 @@ export default function AdminSideBar({ className='', handleClick, username, emai
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink href={route('admin.items')} active={route().current('admin.items')}>
+                    <SidebarLink href={route('admin.items')} active={route().current('admin.items') || route().current('admin.items.create')}>
                         Items
                     </SidebarLink>
                 </li>

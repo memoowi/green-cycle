@@ -1,13 +1,11 @@
+import ConfirmationModal from "@/Components/ConfirmationModal";
 import EditIconButton from "@/Components/EditIconButton";
 import FeaturedTable from "@/Components/FeaturedTable";
 import FormModal from "@/Components/FormModal";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
-import Modal from "@/Components/Modal";
-import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import TrashIconButton from "@/Components/TrashIconButton";
-import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
@@ -36,7 +34,7 @@ export default function ItemsTable() {
     const [showDelete, setShowDelete] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const { data, setData, post, errors, processing, recentlySuccessful } =
+    const { data, setData, post, delete: destroy, errors, processing, recentlySuccessful } =
         useForm({
             name: "",
             item_image: "",
@@ -82,7 +80,9 @@ export default function ItemsTable() {
 
     const submitDelete = (e) => {
         e.preventDefault();
-        // post(route("admin.item.delete", selectedItem.id));
+        destroy(route("admin.items.delete", selectedItem.id), {
+            onSuccess: () => closeDelete(),
+        });
     };
 
     return (
@@ -156,7 +156,7 @@ export default function ItemsTable() {
                                         title="Edit Item"
                                     />
                                     <TrashIconButton
-                                        // onClick={() => openModalBan(user)}
+                                        onClick={() => openDelete(item)}
                                         className="text-white bg-red-600 hover:bg-red-700 rounded-lg p-3"
                                         title="Delete Item"
                                     />
@@ -180,7 +180,6 @@ export default function ItemsTable() {
                 onClose={closeEdit}
                 onSubmit={submit}
                 processing={processing}
-                recentlySuccessful={recentlySuccessful}
             >
                 <div className="col-span-12 flex justify-center">
                     <div className="relative overflow-hidden  rounded-lg  border-2 border-gray-200 dark:border-slate-600">
@@ -205,7 +204,7 @@ export default function ItemsTable() {
                         )}{" "}
                         <InputLabel
                             htmlFor="item_image"
-                            className="absolute w-full h-full top-0 flex items-center text-center bg-gray-500 bg-opacity-50 text-sm font-medium text-gray-900 dark:text-white"
+                            className="absolute hover:cursor-pointer w-full h-full top-0 flex items-center text-center bg-gray-500 bg-opacity-50 text-sm font-medium text-gray-900 dark:text-white"
                             value="Click to change image"
                         />
                         <TextInput
@@ -260,6 +259,14 @@ export default function ItemsTable() {
                     <InputError className="mt-2" message={errors.price} />
                 </div>
             </FormModal>
+
+            <ConfirmationModal
+                show={showDelete}
+                onClose={closeDelete}
+                onSubmit={submitDelete}
+                title="Delete Item"
+                content="Are you sure you want to delete this item?"
+            />
         </div>
     );
 }

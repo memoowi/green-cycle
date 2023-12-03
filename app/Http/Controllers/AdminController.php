@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -57,6 +59,31 @@ class AdminController extends Controller
         return Inertia::render('Admin/ItemsAdmin');
     }
 
+    public function createItem(): Response
+    {
+        return Inertia::render('Admin/CreateItem');
+    }
+
+    public function storeItem(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'numeric'],
+            'item_image' => ['required'],
+        ]);
+
+        $filename = 'item-' . time() . '-' . rand(1000, 9999) . '.' . $request->item_image->extension();
+        $request->file('item_image')->storeAs('item-images', $filename);
+
+        Item::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'item_image' => $filename,
+        ]);
+
+        return Redirect::route('admin.items');
+    }
+
     public function updateItem(Request $request, $item)
     {
         $request->validate([
@@ -82,4 +109,12 @@ class AdminController extends Controller
         $selectedItem->update($request->except('item_image'));
     }
     
+    public function deleteItem($item)
+    {
+        $selectedItem = Item::findOrFail($item);
+        if(Storage::exists('item-images/' . $selectedItem->item_image)){
+            Storage::delete('item-images/' . $selectedItem->item_image);
+        }
+        $selectedItem->delete();
+    }
 }
