@@ -8,7 +8,7 @@ export default function ItemsAdmin({ auth }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight select-none">
-                    <Link href={route("admin.items")}>
+                    <Link href={route("admin.items")} className="hover:underline">
                         Items
                     </Link>
                 </h2>

@@ -27,9 +27,9 @@ export default function CreateItem({ auth }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight select-none">
-                    <Link href={route("admin.items")}>Items</Link>
+                    <Link href={route("admin.items")} className="hover:underline">Items</Link>
                     <span className="mx-2 mb-2">/</span>
-                    New Item
+                    <Link href={route("admin.items.create")} className="hover:underline">New Item</Link>
                 </h2>
             }
         >
