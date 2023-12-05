@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\BusinessItem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -16,7 +17,7 @@ class BusinessController extends Controller
     {
         return Inertia::render('Business/CreateBusiness');
     }
-    
+
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -35,11 +36,49 @@ class BusinessController extends Controller
         return Redirect::route('business.profile');
     }
 
+    public function dashboard(): Response
+    {
+        return Inertia::render('Business/BusinessDashboard');
+    }
+
+    public function items(): Response
+    {
+        return Inertia::render('Business/BusinessItems');
+    }
+    public function storeItem(Request $request): RedirectResponse
+    {
+        // Validate the request data
+        $request->validate([
+            'business_id' => 'required|exists:businesses,id',
+            'item_id' => 'required|exists:items,id',
+        ]);
+
+        // Check if the item is already registered for the business
+        $existingItem = BusinessItem::where('business_id', $request->input('business_id'))
+            ->where('item_id', $request->input('item_id')) // Fix the field name here
+            ->first();
+
+        if ($existingItem) {
+            // Item is already registered for the business, handle accordingly
+            // You may want to return a response or redirect back with an error message
+            return response()->json(['error' => 'Item is already registered for the business.']);
+        }
+
+        // Create a new BusinessItem record
+        BusinessItem::create([
+            'business_id' => $request->input('business_id'),
+            'item_id' => $request->input('item_id'),
+        ]);
+
+        return redirect()->route('business.items');
+    }
+
+
     public function edit(): Response
     {
         return Inertia::render('Business/BusinessProfile');
     }
-    
+
     public function update(Request $request): RedirectResponse
     {
         $request->validate([
@@ -58,7 +97,7 @@ class BusinessController extends Controller
         ]);
         // dd($request->all());
 
-        
+
         $user = $request->user();
         $business = $user->business;
 
@@ -100,6 +139,4 @@ class BusinessController extends Controller
 
         return Redirect::route('business.setting');
     }
-
 }
-

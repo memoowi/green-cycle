@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
+            'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
             'role' => 1,
         ]);
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Misbach',
             'email' => 'misbach@gmail.com',
+            'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
             'role' => 0,
         ]);

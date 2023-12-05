@@ -48,6 +48,11 @@ export default function BusinessSideBar({ className='', handleClick, username, e
                         Dashboard
                     </SidebarLink>
                 </li>
+                <li>
+                    <SidebarLink href={route('business.items')} active={route().current('business.items') || route().current('business.items.add')}>
+                        Customize Items
+                    </SidebarLink>
+                </li>
             </ul>
             <div className="pt-2 pb-1 border-t border-gray-200 dark:border-slate-600">
                 <div className="mt-3 space-y-1">

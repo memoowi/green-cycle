@@ -1,10 +1,11 @@
 import InputLabel from "./InputLabel";
 import TextInput from "./TextInput";
 
-export default function TogglesButton({ className = '', value, onChange, checked, label }) {
+export default function TogglesButton({ className = '', value, onChange, checked, label, ...props }) {
     return (
         <InputLabel className={("relative inline-flex items-center cursor-pointer") + className }>
             <TextInput
+                {...props}
                 type="checkbox"
                 value={ value }
                 className="sr-only peer"

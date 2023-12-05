@@ -5,6 +5,7 @@ import Dropzone from "@/Components/Dropzone";
 import AdminPanelLayout from "@/Layouts/AdminPanelLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
+import ArrowBreadcrumbs from "@/Components/ArrowBreadcrumbs";
 
 export default function CreateItem({ auth }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -26,9 +27,9 @@ export default function CreateItem({ auth }) {
         <AdminPanelLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight select-none">
+                <h2 className="inline-flex items-center font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight select-none">
                     <Link href={route("admin.items")} className="hover:underline">Items</Link>
-                    <span className="mx-2 mb-2">/</span>
+                    <ArrowBreadcrumbs />
                     <Link href={route("admin.items.create")} className="hover:underline">New Item</Link>
                 </h2>
             }
@@ -38,8 +39,8 @@ export default function CreateItem({ auth }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            <p className="text-2xl font-bold uppercase mb-4">
+                        <div className="p-6 text-gray-900 ">
+                            <p className="text-2xl font-bold uppercase mb-4 dark:text-gray-100">
                                 Create New Item
                             </p>
                             <form onSubmit={submit}>

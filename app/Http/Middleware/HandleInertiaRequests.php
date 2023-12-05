@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Business;
+use App\Models\BusinessItem;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ class HandleInertiaRequests extends Middleware
                 'users' => User::all(),
                 'business' => Business::where('user_id', auth()->id())->first(),
                 'items' => Item::all(),
+                'businessItems' => BusinessItem::where('business_id', auth()->user()->business->id)->get(),
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

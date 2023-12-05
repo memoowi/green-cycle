@@ -1,9 +1,7 @@
 import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
-import TextInput from "@/Components/TextInput";
 import TogglesButton from "@/Components/TogglesButton";
 import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";

@@ -87,7 +87,7 @@ class AdminController extends Controller
     public function updateItem(Request $request, $item)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:items,name,' . $item],
             'price' => ['required', 'numeric'],
             'item_image' => ['required'],
         ]);

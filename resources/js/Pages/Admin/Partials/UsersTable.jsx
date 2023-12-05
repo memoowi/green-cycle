@@ -6,6 +6,7 @@ import FormModal from "@/Components/FormModal";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
+import TogglesButton from "@/Components/TogglesButton";
 import XUserIconButton from "@/Components/XUserIconButton";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
@@ -285,32 +286,32 @@ export default function UsersTable() {
                 <div className="col-span-12 sm:col-span-6">
                     <InputLabel
                         htmlFor="role"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-4 text-sm font-medium text-gray-900 dark:text-white"
                         value="Role"
                     />
-                    <TextInput
+                    <TogglesButton
                         id="role"
-                        type="text"
-                        className="w-full"
+                        className="mb-2 cursor-pointer" 
                         value={data.role}
-                        onChange={(e) => setData("role", e.target.value)}
-                        required
+                        onChange={(e) => setData("role", e.target.checked ? 1 : 0)}
+                        checked={data.role == 1 }
+                        label={data.role ? 'Admin' : 'User'}
                     />
                     <InputError className="mt-2" message={errors.role} />
                 </div>
                 <div className="col-span-12 sm:col-span-6">
                     <InputLabel
                         htmlFor="type"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-4 text-sm font-medium text-gray-900 dark:text-white"
                         value="Type"
                     />
-                    <TextInput
+                    <TogglesButton
                         id="type"
-                        type="text"
-                        className="w-full"
+                        className="mb-2 cursor-pointer" 
                         value={data.type}
-                        onChange={(e) => setData("type", e.target.value)}
-                        required
+                        onChange={(e) => setData("type", e.target.checked ? 1 : 0)}
+                        checked={data.type == 1 }
+                        label={data.type ? 'Business' : 'Basic'}
                     />
                     <InputError className="mt-2" message={errors.type} />
                 </div>

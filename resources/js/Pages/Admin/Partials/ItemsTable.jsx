@@ -180,6 +180,7 @@ export default function ItemsTable() {
                 onClose={closeEdit}
                 onSubmit={submit}
                 processing={processing}
+                recentlySuccessful={recentlySuccessful}
             >
                 <div className="col-span-12 flex justify-center">
                     <div className="relative overflow-hidden  rounded-lg  border-2 border-gray-200 dark:border-slate-600">
