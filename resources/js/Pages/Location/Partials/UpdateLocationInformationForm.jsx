@@ -5,7 +5,6 @@ import TextInput from '@/Components/TextInput';
 import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 export default function UpdateLocationInformation({ className = '' }) {
@@ -33,11 +32,9 @@ export default function UpdateLocationInformation({ className = '' }) {
             try {
                 const apiUrl = `https://api.binderbyte.com/wilayah/provinsi?api_key=${apiKey}`;
 
-                const response = await axios.get(apiUrl);
-                const data = response.data;
-                // console.log(data);
+                const response = await fetch(apiUrl);
+                const data = await response.json();
                 setProvinceOptions(Object.values(data[ 'value' ]));
-                // console.log(Object.values(data[ 'value' ]));
             } catch (error) {
                 console.error('Error fetching province options:', error);
             }
@@ -52,8 +49,8 @@ export default function UpdateLocationInformation({ className = '' }) {
                 const prov = { province: data.province };
                 const apiUrl = `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${prov.province}`;
     
-                const response = await axios.get(apiUrl);
-                const regencyData = response.data; // Use a different variable name here
+                const response = await fetch(apiUrl);
+                const regencyData = await response.json();
                 setRegencyOptions(Object.values(regencyData['value']));
             } catch (error) {
                 console.error('Error fetching regency options:', error);
@@ -67,7 +64,6 @@ export default function UpdateLocationInformation({ className = '' }) {
             setRegencyOptions([]);
         }
     }, [data.province]);
-    
 
     useEffect(() => {
         const fetchDistrictOptions = async () => {
@@ -75,8 +71,8 @@ export default function UpdateLocationInformation({ className = '' }) {
                 const regen = { regency: data.regency };
                 const apiUrl = `https://api.binderbyte.com/wilayah/kecamatan?api_key=${apiKey}&id_kabupaten=${regen.regency}`;
     
-                const response = await axios.get(apiUrl);
-                const districtData = response.data; // Use a different variable name here
+                const response = await fetch(apiUrl);
+                const districtData = await response.json();
                 setDistrictOptions(Object.values(districtData['value']));
             } catch (error) {
                 console.error('Error fetching district options:', error);

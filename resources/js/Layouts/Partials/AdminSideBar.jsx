@@ -50,12 +50,12 @@ export default function AdminSideBar({ className='', handleClick, username, emai
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink href={route('admin.items')} active={route().current('admin.items') || route().current('admin.items.create')}>
+                    <SidebarLink href={route('admin.items')} active={route().current('admin.items') || route().current('admin.items.*')}>
                         Items
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink href={route('admin.recycle-facilities')} active={route().current('admin.recycle-facilities')}>
+                    <SidebarLink href={route('admin.recycle-facilities')} active={route().current('admin.recycle-facilities') || route().current('admin.facilities.*')}>
                         Recycle Facilities
                     </SidebarLink>
                 </li>

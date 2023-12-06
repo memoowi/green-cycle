@@ -3,8 +3,7 @@ import ConfirmationModal from "@/Components/ConfirmationModal";
 import EditIconButton from "@/Components/EditIconButton";
 import FeaturedTable from "@/Components/FeaturedTable";
 import XUserIconButton from "@/Components/XUserIconButton";
-import { useForm, usePage } from "@inertiajs/react";
-import axios from "axios";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 export default function FacilitiesTable() {
@@ -38,7 +37,7 @@ export default function FacilitiesTable() {
     const [selectedBusiness, setSelectedBusiness] = useState(null);
     const [regencyNames, setRegencyNames] = useState({});
 
-    const { data, setData, patch } = useForm();
+    const { data, setData, patch, get } = useForm();
 
     const apiKey = import.meta.env.VITE_BINDERBYTE_API_KEY;
 
@@ -47,10 +46,11 @@ export default function FacilitiesTable() {
             const regencyNamesMap = {};
             for (const business of businesses) {
                 try {
-                    const response = await axios.get(
+                    const response = await fetch(
                         `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${business.province}`
                     );
-                    const regencyData = response.data.value.find(
+                    const responseData = await response.json();
+                    const regencyData = responseData.value.find(
                         (regency) => regency.id === business.regency
                     );
                     const regencyName = regencyData ? regencyData.name : "Unknown";
@@ -74,6 +74,10 @@ export default function FacilitiesTable() {
             setData({ ...selectedBusiness });
         }
     }, [selectedBusiness]);
+
+    const openEdit = (business) => {
+        get(route("admin.facilities.edit", business.id));
+    };
 
     const openRemove = (business) => {
         setSelectedBusiness(business);
@@ -215,7 +219,7 @@ export default function FacilitiesTable() {
                             <td className="px-6 py-4">
                                 <div className="flex items-center gap-1">
                                     <EditIconButton
-                                        // onClick={}
+                                        onClick={() => openEdit(business)}
                                         className="text-white bg-emerald-600 hover:bg-emerald-700"
                                         title="Edit"
                                     />

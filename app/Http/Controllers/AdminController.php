@@ -142,4 +142,33 @@ class AdminController extends Controller
 
         $selectedFacility->update(['business_photo' => null, 'business_banner' => null]);
     }
+
+    public function editFacility(Business $business): Response
+    {
+        return Inertia::render('Admin/EditFacility', [
+            'business' => $business
+        ]);
+    }
+    public function updateFacility(Request $request, $business): RedirectResponse
+    {
+        $request->validate([
+            'business_name' => 'required|max:255',
+            'province' => 'required',
+            'regency' => 'required',
+            'district' => 'required',
+            'address' => 'required|max:255',
+            'postal_code' => 'required|max:255',
+            'business_number' => 'required|max:255',
+            'business_email' => 'required|email|max:255',
+            'website_link' => 'nullable|url',
+            'social_link1' => 'nullable|url',
+            'social_link2' => 'nullable|url',
+            'social_link3' => 'nullable|url',
+        ]);
+
+        $selectedBusiness = Business::findOrFail($business);
+        $selectedBusiness->update($request->all());
+
+        return Redirect::route('admin.recycle-facilities');
+    }
 }
