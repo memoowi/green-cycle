@@ -26,7 +26,7 @@ export default function UpdateLocationInformation({ className = '' }) {
     const [provinceOptions, setProvinceOptions] = useState([]);
     const [regencyOptions, setRegencyOptions] = useState([]);
     const [districtOptions, setDistrictOptions] = useState([]);
-    const apiKey = '3f186c55e75f77bf6d20929f93d71dafb3e0a0f4ca1031680b5eb31602d1dc37';
+    const apiKey = import.meta.env.VITE_BINDERBYTE_API_KEY;
     
     useEffect(() => {
         const fetchProvinceOptions = async () => {

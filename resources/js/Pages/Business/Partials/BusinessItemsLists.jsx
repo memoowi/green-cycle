@@ -1,7 +1,7 @@
 import ConfirmationModal from "@/Components/ConfirmationModal";
 import FeaturedTable from "@/Components/FeaturedTable";
 import TrashIconButton from "@/Components/TrashIconButton";
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function BusinessItemsLists() {

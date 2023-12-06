@@ -21,4 +21,16 @@ class Business extends Model
     public function items() {
         return $this->hasMany(Item::class, 'business_id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($business) {
+            if($business->is_ban == 1) {
+                if($business->status != 0) {
+                    $business->status = 0;
+                }
+            }
+        });
+    }
 }

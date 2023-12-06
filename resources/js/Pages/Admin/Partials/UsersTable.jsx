@@ -208,27 +208,28 @@ export default function UsersTable() {
                                     {user.is_ban ? "Banned" : "Active"}
                                 </div>
                             </td>
-                            <td className="px-6 py-4 flex flex-row gap-1">
-                                {/* Modal toggle */}
-                                <EditIconButton
-                                    onClick={() => openModal(user)}
-                                    className="text-white bg-emerald-600 hover:bg-emerald-700"
-                                    title="Edit User"
-                                />
-                                <XUserIconButton
-                                    onClick={() => openModalRemove(user)}
-                                    className="text-white bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-400"
-                                    title="Remove Profile Photo"
-                                    disabled={user.profile_photo === null}
-                                />
-                                <BanIconButton
-                                    onClick={() => openModalBan(user)}
-                                    className={
-                                        (user.is_ban ? "-hue-rotate-180" : "") +
-                                        " text-white bg-red-600 hover:bg-red-700"
-                                    }
-                                    title="Ban / Unban User"
-                                />
+                            <td className="px-6 py-4">
+                                <div className="flex items-center gap-1">
+                                    <EditIconButton
+                                        onClick={() => openModal(user)}
+                                        className="text-white bg-emerald-600 hover:bg-emerald-700"
+                                        title="Edit User"
+                                    />
+                                    <XUserIconButton
+                                        onClick={() => openModalRemove(user)}
+                                        className="text-white bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-400"
+                                        title="Remove Profile Photo"
+                                        disabled={user.profile_photo === null}
+                                    />
+                                    <BanIconButton
+                                        onClick={() => openModalBan(user)}
+                                        className={
+                                            (user.is_ban ? "-hue-rotate-180" : "") +
+                                            " text-white bg-red-600 hover:bg-red-700"
+                                        }
+                                        title="Ban / Unban User"
+                                    />
+                                </div>
                             </td>
                         </tr>
                     ))}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -121,5 +122,24 @@ class AdminController extends Controller
     public function facilities(): Response
     {
         return Inertia::render('Admin/FacilitiesAdmin');
+    }
+
+    public function banFacility($facility)
+    {
+        $selectedFacility = Business::findOrFail($facility);
+        $selectedFacility->update(['is_ban' => !$selectedFacility->is_ban]);
+    }
+
+    public function removeFacilityPhotos($facility)
+    {
+        $selectedFacility = Business::findOrFail($facility);
+        if(Storage::exists('b-photos/' . $selectedFacility->business_photo)){
+            Storage::delete('b-photos/' . $selectedFacility->business_photo);
+        }
+        if(Storage::exists('b-photos/' . $selectedFacility->business_banner)){
+            Storage::delete('b-photos/' . $selectedFacility->business_banner);
+        }
+
+        $selectedFacility->update(['business_photo' => null, 'business_banner' => null]);
     }
 }
