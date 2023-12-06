@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
             'user' => $request->user(),
             'users' => User::all(),
             'business' => null,
+            'businesses' => Business::all(),
             'items' => Item::all(),
             'businessItems' => [],
         ];

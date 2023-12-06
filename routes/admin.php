@@ -23,9 +23,7 @@ Route::post('/items', [AdminController::class, 'storeItem'])->name('items.store'
 Route::post('/items/{item}', [AdminController::class, 'updateItem'])->name('items.update');
 Route::delete('/items/{item}/delete', [AdminController::class, 'deleteItem'])->name('items.delete');
 
-Route::get('/facilities', function () {
-    return Inertia::render('Admin/FacilitiesAdmin');
-})->name('recycle-facilities');
+Route::get('/facilities', [AdminController::class, 'facilities'])->name('recycle-facilities');
 
 Route::get('/rewards', function () {
     return Inertia::render('Admin/RewardsAdmin');

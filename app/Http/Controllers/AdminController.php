@@ -117,4 +117,9 @@ class AdminController extends Controller
         }
         $selectedItem->delete();
     }
+
+    public function facilities(): Response
+    {
+        return Inertia::render('Admin/FacilitiesAdmin');
+    }
 }
