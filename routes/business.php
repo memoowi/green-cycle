@@ -7,8 +7,7 @@ Route::get('/dashboard', [BusinessController::class, 'dashboard'])->name('dashbo
 
 Route::get('/items', [BusinessController::class, 'items'])->name('items');
 Route::post('/items/store/', [BusinessController::class, 'storeItem'])->name('items.store');
-// Route::post('/items/update', [BusinessController::class, 'updateItem'])->name('items.update');
-// Route::post('/items/delete', [BusinessController::class, 'deleteItem'])->name('items.delete');
+Route::delete('/items/delete/{businessItems}', [BusinessController::class, 'deleteItem'])->name('items.delete');
 
 
 Route::get('/profile', [BusinessController::class, 'edit'])->name('profile');

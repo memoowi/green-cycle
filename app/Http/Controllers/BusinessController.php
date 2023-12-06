@@ -70,7 +70,15 @@ class BusinessController extends Controller
             'item_id' => $request->input('item_id'),
         ]);
 
-        return redirect()->route('business.items');
+        return Redirect::route('business.items');
+    }
+
+    public function deleteItem($businessItems): RedirectResponse
+    {
+        // dd($businessItems);
+        $selectedItem = BusinessItem::findOrFail($businessItems);
+        $selectedItem->delete();
+        return Redirect::route('business.items');
     }
 
 

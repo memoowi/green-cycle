@@ -40,7 +40,7 @@ export default function BusinessItemsForm() {
                 List New Item
             </p>
             <form onSubmit={submit}>
-                <ul className="grid w-full gap-6 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+                <ul className="grid w-full max-h-96 md:max-h-40 overflow-y-auto gap-6 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
                     {items.map((item) => (
                         <CardCheckbox
                             id={item.id}
@@ -65,7 +65,7 @@ export default function BusinessItemsForm() {
 
                 <button
                     type="submit"
-                    className="w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50"
+                    className="w-full mt-4 px-4 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 active:bg-emerald-700 disabled:opacity-50"
                 >
                     Save
                 </button>

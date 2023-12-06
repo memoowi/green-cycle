@@ -2,6 +2,7 @@ import NewButton from "@/Components/NewButton";
 import BusinessPanelLayout from "@/Layouts/BusinessPanelLayout";
 import { Head, Link } from "@inertiajs/react";
 import BusinessItemsForm from "./Partials/BusinessItemsForm";
+import BusinessItemsLists from "./Partials/BusinessItemsLists";
 
 export default function BusinessItems({ auth }) {
     return (
@@ -26,6 +27,13 @@ export default function BusinessItems({ auth }) {
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <BusinessItemsForm />
+                        </div>
+                    </div>
+                </div>
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
+                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="p-6 text-gray-900">
+                            <BusinessItemsLists />
                         </div>
                     </div>
                 </div>

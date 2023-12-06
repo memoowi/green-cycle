@@ -15,7 +15,7 @@ export default function CardCheckbox({
                 type={type}
                 id={id}
                 className="hidden peer"
-                required
+                // required
             />
             <label
                 htmlFor={id}
