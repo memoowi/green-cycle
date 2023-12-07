@@ -33,16 +33,13 @@ export default function Landing({ user, header, children }) {
                             <NavLink href={route('where-to-recycle')} active={route().current('where-to-recycle')}>
                                 Where to Recycle
                             </NavLink>
-                            <NavLink href='/'>
+                            <NavLink href={route('how-it-works')} active={route().current('how-it-works')}>
                                 How it works
                             </NavLink>
                             <NavLink href='/'>
                                 Blog
                             </NavLink>
-                            <NavLink href='/'>
-                                How to recycle
-                            </NavLink>
-                            <NavLink href='/'>
+                            <NavLink href={route('about-us')} active={route().current('about-us')}>
                                 About GreenCycle
                             </NavLink>
                         </div>

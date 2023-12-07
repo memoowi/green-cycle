@@ -8,7 +8,7 @@ export default function CTA({ className = "", children, ...props }) {
         >
             {children}
             <svg
-                className="w-6 h-6 opacity-0 -translate-x-10 -me-10 group-hover:opacity-100 group-hover:translate-x-0 group-hover:me-0 transition-all duration-500 ease-in-out"
+                className="w-6 h-6 shrink-0 opacity-0 -translate-x-10 -me-10 group-hover:opacity-100 group-hover:translate-x-0 group-hover:me-0 transition-all duration-500 ease-in-out"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

@@ -33,6 +33,12 @@ Route::get('/recycle-an-item', function () {
 Route::get('/where-to-recycle', function () {
     return Inertia::render('WhereToRecycle');
 })->name('where-to-recycle');
+Route::get('/how-it-works', function () {
+    return Inertia::render('HowItWorks');
+})->name('how-it-works');
+Route::get('/about-us', function () {
+    return Inertia::render('AboutUs');
+})->name('about-us');
 
 
 

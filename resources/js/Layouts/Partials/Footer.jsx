@@ -16,16 +16,16 @@ export default function Footer() {
                     <p className='font-bold'>GreenCycle</p>
                     <ul className='space-y-2'>
                         <li>
-                            <Link href="/" className='hover:underline hover:text-emerald-500'>About Us</Link>
+                            <Link href="#" className='hover:underline hover:text-emerald-500'>About Us</Link>
                         </li>
                         <li>
-                            <Link href="/" className='hover:underline hover:text-emerald-500'>Services</Link>
+                            <Link href="#" className='hover:underline hover:text-emerald-500'>Services</Link>
                         </li>
                         <li>
-                            <Link href="/" className='hover:underline hover:text-emerald-500'>Blog</Link>
+                            <Link href="#" className='hover:underline hover:text-emerald-500'>Blog</Link>
                         </li>
                         <li>
-                            <Link href="/" className='hover:underline hover:text-emerald-500'>How to Recycle</Link>
+                            <Link href="#" className='hover:underline hover:text-emerald-500'>How it Works</Link>
                         </li>
                     </ul>
                 </div>
@@ -33,16 +33,16 @@ export default function Footer() {
                     <p className='font-bold'>Information</p>
                     <ul className='space-y-2'>
                         <li>
-                            <Link href="/" className='hover:underline hover:text-emerald-500'>Contact Us</Link>
+                            <Link href="#" className='hover:underline hover:text-emerald-500'>Contact Us</Link>
                         </li>
                         <li>
-                            <Link href="/" className='hover:underline hover:text-emerald-500'>FAQs</Link>
+                            <Link href="#" className='hover:underline hover:text-emerald-500'>FAQs</Link>
                         </li>
                         <li>
-                            <Link href="/" className='hover:underline hover:text-emerald-500'>Privacy Policy</Link>
+                            <Link href="#" className='hover:underline hover:text-emerald-500'>Privacy Policy</Link>
                         </li>
                         <li>
-                            <Link href="/" className='hover:underline hover:text-emerald-500'>Terms and Conditions</Link>
+                            <Link href="#" className='hover:underline hover:text-emerald-500'>Terms and Conditions</Link>
                         </li>
                     </ul>
                 </div>
