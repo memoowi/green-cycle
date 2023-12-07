@@ -27,6 +27,16 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/recycle-an-item', function () {
+    return Inertia::render('RecycleAnItem');
+})->name('recycle-an-item');
+Route::get('/where-to-recycle', function () {
+    return Inertia::render('WhereToRecycle');
+})->name('where-to-recycle');
+
+
+
+
 
 // ROUTE GAJE 
 Route::get('/dashboard', function () {
