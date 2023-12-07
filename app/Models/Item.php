@@ -16,4 +16,8 @@ class Item extends Model
     public function business() {
         return $this->belongsToMany(Business::class, 'business_item', 'item_id', 'business_id');
     }
+    public function pickupitem(): HasMany
+    {
+        return $this->hasMany(PickupItem::class);
+    }
 }

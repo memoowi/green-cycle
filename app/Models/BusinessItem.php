@@ -20,5 +20,9 @@ class BusinessItem extends Model
     {
         return $this->belongsTo(Item::class);
     }
+    public function dropoffitem()
+    {
+        return $this->hasMany(DropoffItem::class);
+    }
 
 }

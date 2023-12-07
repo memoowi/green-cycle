@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
 
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'business' => \App\Http\Middleware\BusinessMiddleware::class,
-        'business.exist' => \App\Http\Middleware\BusinessExistMiddleware::class
+        'business.exist' => \App\Http\Middleware\BusinessExistMiddleware::class,
+        'user.is.ban' => \App\Http\Middleware\UserMiddleware::class
     ];
 }

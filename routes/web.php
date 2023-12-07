@@ -18,7 +18,7 @@ use Inertia\Inertia;
 |
 */
 
-// Route Landing Page
+// Route Landing Page / Guest
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -49,7 +49,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route yang butuh login
+// Route yang butuh login/ User Only
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -60,6 +60,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/location', [LocationController::class, 'edit'])->name('location.edit');
     Route::patch('/location/update', [LocationController::class, 'update'])->name('location.update');
+});
+
+// Route User non-ban Only
+Route::prefix('/admin')->middleware(['auth','verified', 'user.is.ban'])->name('user.')->group(function () {
+    require __DIR__.'/user.php';
 });
 
 // Route per-regist-login-an-logout jg 

@@ -6,19 +6,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Location extends Model
+class DropOff extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function pickup(): HasMany
+    public function business(): BelongsTo
     {
-        return $this->hasMany(Pickup::class);
+        return $this->belongsTo(Business::class);
+    }
+    public function dropoffitem(): HasMany
+    {
+        return $this->hasMany(DropOffItem::class);
+    }
+    public function paymentmethod(): HasOne
+    {
+        return $this->hasOne(PaymentMethod::class);
     }
 }
