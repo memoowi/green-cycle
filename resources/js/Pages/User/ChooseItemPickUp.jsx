@@ -5,6 +5,10 @@ import NextButton from "@/Components/NextButton";
 import TrashIconButton from "@/Components/TrashIconButton";
 import { useEffect, useState } from "react";
 import ConfirmationModal from "@/Components/ConfirmationModal";
+import FormModal from "@/Components/FormModal";
+import InputLabel from "@/Components/InputLabel";
+import InputError from "@/Components/InputError";
+import TextInput from "@/Components/TextInput";
 
 export default function ChooseItemPickUp({ auth }) {
     const items = usePage().props.auth.items;
@@ -31,14 +35,64 @@ export default function ChooseItemPickUp({ auth }) {
         setTotalEarnings(earningsSum);
     }, [pickUpItems]);
 
-    const { delete:destroy } = useForm();
-    const [ showDelete , setShowDelete ] = useState(false);
-    const [ selectedItem , setSelectedItem ] = useState(null);
+    const {
+        data,
+        setData,
+        post,
+        delete: destroy,
+        errors,
+        processing,
+        recentlySuccessful,
+    } = useForm();
+    const [showModal, setShowModal] = useState(false);
+
+    const [showDelete, setShowDelete] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const calculateApproxEarn = (selectedItemId, weight) => {
+        const selectedItem = items.find(
+            (item) => item.id === parseInt(selectedItemId, 10)
+        );
+    
+        if (selectedItem) {
+            const approxEarn = selectedItem.price * weight;
+            setData((data) => ({ ...data, approx_earn: approxEarn }));
+        }
+    };
+    
+
+    const handleWeightChange = (e) => {
+        const newWeight = e.target.value;
+        setData("weight", newWeight);
+
+        // Calculate approx_earn while typing
+        calculateApproxEarn(data.item_id, newWeight);
+    };
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        // Calculate approx_earn before submitting the form
+        calculateApproxEarn(data.item_id, data.weight);
+        // console.log(data);
+        // console.log(pickUpId);
+        post(route("user.pick-up.add-items.add-item", { pickUpId: pickUpId }), {
+            onSuccess: () => closeModal(),
+        });
+    };
+    const openModal = (user) => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setData({});
+    };
 
     const openDelete = (item) => {
         setSelectedItem(item);
         setShowDelete(true);
-        console.log(item.id);
+        // console.log(item.id);
     };
 
     const closeDelete = () => {
@@ -48,12 +102,15 @@ export default function ChooseItemPickUp({ auth }) {
 
     const submitDelete = (e) => {
         e.preventDefault();
-        console.log(selectedItem.id);
-        destroy(route("user.pick-up.add-items.remove-item", {
-            itemId: selectedItem.id
-        }), {
-            onSuccess: () => closeDelete(),
-        });
+        // console.log(selectedItem.id);
+        destroy(
+            route("user.pick-up.add-items.remove-item", {
+                itemId: selectedItem.id,
+            }),
+            {
+                onSuccess: () => closeDelete(),
+            }
+        );
     };
 
     return (
@@ -85,6 +142,28 @@ export default function ChooseItemPickUp({ auth }) {
             <section className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center">
                     <div className=" -mt-24 z-10 bg-white dark:bg-slate-700 w-full md:w-5/6 lg:w-2/3 text-gray-800 dark:text-gray-200">
+                        <div className="p-4 flex justify-end">
+                            <button
+                                onClick={openModal}
+                                className="group bg-emerald-600 text-white hover:bg-emerald-700 font-bold p-3 rounded"
+                            >
+                                <svg
+                                    className="w-6 h-6 group-hover:animate-spin"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M10 5.757v8.486M5.757 10h8.486M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
                         <div className="relative overflow-x-auto">
                             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
@@ -129,7 +208,9 @@ export default function ChooseItemPickUp({ auth }) {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <TrashIconButton
-                                                onClick={() => openDelete(item)}
+                                                    onClick={() =>
+                                                        openDelete(item)
+                                                    }
                                                     className="text-white bg-red-500 hover:bg-red-800"
                                                 />
                                             </td>
@@ -168,6 +249,76 @@ export default function ChooseItemPickUp({ auth }) {
                 </div>
             </section>
             <Footer />
+
+            <FormModal
+                title="Add Item"
+                show={showModal}
+                onClose={closeModal}
+                onSubmit={submit}
+                processing={processing}
+                recentlySuccessful={recentlySuccessful}
+            >
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="item_id"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Item"
+                    />
+                    <select
+                        id="item_id"
+                        className="w-full"
+                        value={data.item_id || ""}
+                        onChange={(e) => setData("item_id", e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>
+                            ----SELECT ITEM----
+                        </option>
+                        {items.map((item) => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+                    <InputError className="mt-2" message={errors.item_id} />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="weight"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Weight"
+                    />
+                    <TextInput
+                        id="weight"
+                        type="number"
+                        className="w-full"
+                        value={data.weight || ""}
+                        onChange={(e) => {
+                            setData("weight", e.target.value);
+                            handleWeightChange(e); // Add this line to update approx_earn while typing
+                        }}
+                        required
+                    />
+                    <InputError className="mt-2" message={errors.weight} />
+                </div>
+                <div className="col-span-12 sm:col-span-6">
+                    <InputLabel
+                        htmlFor="approx_earn"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        value="Approx. Earn"
+                    />
+                    <TextInput
+                        id="approx_earn"
+                        type="number"
+                        className="w-full"
+                        value={data.approx_earn || ""}
+                        onChange={(e) => setData("approx_earn", e.target.value)}
+                        required
+                    />
+                    <InputError className="mt-2" message={errors.approx_earn} />
+                </div>
+            </FormModal>
+
             <ConfirmationModal
                 show={showDelete}
                 onClose={closeDelete}

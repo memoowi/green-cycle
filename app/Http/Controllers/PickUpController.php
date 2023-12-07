@@ -49,4 +49,14 @@ class PickUpController extends Controller
     {
         PickUpItem::where('id', $itemId)->delete();
     }
+    public function addItem(Request $request, $pickUpId)
+    {
+        // dd($request->all());
+        PickUpItem::create([
+            'pick_up_id' => $pickUpId,
+            'item_id' => $request->item_id,
+            'weight' => $request->weight,
+            'approx_earn' => $request->approx_earn,
+        ]);
+    }
 }

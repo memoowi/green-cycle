@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('business_item_id');
             $table->foreign('business_item_id')->references('id')->on('business_items')->onDelete('cascade');
             $table->integer('weight')->default(0);
-            $table->string('approx_earn')->default(0);
+            $table->integer('approx_earn')->default(0);
             $table->integer('status')->nullable(); // 0 = declined, 1 = picked up
             $table->timestamps();
         });

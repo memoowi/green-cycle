@@ -8,3 +8,4 @@ Route::get('/pick-up',[PickUpController::class,'pickUp'])->name('pick-up.set-loc
 Route::post('/pick-up/create',[PickUpController::class,'create'])->name('pick-up.create');
 Route::get('/pick-up/{pickUpId}/add-items',[PickUpController::class,'addItems'])->name('pick-up.add-items');
 Route::delete('/pick-up/add-items/remove-item={itemId}',[PickUpController::class,'removeItem'])->name('pick-up.add-items.remove-item');
+Route::post('/pick-up/add-items/add-item={pickUpId}',[PickUpController::class,'addItem'])->name('pick-up.add-items.add-item');
