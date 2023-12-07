@@ -1,6 +1,6 @@
 export default function TrashIconButton({ className, ...props }) {
     return (
-        <button className={"rounded-lg p-3 " + className} {...props}>
+        <button type="submit" className={"rounded-lg p-3 " + className} {...props}>
             <svg
                 className="w-4 h-4 stroke-current stroke-2"
                 aria-hidden="true"

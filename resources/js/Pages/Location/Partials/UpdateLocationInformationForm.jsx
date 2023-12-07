@@ -9,7 +9,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 export default function UpdateLocationInformation({ className = '' }) {
     // const user = usePage().props.auth.user;
-    const location = usePage().props.location;
+    const location = usePage().props.auth.location;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         address: location.address,
@@ -92,7 +92,10 @@ export default function UpdateLocationInformation({ className = '' }) {
         e.preventDefault();
 
         // console.log(data);
-        patch(route('location.update'));
+        patch(route('location.update'), {
+            preserveScroll: true,
+            
+        });
     };
 
     return (
@@ -101,7 +104,7 @@ export default function UpdateLocationInformation({ className = '' }) {
                 <h2 className="text-lg font-medium text-gray-900">Location Information</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+                    Update your location Information.
                 </p>
             </header>
 

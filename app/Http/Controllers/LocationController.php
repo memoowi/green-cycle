@@ -21,7 +21,7 @@ class LocationController extends Controller
         ]);
     }
     
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request)
     {
         
         $request->validate([
@@ -38,7 +38,5 @@ class LocationController extends Controller
         // dd($request->all());
 
         $request->user()->location()->update($request->all());
-        
-        return Redirect::route('location.edit');
     }
 }

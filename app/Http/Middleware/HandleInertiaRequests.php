@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Business;
 use App\Models\BusinessItem;
 use App\Models\Item;
+use App\Models\Location;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -37,6 +38,7 @@ class HandleInertiaRequests extends Middleware
         $authData = [
             'user' => $request->user(),
             'users' => User::all(),
+            'location' => null,
             'business' => null,
             'businesses' => Business::all(),
             'items' => Item::all(),
@@ -46,6 +48,12 @@ class HandleInertiaRequests extends Middleware
         // Check if there is an authenticated user
         if ($user = $request->user()) {
             $business = Business::where('user_id', $user->id)->first();
+            $location = Location::where('user_id', $user->id)->first();
+
+            // Check if location is not null
+            if ($location) {
+                $authData['location'] = $location;
+            }
 
             // Check if business is not null
             if ($business) {

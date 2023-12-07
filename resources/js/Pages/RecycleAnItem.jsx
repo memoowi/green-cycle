@@ -1,6 +1,6 @@
 import Footer from "@/Layouts/Partials/Footer";
 import LandingLayout from "@/Layouts/LandingLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import CTA from "@/Components/CTA";
 
 export default function RecycleAnItem({ auth }) {
@@ -23,7 +23,7 @@ export default function RecycleAnItem({ auth }) {
                             </p>
                             <div className="flex justify-center mt-10">
                                 <CTA
-                                    // href={route("recycle-item")}
+                                    href={route("user.pick-up.set-location")}
                                     className="bg-emerald-600 hover:bg-emerald-700"
                                 >Pick Up</CTA>
                             </div>

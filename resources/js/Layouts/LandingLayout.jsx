@@ -27,7 +27,7 @@ export default function Landing({ user, header, children }) {
                         </div>
 
                         <div className="hidden space-x-6 md:-my-px sm:ms-10 md:flex">
-                            <NavLink href={route('recycle-an-item')} active={route().current('recycle-an-item')}>
+                            <NavLink href={route('recycle-an-item')} active={route().current('recycle-an-item') || route().current('user.pick-up.*')}>
                                 Recycle an Item
                             </NavLink>
                             <NavLink href={route('where-to-recycle')} active={route().current('where-to-recycle')}>

@@ -63,7 +63,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Route User non-ban Only
-Route::prefix('/admin')->middleware(['auth','verified', 'user.is.ban'])->name('user.')->group(function () {
+Route::prefix('/user')->middleware(['auth','verified', 'user.is.ban'])->name('user.')->group(function () {
     require __DIR__.'/user.php';
 });
 
