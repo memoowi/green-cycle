@@ -29,7 +29,7 @@ export default function Dropzone({ id, required = false, onChange }) {
                         SVG, PNG, JPG or GIF (Images Only)
                     </p>
                 </div>
-                <input id={ id } type="file" className="hidden" accept="image/*" onChange={ onChange } required={ required }/>
+                <input id={ id } name={ id } type="file" className="sr-only" accept="image/*" onChange={ onChange } required={ required }/>
             </label>
         </div>
     );

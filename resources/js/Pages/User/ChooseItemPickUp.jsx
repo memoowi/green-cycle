@@ -38,6 +38,7 @@ export default function ChooseItemPickUp({ auth }) {
     const {
         data,
         setData,
+        get,
         post,
         delete: destroy,
         errors,
@@ -87,6 +88,9 @@ export default function ChooseItemPickUp({ auth }) {
     const closeModal = () => {
         setShowModal(false);
         setData({});
+        Object.keys(errors).forEach((key) => {
+            errors[key] = null;
+        });
     };
 
     const openDelete = (item) => {
@@ -113,6 +117,12 @@ export default function ChooseItemPickUp({ auth }) {
         );
     };
 
+    const nextSubmit = (e) => {
+        e.preventDefault();
+        
+        get(route("user.pick-up.after-items", { pickUpId: pickUpId }));
+    };
+
     return (
         <LandingLayout
             user={auth.user}
@@ -128,7 +138,7 @@ export default function ChooseItemPickUp({ auth }) {
                                     <div className="w-3/12 h-1 bg-emerald-600 my-4"></div>
                                 </div>
                                 <div>
-                                    <form className="col-span-1 flex justify-end">
+                                    <form onSubmit={nextSubmit} className="col-span-1 flex justify-end">
                                         <NextButton>Next</NextButton>
                                     </form>
                                 </div>
@@ -295,7 +305,7 @@ export default function ChooseItemPickUp({ auth }) {
                         value={data.weight || ""}
                         onChange={(e) => {
                             setData("weight", e.target.value);
-                            handleWeightChange(e); // Add this line to update approx_earn while typing
+                            handleWeightChange(e);
                         }}
                         required
                     />
@@ -314,6 +324,7 @@ export default function ChooseItemPickUp({ auth }) {
                         value={data.approx_earn || ""}
                         onChange={(e) => setData("approx_earn", e.target.value)}
                         required
+                        disabled
                     />
                     <InputError className="mt-2" message={errors.approx_earn} />
                 </div>
