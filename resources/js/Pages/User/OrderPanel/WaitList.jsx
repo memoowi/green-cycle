@@ -5,6 +5,7 @@ import ConfirmationModal from "@/Components/ConfirmationModal";
 import { Fragment, useEffect, useState } from "react";
 import FormModal from "@/Components/FormModal";
 import OrderPanelNav from "./Partials/OrderPanelNav";
+import NoDataFoundIcon from "@/Components/NoDataFoundIcon";
 
 export default function WaitList({ auth }) {
     const pickupWaitList = usePage().props.auth.pickupWaitList;
@@ -239,7 +240,7 @@ export default function WaitList({ auth }) {
                                 <div className="flex flex-col justify-center py-12 items-center font-bold text-lg">
                                     <NoDataFoundIcon className="w-80 h-80" />
                                     <p className="pt-4">
-                                        No canceled orders yet
+                                        No order found.
                                     </p>
                                 </div>
                             )}
