@@ -1,8 +1,7 @@
 import Footer from "@/Layouts/Partials/Footer";
 import LandingLayout from "@/Layouts/LandingLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
-import Lottie from "lottie-react";
-import animationData from "../../../../public/images/anicon-truck.json";
+import TruckIcon from "@/Components/TruckIcon";
 
 export default function ChoosePaymentPickUp({ auth }) {
     const pickUpId = usePage().props.pickUpId;
@@ -35,12 +34,7 @@ export default function ChoosePaymentPickUp({ auth }) {
                     <div className=" -mt-24 z-10 bg-white dark:bg-slate-700 w-full md:w-5/6 lg:w-2/3 text-gray-800 dark:text-gray-200">
                         <div className="p-8">
                             <div className="flex flex-col justify-center items-center text-center">
-                                <Lottie
-                                    className="w-80 h-80 dark:invert"
-                                    animationData={animationData}
-                                    loop={true}
-                                    autoplay={true}
-                                />
+                                <TruckIcon className="w-80 h-80 dark:invert"/>
                                 <p className="text-lg italic">
                                     We will pick up your order asap.
                                 </p>

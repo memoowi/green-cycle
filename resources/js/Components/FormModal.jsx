@@ -2,7 +2,7 @@ import { Transition } from "@headlessui/react";
 import Modal from "./Modal";
 import PrimaryButton from "./PrimaryButton";
 
-export default function FormModal({ title, children, show = false, onClose, onSubmit, processing, recentlySuccessful}) {
+export default function FormModal({ title, children, show = false, onClose, onSubmit, processing, recentlySuccessful, hideFooter = false }) {
     return (
         <Modal show={show} onClose={onClose}>
             <div className="relative max-h-full">
@@ -42,7 +42,7 @@ export default function FormModal({ title, children, show = false, onClose, onSu
                             {children}
                         </div>
                     </div>
-                    <div className="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <div className={"flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600" + (hideFooter ? " hidden" : "")}>
                         <PrimaryButton disabled={processing} onClick={onSubmit}>
                             Save All
                         </PrimaryButton>

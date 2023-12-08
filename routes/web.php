@@ -63,6 +63,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/location/update', [LocationController::class, 'update'])->name('location.update');
 
     Route::get('/panel/wait-list', [UserOrderController::class, 'waitList'])->name('order.waitlist');
+    Route::patch('/panel/wait-list/cancel/{id}', [UserOrderController::class, 'cancelOrder'])->name('order.waitlist.cancel');
+    Route::get('/panel/canceled-list', [UserOrderController::class, 'canceledList'])->name('order.canceledlist');
 });
 
 // Route User non-ban Only

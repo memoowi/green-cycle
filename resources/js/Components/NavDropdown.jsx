@@ -36,6 +36,7 @@ export default function NavDropdown({name, role, photo, type}) {
 
             <Dropdown.Content>
                 <Dropdown.Link href={route('location.edit')}>Location</Dropdown.Link>
+                <Dropdown.Link href={route('order.waitlist')}>My Orders</Dropdown.Link>
                 <hr className="border-gray-500 dark:border-gray-300 w-10/12 mx-auto my-1"/>
                 <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
                 { type === 1 && (

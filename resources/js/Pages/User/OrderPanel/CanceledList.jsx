@@ -1,17 +1,17 @@
 import Footer from "@/Layouts/Partials/Footer";
 import LandingLayout from "@/Layouts/LandingLayout";
 import { Head, useForm, usePage } from "@inertiajs/react";
-import ConfirmationModal from "@/Components/ConfirmationModal";
 import { Fragment, useEffect, useState } from "react";
 import FormModal from "@/Components/FormModal";
 import OrderPanelNav from "./Partials/OrderPanelNav";
+import NoDataFoundIcon from "@/Components/NoDataFoundIcon";
 
-export default function WaitList({ auth }) {
-    const pickupWaitList = usePage().props.auth.pickupWaitList;
-    // console.log(pickupWaitList);
+export default function CanceledList({ auth }) {
+    const pickupCanceledList = usePage().props.auth.pickupCanceledList;
+    // console.log(pickupCanceledList);
 
-    const sortedPickupWaitList = pickupWaitList.sort((a, b) => {
-        return new Date(b.created_at) - new Date(a.created_at);
+    const sortedpickupCanceledList = pickupCanceledList.sort((a, b) => {
+        return new Date(b.updated_at) - new Date(a.updated_at);
     });
 
     const formatDateTime = (dateTimeString) => {
@@ -42,20 +42,18 @@ export default function WaitList({ auth }) {
         );
     };
 
-    const [showCancel, setShowCancel] = useState(false);
     const [showDeatils, setShowDetails] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [provinceNames, setProvinceNames] = useState({});
     const [regencyNames, setRegencyNames] = useState({});
     const [districtNames, setDistrictNames] = useState({});
     const apiKey = import.meta.env.VITE_BINDERBYTE_API_KEY;
-    const { patch } = useForm();
 
     useEffect(() => {
         const fetchProvinceNames = async () => {
             const provinceNamesMap = {};
 
-            for (const pickup of pickupWaitList) {
+            for (const pickup of pickupCanceledList) {
                 try {
                     const response = await fetch(
                         `https://api.binderbyte.com/wilayah/provinsi?api_key=${apiKey}`
@@ -78,13 +76,13 @@ export default function WaitList({ auth }) {
         };
 
         fetchProvinceNames();
-    }, [pickupWaitList, apiKey]);
+    }, [pickupCanceledList, apiKey]);
 
     useEffect(() => {
         const fetchRegencyNames = async () => {
             const regencyNamesMap = {};
 
-            for (const pickup of pickupWaitList) {
+            for (const pickup of pickupCanceledList) {
                 try {
                     const response = await fetch(
                         `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${pickup.location.province}`
@@ -107,13 +105,13 @@ export default function WaitList({ auth }) {
         };
 
         fetchRegencyNames();
-    }, [pickupWaitList, apiKey]);
+    }, [pickupCanceledList, apiKey]);
 
     useEffect(() => {
         const fetchDistrictNames = async () => {
             const districtNamesMap = {};
 
-            for (const pickup of pickupWaitList) {
+            for (const pickup of pickupCanceledList) {
                 try {
                     const response = await fetch(
                         `https://api.binderbyte.com/wilayah/kecamatan?api_key=${apiKey}&id_kabupaten=${pickup.location.regency}`
@@ -136,7 +134,7 @@ export default function WaitList({ auth }) {
         };
 
         fetchDistrictNames();
-    }, [pickupWaitList, apiKey]);
+    }, [pickupCanceledList, apiKey]);
 
     const openDetails = (order) => {
         setSelectedOrder(order);
@@ -145,22 +143,6 @@ export default function WaitList({ auth }) {
     const closeDetails = () => {
         setSelectedOrder(null);
         setShowDetails(false);
-    };
-    const openCancel = (order) => {
-        setSelectedOrder(order);
-        setShowCancel(true);
-    };
-    const closeCancel = () => {
-        setSelectedOrder(null);
-        setShowCancel(false);
-    };
-
-    const submit = (e) => {
-        e.preventDefault();
-        // console.log(selectedOrder);
-        patch(route("order.waitlist.cancel", { id: selectedOrder.id }), {
-            onSuccess: () => closeCancel(),
-        });
     };
 
     return (
@@ -179,7 +161,7 @@ export default function WaitList({ auth }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center">
                     <div className="bg-white dark:bg-slate-700 w-full md:w-5/6 lg:w-2/3 text-gray-800 dark:text-gray-200">
                         <div className="p-8 space-y-6">
-                            {sortedPickupWaitList.map((order) => (
+                            {sortedpickupCanceledList.map((order) => (
                                 <div
                                     key={order.id}
                                     className="border-2 border-slate-500"
@@ -198,9 +180,10 @@ export default function WaitList({ auth }) {
                                         </div>
                                         <div className="col-span-2 flex flex-col justify-between items-end">
                                             <p className="text-sm italic">
-                                                {order.status == 1 && "Pending"}
-                                                {order.status == 3 &&
-                                                    "Accepted"}
+                                                {order.status == 2 &&
+                                                    "Canceled"}
+                                                {order.status == 4 &&
+                                                    "Declined"}
                                             </p>
                                             <div className="text-end">
                                                 <span className="text-sm">
@@ -224,22 +207,14 @@ export default function WaitList({ auth }) {
                                         >
                                             View Details
                                         </button>
-                                        <button
-                                            className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
-                                            type="button"
-                                            onClick={() => openCancel(order)}
-                                            disabled={order.status == 3}
-                                        >
-                                            Cancel
-                                        </button>
                                     </div>
                                 </div>
                             ))}
-                            {sortedPickupWaitList.length == 0 && (
+                            {sortedpickupCanceledList.length == 0 && (
                                 <div className="flex flex-col justify-center py-12 items-center font-bold text-lg">
                                     <NoDataFoundIcon className="w-80 h-80" />
                                     <p className="pt-4">
-                                        No canceled orders yet
+                                        No canceled / declined orders yet
                                     </p>
                                 </div>
                             )}
@@ -385,14 +360,6 @@ export default function WaitList({ auth }) {
                     </p>
                 </div>
             </FormModal>
-
-            <ConfirmationModal
-                show={showCancel}
-                onClose={closeCancel}
-                title="Cancel Order"
-                content="Are you sure you want to cancel this order?"
-                onSubmit={submit}
-            />
         </LandingLayout>
     );
 }

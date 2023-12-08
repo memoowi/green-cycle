@@ -46,13 +46,15 @@ class HandleInertiaRequests extends Middleware
             'items' => Item::all(),
             'businessItems' => [],
             'pickupWaitList' => [],
+            'pickupCanceledList' => [],
         ];
 
         // Check if there is an authenticated user
         if ($user = $request->user()) {
             $business = Business::where('user_id', $user->id)->first();
             $location = Location::where('user_id', $user->id)->first();
-            $pickupWaitList = PickUp::with('pickupitem')->where('user_id', $user->id)->whereIn('status', [1,3])->get();
+            $pickupWaitList = PickUp::with('pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [1,3])->get();
+            $pickupCanceledList = PickUp::with('pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [2,4])->get();
             
             // Check if location is not null
             if ($location) {
@@ -69,6 +71,10 @@ class HandleInertiaRequests extends Middleware
             // Check if pickup is not null
             if ($pickupWaitList) {
                 $authData['pickupWaitList'] = $pickupWaitList;
+            }
+
+            if ($pickupCanceledList) {
+                $authData['pickupCanceledList'] = $pickupCanceledList;
             }
         }
 
