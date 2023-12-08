@@ -3,6 +3,7 @@
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserOrderController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -60,6 +61,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/location', [LocationController::class, 'edit'])->name('location.edit');
     Route::patch('/location/update', [LocationController::class, 'update'])->name('location.update');
+
+    Route::get('/panel/wait-list', [UserOrderController::class, 'waitList'])->name('order.waitlist');
 });
 
 // Route User non-ban Only

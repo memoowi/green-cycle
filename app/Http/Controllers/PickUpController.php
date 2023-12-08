@@ -116,6 +116,11 @@ class PickUpController extends Controller
             'account_name' => $request->account_name,
             'account_number' => $request->account_number,
         ]);
+
+        $pickUp = PickUp::findOrFail($pickUpId);
+        $pickUp->update([
+            'status' => 1,
+        ]);
         
         $encodedPickUpId = Hashids::encode($pickUpId);
         return Redirect::route('user.pick-up.success', ['pickUpId' => $encodedPickUpId]);
