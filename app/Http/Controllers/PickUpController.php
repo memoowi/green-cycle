@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
+use App\Models\PaymentMethod;
 use App\Models\PickUp;
 use App\Models\PickUpItem;
 use Illuminate\Http\RedirectResponse;
@@ -100,6 +101,29 @@ class PickUpController extends Controller
     {
         $id = Hashids::decode($pickUpId)[0];
         return Inertia::render('User/ChoosePaymentPickUp', [
+            'pickUpId' => $id,
+        ]);
+    }
+    public function payment(Request $request, $pickUpId):RedirectResponse
+    {
+        $request->validate([
+            'type' => 'required',
+        ]);
+
+        PaymentMethod::create([
+            'pick_up_id' => $pickUpId,
+            'type' => $request->type,
+            'account_name' => $request->account_name,
+            'account_number' => $request->account_number,
+        ]);
+        
+        $encodedPickUpId = Hashids::encode($pickUpId);
+        return Redirect::route('user.pick-up.success', ['pickUpId' => $encodedPickUpId]);
+    }
+    public function successPickUp($pickUpId):Response
+    {
+        $id = Hashids::decode($pickUpId)[0];
+        return Inertia::render('User/SuccessPickUp', [
             'pickUpId' => $id,
         ]);
     }

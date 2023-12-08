@@ -1,6 +1,7 @@
-export default function NextButton({ children, disabled = false }) {
+export default function NextButton({ children, disabled = false, ...props }) {
     return (
         <button
+            {... props}
             type="submit"
             disabled={disabled}
             className="group flex items-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded hover:shadow-[-5px_5px_0px_0px_rgb(0,0,0)] hover:translate-x-1 hover:-translate-y-1 transition duration-500 ease-in-out"

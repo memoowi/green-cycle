@@ -13,4 +13,5 @@ Route::get('/pick-up/{pickUpId}/after-items',[PickUpController::class,'afterItem
 Route::get('/pick-up/{pickUpId}/upload-photo',[PickUpController::class,'uploadPhoto'])->name('pick-up.upload-photo');
 Route::post('/pick-up/{pickUpId}/uploading-photo',[PickUpController::class,'storePhoto'])->name('pick-up.uploading-photo');
 Route::get('/pick-up/{pickUpId}/choose-payment',[PickUpController::class,'choosePayment'])->name('pick-up.choose-payment');
-// Route::post('/pick-up/{pickUpId}/payment',[PickUpController::class,'payment'])->name('pick-up.payment');
+Route::post('/pick-up/{pickUpId}/set-payment',[PickUpController::class,'payment'])->name('pick-up.set-payment');
+Route::get('/pick-up/{pickUpId}/complete',[PickUpController::class,'successPickUp'])->name('pick-up.success');

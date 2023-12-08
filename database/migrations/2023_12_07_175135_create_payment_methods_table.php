@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pick_up_id');
+            $table->unsignedBigInteger('pick_up_id')->nullable();
             $table->foreign('pick_up_id')->references('id')->on('pick_ups')->onDelete('cascade');
-            $table->unsignedBigInteger('drop_off_id');
+            $table->unsignedBigInteger('drop_off_id')->nullable();
             $table->foreign('drop_off_id')->references('id')->on('drop_offs')->onDelete('cascade');
             $table->enum('type', ['cash', 'transfer', 'e-wallet']);
             $table->string('account_name')->nullable();
