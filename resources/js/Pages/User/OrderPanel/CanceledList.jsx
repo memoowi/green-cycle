@@ -1,6 +1,6 @@
 import Footer from "@/Layouts/Partials/Footer";
 import LandingLayout from "@/Layouts/LandingLayout";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { Fragment, useEffect, useState } from "react";
 import FormModal from "@/Components/FormModal";
 import OrderPanelNav from "./Partials/OrderPanelNav";
@@ -235,9 +235,18 @@ export default function CanceledList({ auth }) {
                           <div className="col-span-12 flex justify-between dark:text-white border-2 border-slate-500 p-3">
                               <h5 className="font-bold">Declined By : </h5>
                               <p className="text-sm">
-                                  {selectedOrder
-                                      ? selectedOrder.business.business_name
-                                      : "Loading"}
+                                  <Link
+                                      href={route("business.public.profile", {
+                                          business: selectedOrder
+                                              ? selectedOrder.business.id
+                                              : "Loading",
+                                      })}
+                                      className="hover:text-emerald-600 hover:underline"
+                                  >
+                                      {selectedOrder
+                                          ? selectedOrder.business.business_name
+                                          : "Loading"}
+                                  </Link>
                               </p>
                           </div>
                       )

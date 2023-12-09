@@ -167,7 +167,44 @@ class BusinessController extends Controller
         $selectedOrder = PickUp::findOrFail($orders);
         $selectedOrder->update([
             'business_id' => $business,
-            'status' => 3,
+            'status' => 3, // 3 = to accept
+         ]);
+    }
+    public function outgoingPickUp(): Response
+    {
+        return Inertia::render('Business/OutgoingPickUp');
+    }
+    public function declineOrder($orders)
+    {
+        $selectedOrder = PickUp::findOrFail($orders);
+        $selectedOrder->update([
+            'status' => 4, // 4= to decline
+         ]);
+    }
+    public function otw($orders)
+    {
+        $selectedOrder = PickUp::findOrFail($orders);
+        $selectedOrder->update([
+            'status' => 5, // 5 = accpet send, on the way
+         ]);
+    }
+    
+    public function completeOrder(Request $request, $orders)
+    {
+        $request->validate([
+            'amount_paid' => 'required',
+            'invoice_photo' => 'required',
+        ]);
+        $selectedOrder = PickUp::findOrFail($orders);
+
+        $filenameInvoice = time() . '_' . rand(1000, 9999) . '_iP' . '.' . $request->invoice_photo->extension();
+        $request->invoice_photo->storeAs('order-invoices', $filenameInvoice);
+
+        $selectedOrder->update([
+            'invoice_photo' => $filenameInvoice,
+            'amount_paid' => $request->amount_paid,
+            'completed_at' => now(),
+            'status' => 6, // 6 = completed
          ]);
     }
 }

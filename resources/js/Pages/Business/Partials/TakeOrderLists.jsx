@@ -1,4 +1,5 @@
 import FormModal from "@/Components/FormModal";
+import NoDataFoundIcon from "@/Components/NoDataFoundIcon";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Fragment, useEffect, useState } from "react";
 
@@ -196,6 +197,14 @@ export default function TakeOrderLists() {
                         </div>
                     </div>
                 ))}
+                {takeOrders.length == 0 && (
+                    <div className="w-full h-full p-20 flex flex-col items-center justify-center gap-5">
+                        <NoDataFoundIcon 
+                            className="w-80 h-80"
+                        />
+                        <h1 className="text-2xl font-bold">You haven't take any order</h1>
+                    </div>
+                )}
             </div>
             <FormModal
                 title="Order Details"

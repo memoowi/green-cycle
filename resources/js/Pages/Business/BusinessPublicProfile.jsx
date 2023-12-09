@@ -86,15 +86,11 @@ export default function BusinessPublicProfile({ auth, business }) {
 
         fetchDistrictNames();
     }, [business.regency, apiKey]);
-
-
-
-
     return (
         <LandingLayout
             user={auth.user}
             header={
-                <div className="relative flex justify-center items-center py-16 bg-emerald-600">
+                <div className="relative flex justify-center items-center py-16 bg-amber-500">
                     <div className="max-w-7xl w-full px-8 pt-20 flex justify-center z-10">
                         <div className="bg-white dark:bg-slate-700 p-8 w-full md:w-5/6 lg:w-2/3 text-gray-800 dark:text-gray-200">
                         <div className='bg-gray-300 p-6 h-36 sm:h-48 flex flex-col justify-end'
