@@ -49,6 +49,26 @@ export default function BusinessSideBar({ className='', handleClick, username, e
                     </SidebarLink>
                 </li>
                 <li>
+                    <SidebarLink href={route('business.take-order')} active={route().current('business.take-order')}>
+                        Take Order
+                    </SidebarLink>
+                </li>
+                <li>
+                    <SidebarLink href={route('business.items')} active={route().current('business.items') || route().current('business.items.add')}>
+                        Incoming Drop Off
+                    </SidebarLink>
+                </li>
+                <li>
+                    <SidebarLink href={route('business.items')} active={route().current('business.items') || route().current('business.items.add')}>
+                        Outgoing Pick Up
+                    </SidebarLink>
+                </li>
+                <li>
+                    <SidebarLink href={route('business.items')} active={route().current('business.items') || route().current('business.items.add')}>
+                        Taken Order History
+                    </SidebarLink>
+                </li>
+                <li>
                     <SidebarLink href={route('business.items')} active={route().current('business.items') || route().current('business.items.add')}>
                         Customize Items
                     </SidebarLink>

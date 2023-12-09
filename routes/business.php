@@ -8,6 +8,7 @@ Route::get('/dashboard', [BusinessController::class, 'dashboard'])->name('dashbo
 Route::get('/items', [BusinessController::class, 'items'])->name('items');
 Route::get('/profile', [BusinessController::class, 'edit'])->name('profile');
 Route::get('/setting', [BusinessController::class, 'setting'])->name('setting');
+Route::get('/take-order', [BusinessController::class, 'takeOrder'])->name('take-order');
 
 // only not-banned business can access
 Route::middleware('business.is.ban')->group(function () {
@@ -15,6 +16,7 @@ Route::middleware('business.is.ban')->group(function () {
     Route::delete('/items/delete/{businessItems}', [BusinessController::class, 'deleteItem'])->name('items.delete');
     Route::post('/profile/update', [BusinessController::class, 'update'])->name('profile.update');
     Route::patch('/setting/update', [BusinessController::class, 'updateSetting'])->name('setting.update');
+    Route::patch('/take-order/pick/{order}', [BusinessController::class, 'picked'])->name('take-order.pick');
 });
 
 

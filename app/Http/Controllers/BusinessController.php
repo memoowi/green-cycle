@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Business;
 use App\Models\BusinessItem;
+use App\Models\PickUp;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -146,5 +147,16 @@ class BusinessController extends Controller
         $request->user()->business()->update($request->all());
 
         return Redirect::route('business.setting');
+    }
+
+    public function takeOrder(): Response
+    {
+        return Inertia::render('Business/TakeOrder');
+    }
+
+    public function picked($orders)
+    {
+        $selectedOrder = PickUp::findOrFail($orders);
+        $selectedOrder->update(['status' => 3 ]);
     }
 }
