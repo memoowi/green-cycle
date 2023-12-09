@@ -67,7 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/panel/wait-list/cancel/{id}', [UserOrderController::class, 'cancelOrder'])->name('order.waitlist.cancel');
     Route::get('/panel/canceled-list', [UserOrderController::class, 'canceledList'])->name('order.canceledlist');
 
-    
+    Route::get('/user={user}/profile', [ProfileController::class, 'userProfile'])->name('user.profile');
 });
 
 // Route for User Banned Only

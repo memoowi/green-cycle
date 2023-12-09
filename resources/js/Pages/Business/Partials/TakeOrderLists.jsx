@@ -1,5 +1,5 @@
 import FormModal from "@/Components/FormModal";
-import { useForm, usePage } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { Fragment, useEffect, useState } from "react";
 
 export default function TakeOrderLists() {
@@ -203,6 +203,22 @@ export default function TakeOrderLists() {
                 onClose={closeDetails}
                 hideFooter={true}
             >
+                <div className="col-span-12 flex justify-between space-y-2 dark:text-white">
+                    <div className="space-y-2">
+                        <h5 className="font-bold">Order By : </h5>
+                        <p className="text-sm">
+                            {selectedOrder ? selectedOrder.user.name : "Loading"}
+                        </p>
+                    </div>
+                    <div className="self-center">
+                        <Link 
+                            href={route("user.profile", { user : selectedOrder ? selectedOrder.user.id  : "Loading"})}
+                            className="border-2 border-gray-700 dark:border-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 font-bold py-2 px-4 rounded"
+                        >
+                            Show Profile
+                        </Link>
+                    </div>
+                </div>
                 <div className="col-span-6 space-y-2 dark:text-white">
                     <h5 className="font-bold">Order ID : </h5>
                     <p className="text-sm">
