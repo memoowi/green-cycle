@@ -256,6 +256,14 @@ export default function WaitList({ auth }) {
                 onClose={closeDetails}
                 hideFooter={true}
             >
+                {selectedOrder ? selectedOrder.status == 3 && (
+                <div className="col-span-12 flex justify-between dark:text-white border-2 border-slate-500 p-3">
+                    <h5 className="font-bold">Accepeted By : </h5>
+                    <p className="text-sm">
+                        {selectedOrder ? selectedOrder.business.business_name : "Loading"}
+                    </p>
+                </div>
+                ) : null}
                 <div className="col-span-6 space-y-2 dark:text-white">
                     <h5 className="font-bold">Order ID : </h5>
                     <p className="text-sm">
