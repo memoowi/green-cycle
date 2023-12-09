@@ -16,7 +16,7 @@ Route::middleware('business.is.ban')->group(function () {
     Route::delete('/items/delete/{businessItems}', [BusinessController::class, 'deleteItem'])->name('items.delete');
     Route::post('/profile/update', [BusinessController::class, 'update'])->name('profile.update');
     Route::patch('/setting/update', [BusinessController::class, 'updateSetting'])->name('setting.update');
-    Route::patch('/take-order/pick/{order}', [BusinessController::class, 'picked'])->name('take-order.pick');
+    Route::patch('/take-order/pick/{order}/{business}', [BusinessController::class, 'picked'])->name('take-order.pick');
 });
 
 

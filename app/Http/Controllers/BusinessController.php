@@ -154,9 +154,12 @@ class BusinessController extends Controller
         return Inertia::render('Business/TakeOrder');
     }
 
-    public function picked($orders)
+    public function picked($orders, $business )
     {
         $selectedOrder = PickUp::findOrFail($orders);
-        $selectedOrder->update(['status' => 3 ]);
+        $selectedOrder->update([
+            'business_id' => $business,
+            'status' => 3,
+         ]);
     }
 }

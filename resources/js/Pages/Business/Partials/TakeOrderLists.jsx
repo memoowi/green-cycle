@@ -4,6 +4,8 @@ import { Fragment, useEffect, useState } from "react";
 
 export default function TakeOrderLists() {
     const takeOrders = usePage().props.auth.takeOrders;
+    const business = usePage().props.auth.business;
+    // console.log(business);
     // console.log(takeOrders);
     const formatDateTime = (dateTimeString) => {
         const options = {
@@ -141,7 +143,7 @@ export default function TakeOrderLists() {
         e.preventDefault();
 
         // console.log(selectedOrder);
-        patch(route("business.take-order.pick", { order : selectedOrder.id}), {
+        patch(route("business.take-order.pick", { order : selectedOrder.id, business : business.id }), {
             onSuccess: () => {
                 setSelectedOrder(null);
             },
