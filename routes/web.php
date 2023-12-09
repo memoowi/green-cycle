@@ -68,6 +68,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/panel/canceled-list', [UserOrderController::class, 'canceledList'])->name('order.canceledlist');
 
     Route::get('/user={user}/profile', [ProfileController::class, 'userProfile'])->name('user.profile');
+    Route::get('/business={business}/profile', [BusinessController::class, 'businessPublicProfile'])->name('business.public.profile');
+
 });
 
 // Route for User Banned Only

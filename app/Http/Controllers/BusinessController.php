@@ -149,6 +149,14 @@ class BusinessController extends Controller
         return Redirect::route('business.setting');
     }
 
+    public function businessPublicProfile($business): Response
+    {
+        $business = Business::findOrFail($business);
+        return Inertia::render('Business/BusinessPublicProfile', [
+            'business' => $business
+        ]);
+    }
+
     public function takeOrder(): Response
     {
         return Inertia::render('Business/TakeOrder');

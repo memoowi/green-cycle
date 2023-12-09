@@ -34,7 +34,7 @@ export default function UserProfile({ auth, user }) {
                                 <div className="w-3/12 h-1 bg-emerald-600 my-4"></div>
                             </div>
                             <div className="grid grid-cols-12 py-10">
-                                <div className="col-span-6 sm:col-span-6 mx-auto">
+                                <div className="col-span-12 sm:col-span-6 mx-auto">
                                     <img
                                         src={
                                             user.profile_photo
