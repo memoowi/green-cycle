@@ -12,6 +12,20 @@ export default function OrderPanelNav() {
                     <span>Wait List</span>
                 </NavLink>
                 <NavLink
+                    // href={route("order.canceledlist")}
+                    // active={route().current("order.canceledlist")}
+                    className="h-3/4 px-3 rounded border-4"
+                >
+                    <span>On The Way</span>
+                </NavLink>
+                <NavLink
+                    // href={route("order.canceledlist")}
+                    // active={route().current("order.canceledlist")}
+                    className="h-3/4 px-3 rounded border-4"
+                >
+                    <span>Completed</span>
+                </NavLink>
+                <NavLink
                     href={route("order.canceledlist")}
                     active={route().current("order.canceledlist")}
                     className="h-3/4 px-3 rounded border-4"

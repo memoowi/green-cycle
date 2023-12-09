@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannedController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
@@ -65,6 +66,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/panel/wait-list', [UserOrderController::class, 'waitList'])->name('order.waitlist');
     Route::patch('/panel/wait-list/cancel/{id}', [UserOrderController::class, 'cancelOrder'])->name('order.waitlist.cancel');
     Route::get('/panel/canceled-list', [UserOrderController::class, 'canceledList'])->name('order.canceledlist');
+
+    
+});
+
+// Route for User Banned Only
+Route::middleware(['auth', 'verified', 'user.is.not.ban'])->group(function () {
+    Route::get('/banned-user', [BannedController::class, 'bannedUser'])->name('banned.user');
 });
 
 // Route User non-ban Only

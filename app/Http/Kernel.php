@@ -70,6 +70,9 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'business' => \App\Http\Middleware\BusinessMiddleware::class,
         'business.exist' => \App\Http\Middleware\BusinessExistMiddleware::class,
-        'user.is.ban' => \App\Http\Middleware\UserMiddleware::class
+        'user.is.ban' => \App\Http\Middleware\UserMiddleware::class,
+        'user.is.not.ban' => \App\Http\Middleware\BanUserMiddleware::class,
+        'business.is.ban' => \App\Http\Middleware\BanBusinessMiddleware::class,
+        'business.is.not.ban' => \App\Http\Middleware\BanCounterBusinessMiddleware::class,
     ];
 }

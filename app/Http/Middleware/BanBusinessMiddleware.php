@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Business;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserMiddleware
+class BanBusinessMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,8 +16,11 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->is_ban == 1) {
-            return redirect()->route('banned.user');
+        $user = auth()->user();
+
+        // Check if the user is associated with a banned business
+        if ($user && Business::where('user_id', $user->id)->where('is_ban', 1)->exists()) {
+            return redirect()->route('business.banned-business');
         }
         return $next($request);
     }

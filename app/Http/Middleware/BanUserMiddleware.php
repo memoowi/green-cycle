@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserMiddleware
+class BanUserMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,8 +15,8 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->is_ban == 1) {
-            return redirect()->route('banned.user');
+        if (auth()->user()->is_ban == 0) {
+            return redirect()->back()->with('error', 'You are not banned!');
         }
         return $next($request);
     }
