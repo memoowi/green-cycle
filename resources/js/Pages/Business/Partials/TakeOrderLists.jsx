@@ -202,7 +202,7 @@ export default function TakeOrderLists() {
                         <NoDataFoundIcon 
                             className="w-80 h-80"
                         />
-                        <h1 className="text-2xl font-bold">You haven't take any order</h1>
+                        <h1 className="text-2xl font-bold">No Orders Found</h1>
                     </div>
                 )}
             </div>
