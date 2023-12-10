@@ -15,6 +15,16 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            keyframes: {
+                slideup: {
+                    '0%,10%, 100%': {  transform: 'translateY(0)' },
+                    '40%,50%': { transform: 'translateY(-8rem)' },
+                    '70%, 80%': { transform: 'translateY(-16rem)' },
+                },
+            },
+            animation: {
+                slideup: 'slideup 8s ease-in-out infinite',
+            },
         },
     },
 

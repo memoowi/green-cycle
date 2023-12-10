@@ -110,6 +110,7 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
+            'landingItems' => Item::take(7)->get(),
             'auth' => $authData,
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
