@@ -69,6 +69,7 @@ class HandleInertiaRequests extends Middleware
             $reportsAdmin = PickUp::with('user','business','pickupitem.item', 'location', 'paymentmethod')->whereIn('status', [2,3,4,5,6])->get();
             
             
+            
             // Check if location is not null
             if ($location) {
                 $authData['location'] = $location;
