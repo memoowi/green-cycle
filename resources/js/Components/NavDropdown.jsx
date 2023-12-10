@@ -1,6 +1,14 @@
+import { usePage } from "@inertiajs/react";
 import Dropdown from "./Dropdown";
 
 export default function NavDropdown({name, role, photo, type}) {
+    const user = usePage().props.auth.user;
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(amount);
+    };
     return (
         <Dropdown>
             <Dropdown.Trigger>
@@ -35,6 +43,24 @@ export default function NavDropdown({name, role, photo, type}) {
             </Dropdown.Trigger>
 
             <Dropdown.Content>
+                <div className="px-4 py-3">
+                    <div className="flex items-center">
+                        <img 
+                            className="h-8 w-8 rounded-full border-2 object-cover" 
+                            src={photo ? ('/storage/profile-photos/' + photo) : ('/storage/profile-photos/default.jpg')} 
+                            alt="user" 
+                        />
+                        <div className="ms-4 text-gray-700 dark:text-gray-200">{name}</div>    
+                    </div>
+                    <div className="bg-gray-100 px-4 py-2 mt-4 rounded-md">
+                        <div className="text-sm font-medium">
+                        Total Earned : 
+                        </div>
+                        <div className="text-lg font-bold">
+                        {formatCurrency(user.total_earned)}
+                        </div>
+                    </div>
+                </div>
                 <Dropdown.Link href={route('location.edit')}>Location</Dropdown.Link>
                 <Dropdown.Link href={route('order.waitlist')}>My Orders</Dropdown.Link>
                 <hr className="border-gray-500 dark:border-gray-300 w-10/12 mx-auto my-1"/>

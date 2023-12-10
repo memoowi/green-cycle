@@ -54,7 +54,7 @@ export default function BusinessSideBar({ className='', handleClick, username, e
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink href={route('business.items')} active={route().current('business.items') || route().current('business.items.add')}>
+                    <SidebarLink href={route('business.incoming-dropoff')} active={route().current('business.incoming-dropoff')}>
                         Incoming Drop Off
                     </SidebarLink>
                 </li>

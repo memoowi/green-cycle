@@ -9,6 +9,7 @@ Route::get('/items', [BusinessController::class, 'items'])->name('items');
 Route::get('/profile', [BusinessController::class, 'edit'])->name('profile');
 Route::get('/setting', [BusinessController::class, 'setting'])->name('setting');
 Route::get('/take-order', [BusinessController::class, 'takeOrder'])->name('take-order');
+Route::get('/incoming-dropoff', [BusinessController::class, 'incomingDropoff'])->name('incoming-dropoff');
 Route::get('/outgoing-pickup', [BusinessController::class, 'outgoingPickUp'])->name('outgoing-pickup');
 Route::get('/taken-order-history', [BusinessController::class, 'takenOrderHistory'])->name('taken-order-history');
 

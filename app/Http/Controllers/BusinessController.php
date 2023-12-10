@@ -171,6 +171,10 @@ class BusinessController extends Controller
             'status' => 3, // 3 = to accept
          ]);
     }
+    public function incomingDropoff(): Response
+    {
+        return Inertia::render('Business/IncomingDropOff');
+    }
     public function outgoingPickUp(): Response
     {
         return Inertia::render('Business/OutgoingPickUp');
