@@ -6,6 +6,7 @@ import TogglesButton from "@/Components/TogglesButton";
 import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function SettingForm() {
     const business = usePage().props.auth.business;
@@ -22,7 +23,10 @@ export default function SettingForm() {
         e.preventDefault();
 
         patch(route('business.setting.update'), {
-            onSuccess: () => setConfirmingChangeStatus(false),
+            onSuccess: () => {
+                setConfirmingChangeStatus(false);
+                toast.success('Business status changed successfully');
+            },
 
         });
     };
@@ -33,8 +37,8 @@ export default function SettingForm() {
     };
     return (
         <section>
-            <div>
-                <h2 className="text-lg font-medium text-gray-900">Business Settings</h2>
+            <div className="space-y-6">
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Business Settings</h2>
                 <div className="my-2 select-none">
                     {business.status === 1 ? (
                         <span className="inline-flex items-center px-3 py-0.5 rounded-full text-lg font-bold bg-green-100 text-green-800">
@@ -46,7 +50,7 @@ export default function SettingForm() {
                         </span>
                     )}
                 </div>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Update your business's status.
                 </p>
             </div>
@@ -74,10 +78,10 @@ export default function SettingForm() {
                 show={confirmingChangeStatus}
                 onClose={closeModal}
             >
-                <form onSubmit={submit}>
+                <form onSubmit={submit} className="dark:bg-slate-700">
                     <div className="p-6">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-lg font-medium text-gray-900">
+                            <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                                 Change Business Status
                             </h2>
 

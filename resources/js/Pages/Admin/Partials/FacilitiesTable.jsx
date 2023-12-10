@@ -5,6 +5,7 @@ import FeaturedTable from "@/Components/FeaturedTable";
 import XUserIconButton from "@/Components/XUserIconButton";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function FacilitiesTable() {
     const businesses = usePage().props.auth.businesses;
@@ -104,7 +105,10 @@ export default function FacilitiesTable() {
         e.preventDefault();
 
         patch(route("admin.facilities.removePhotos", selectedBusiness.id), {
-            onSuccess: () => closeRemove(),
+            onSuccess: () => {
+                closeRemove();
+                toast.success("Photo and Banner removed !");
+            },
         });
     };
 
@@ -112,7 +116,9 @@ export default function FacilitiesTable() {
         e.preventDefault();
 
         patch(route("admin.facilities.ban", selectedBusiness.id), {
-            onSuccess: () => closeBan(),
+            onSuccess: () => {
+                closeBan();
+                toast.success("Facility banned !");},
         });
     };
 

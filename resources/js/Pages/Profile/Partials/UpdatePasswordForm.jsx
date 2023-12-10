@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import { toast } from 'react-toastify';
 
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
@@ -21,16 +22,21 @@ export default function UpdatePasswordForm({ className = '' }) {
 
         put(route('password.update'), {
             preserveScroll: true,
-            onSuccess: () => reset(),
+            onSuccess: () => {
+                reset(),
+                toast.success('Your password has been updated.');
+            },
             onError: (errors) => {
                 if (errors.password) {
                     reset('password', 'password_confirmation');
                     passwordInput.current.focus();
+                    toast.error(errors.password);
                 }
 
                 if (errors.current_password) {
                     reset('current_password');
                     currentPasswordInput.current.focus();
+                    toast.error(errors.current_password);
                 }
             },
         });
@@ -39,9 +45,9 @@ export default function UpdatePasswordForm({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Update Password</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Update Password</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Ensure your account is using a long, random password to stay secure.
                 </p>
             </header>

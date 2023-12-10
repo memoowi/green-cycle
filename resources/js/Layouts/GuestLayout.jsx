@@ -23,7 +23,7 @@ export default function Guest({ children }) {
                 </h1>
             </div>
 
-            <div className="w-full max-w-md my-6 px-6 py-4 bg-white dark:bg-slate-300 border-2 border-black dark:border-gray-500 overflow-hidden rounded-2xl shadow-[-10px_10px_0_0_rgb(0,0,0)] dark:shadow-[-10px_10px_0_0_rgb(5,150,105)]">
+            <div className="w-full max-w-md my-6 px-6 py-4 bg-white dark:bg-slate-400 border-2 border-black dark:border-gray-500 overflow-hidden rounded-2xl shadow-[-10px_10px_0_0_rgb(0,0,0)] dark:shadow-[-10px_10px_0_0_rgb(5,150,105)]">
                 {children}
             </div>
         </div>

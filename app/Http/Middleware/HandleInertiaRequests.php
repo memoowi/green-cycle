@@ -58,6 +58,8 @@ class HandleInertiaRequests extends Middleware
             $location = Location::where('user_id', $user->id)->first();
             $pickupWaitList = PickUp::with('business','pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [1,3])->get();
             $pickupCanceledList = PickUp::with('business','pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [2,4])->get();
+            $pickupOnTheWayList = PickUp::with('business','pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [5])->get();
+            $pickupCompletedList = PickUp::with('business','pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [6])->get();
             
             
             // Check if location is not null
@@ -83,6 +85,14 @@ class HandleInertiaRequests extends Middleware
 
             if ($pickupCanceledList) {
                 $authData['pickupCanceledList'] = $pickupCanceledList;
+            }
+
+            if ($pickupOnTheWayList) {
+                $authData['pickupOnTheWayList'] = $pickupOnTheWayList;
+            }
+
+            if ($pickupCompletedList) {
+                $authData['pickupCompletedList'] = $pickupCompletedList;
             }
         }
 

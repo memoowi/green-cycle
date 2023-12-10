@@ -6,6 +6,7 @@ import AdminPanelLayout from "@/Layouts/AdminPanelLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import ArrowBreadcrumbs from "@/Components/ArrowBreadcrumbs";
+import { toast } from "react-toastify";
 
 export default function CreateItem({ auth }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -19,7 +20,7 @@ export default function CreateItem({ auth }) {
 
         // console.log(data);
         post(route("admin.items.store"), {
-            onSuccess: () => reset(),
+            onSuccess: () => {reset(); toast.success("Item added !");},
         });
     };
 

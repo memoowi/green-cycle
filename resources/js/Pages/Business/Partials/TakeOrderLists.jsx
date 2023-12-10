@@ -2,6 +2,7 @@ import FormModal from "@/Components/FormModal";
 import NoDataFoundIcon from "@/Components/NoDataFoundIcon";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Fragment, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function TakeOrderLists() {
     const takeOrders = usePage().props.auth.takeOrders;
@@ -147,6 +148,7 @@ export default function TakeOrderLists() {
         patch(route("business.take-order.pick", { order : selectedOrder.id, business : business.id }), {
             onSuccess: () => {
                 setSelectedOrder(null);
+                toast.success("Order picked successfully");
             },
         });
     };

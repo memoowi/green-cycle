@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Business;
 use App\Models\BusinessItem;
 use App\Models\PickUp;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -196,6 +197,7 @@ class BusinessController extends Controller
             'invoice_photo' => 'required',
         ]);
         $selectedOrder = PickUp::findOrFail($orders);
+        $selectedUser = User::findOrFail($selectedOrder->user_id);
 
         $filenameInvoice = time() . '_' . rand(1000, 9999) . '_iP' . '.' . $request->invoice_photo->extension();
         $request->invoice_photo->storeAs('order-invoices', $filenameInvoice);
@@ -205,6 +207,10 @@ class BusinessController extends Controller
             'amount_paid' => $request->amount_paid,
             'completed_at' => now(),
             'status' => 6, // 6 = completed
+         ]);
+
+        $selectedUser->update([
+            'total_earned' => $selectedUser->total_earned + $request->amount_paid
          ]);
     }
 }

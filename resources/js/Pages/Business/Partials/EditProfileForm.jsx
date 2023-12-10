@@ -3,6 +3,7 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function EditProfileForm({ auth }) {
     const business = usePage().props.auth.business;
@@ -126,6 +127,7 @@ export default function EditProfileForm({ auth }) {
             onSuccess: () => {
                 bannerRef.current.value = '';
                 photoRef.current.value = '';
+                toast.success('Business Profile updated successfully.');
                 setEdit(false)
             },
         });
@@ -207,7 +209,7 @@ export default function EditProfileForm({ auth }) {
                         </button>
                     </div>
 
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="business_name" value="Business Name"/>
                             <TextInput 
@@ -224,7 +226,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.business_name} />
                     </div>
 
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="description" value="Description"/>
                             <textarea 
@@ -239,7 +241,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.description} />
                     </div>
 
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="address" value="Business Address"/>
                             <TextInput 
@@ -256,7 +258,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2"  message={errors.address} />
                     </div>
 
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="province" value="Province" />
         
@@ -278,7 +280,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.province} />
                     </div>
 
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="regency" value="Regency" />
         
@@ -300,7 +302,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.regency} />
                     </div>
 
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="district" value="District" />
         
@@ -322,7 +324,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.district} />
                     </div>
 
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="postal_code" value="Postal Code"/>
                             <TextInput 
@@ -339,7 +341,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2"  message={errors.postal_code} />
                     </div>
 
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="business_number" value="Contact Number"/>
                             <TextInput 
@@ -356,7 +358,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.business_number} />
                     </div>
                     
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="business_email" value="Contact Email"/>
                             <TextInput 
@@ -373,7 +375,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.business_email} />
                     </div>
                     
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="website_link" value="Website"/>
                             <TextInput 
@@ -389,7 +391,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.website_link} />
                     </div>
                     
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="social_link1" value="Social Media 1"/>
                             <TextInput 
@@ -405,7 +407,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.social_link1} />
                     </div>
                     
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="social_link2" value="Social Media 2"/>
                             <TextInput 
@@ -421,7 +423,7 @@ export default function EditProfileForm({ auth }) {
                         <InputError className="mt-2" message={errors.social_link2} />
                     </div>
                     
-                    <div className='text-gray-900 dark:text-white'>
+                    <div>
                         <div className='sm:flex justify-between items-center w-full'>
                             <InputLabel htmlFor="social_link3" value="Social Media 3"/>
                             <TextInput 

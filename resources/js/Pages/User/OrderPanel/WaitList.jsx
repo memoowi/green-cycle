@@ -6,6 +6,7 @@ import { Fragment, useEffect, useState } from "react";
 import FormModal from "@/Components/FormModal";
 import OrderPanelNav from "./Partials/OrderPanelNav";
 import NoDataFoundIcon from "@/Components/NoDataFoundIcon";
+import { toast } from "react-toastify";
 
 export default function WaitList({ auth }) {
     const pickupWaitList = usePage().props.auth.pickupWaitList;
@@ -160,7 +161,10 @@ export default function WaitList({ auth }) {
         e.preventDefault();
         // console.log(selectedOrder);
         patch(route("order.waitlist.cancel", { id: selectedOrder.id }), {
-            onSuccess: () => closeCancel(),
+            onSuccess: () => {
+                closeCancel(),
+                toast.success("Order cancelled successfully");
+            },
         });
     };
 
@@ -168,7 +172,7 @@ export default function WaitList({ auth }) {
         <LandingLayout
             user={auth.user}
             header={
-                <div className="relative flex justify-center items-center bg-emerald-600">
+                <div className="relative flex justify-center items-center bg-white dark:bg-slate-700">
                     <div className="max-w-7xl w-full pt-20 flex justify-center z-10">
                         <OrderPanelNav />
                     </div>

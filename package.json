@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@react-google-maps/api": "^2.19.2",
-        "lottie-react": "^2.4.0"
+        "lottie-react": "^2.4.0",
+        "react-toastify": "^9.1.3"
     }
 }

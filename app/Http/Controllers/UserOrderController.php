@@ -25,4 +25,14 @@ class UserOrderController extends Controller
     {
         return Inertia::render('User/OrderPanel/CanceledList');
     }
+
+    public function otwList():Response
+    {
+        return Inertia::render('User/OrderPanel/OtwList');
+    }
+
+    public function completedList():Response
+    {
+        return Inertia::render('User/OrderPanel/CompletedList');
+    }
 }

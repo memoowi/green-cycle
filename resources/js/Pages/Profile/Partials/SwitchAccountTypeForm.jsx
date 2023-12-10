@@ -7,6 +7,7 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function SwitchAccountType({ className = '' }) {
     const user = usePage().props.auth.user;
@@ -26,7 +27,11 @@ export default function SwitchAccountType({ className = '' }) {
 
         // console.log(data);
         patch(route('profile.updatetype'),{
-            onSuccess: () => closeModal(),
+            onSuccess: () => {
+                closeModal(),
+                toast.success('Account type updated!');
+            },
+            preserveScroll: true
         });
 
         
@@ -39,9 +44,9 @@ export default function SwitchAccountType({ className = '' }) {
     return (
         <section className={'space-y-6 ' + className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Switch Account Type</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Switch Account Type</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Update your account type.
                 </p>
             </header>
@@ -53,7 +58,7 @@ export default function SwitchAccountType({ className = '' }) {
             </SecondaryButton>
 
                 <Modal show={confirmingChangeType} onClose={closeModal}>
-                    <form onSubmit={submit} className="p-6 space-y-6 w-screen">
+                    <form onSubmit={submit} className="p-6 space-y-6 w-screen bg-white dark:bg-slate-800">
                         <div>
                             <InputLabel htmlFor="type" value="Switch Account Type" className="text-xl mb-4" />
                             <select

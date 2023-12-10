@@ -1,6 +1,7 @@
 import CardCheckbox from "@/Components/CardCheckbox";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function BusinessItemsForm() {
     const { items, business, businessItems } = usePage().props.auth;
@@ -31,6 +32,7 @@ export default function BusinessItemsForm() {
                 item_id: data.item_id,
             } );
             setData('item_id', null);
+            toast.success('Item added!');
         }
     };
 

@@ -6,6 +6,7 @@ import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { toast } from 'react-toastify';
 
 export default function UpdateLocationInformation({ className = '' }) {
     // const user = usePage().props.auth.user;
@@ -94,6 +95,9 @@ export default function UpdateLocationInformation({ className = '' }) {
         // console.log(data);
         patch(route('location.update'), {
             preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Location updated!');
+            },
             
         });
     };
@@ -101,9 +105,9 @@ export default function UpdateLocationInformation({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Location Information</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Location Information</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                     Update your location Information.
                 </p>
             </header>

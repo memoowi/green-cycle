@@ -4,6 +4,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
+import { toast } from "react-toastify";
 
 export default function UpdateLinkForm({ className = '' }) {
     const user = usePage().props.auth.user;
@@ -20,14 +21,19 @@ export default function UpdateLinkForm({ className = '' }) {
         e.preventDefault();
 
         // console.log(data);
-        patch(route('profile.updatelink'));
+        patch(route('profile.updatelink'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Social Media Links updated!');
+            },
+        });
     };
 
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Social Media Links</h2>
-                <p className="mt-1 text-sm text-gray-600">
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Social Media Links</h2>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Update your account's Social Media Links. Make sure to include the http:// or https://
                 </p>
             </header>

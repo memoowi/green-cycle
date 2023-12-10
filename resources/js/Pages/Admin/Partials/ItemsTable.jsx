@@ -8,6 +8,7 @@ import TextInput from "@/Components/TextInput";
 import TrashIconButton from "@/Components/TrashIconButton";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ItemsTable() {
     const items = usePage().props.auth.items;
@@ -74,14 +75,19 @@ export default function ItemsTable() {
         e.preventDefault();
         // console.log(data);
         post(route("admin.items.update", selectedItem.id), {
-            onSuccess: () => closeEdit(),
+            onSuccess: () => {
+                closeEdit();
+                toast.success("Item updated successfully");
+            },
         });
     };
 
     const submitDelete = (e) => {
         e.preventDefault();
         destroy(route("admin.items.delete", selectedItem.id), {
-            onSuccess: () => closeDelete(),
+            onSuccess: () => {
+                closeDelete();
+                toast.success("Item deleted successfully");},
         });
     };
 

@@ -10,6 +10,7 @@ import TogglesButton from "@/Components/TogglesButton";
 import XUserIconButton from "@/Components/XUserIconButton";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function UsersTable() {
     const users = usePage().props.auth.users;
@@ -103,7 +104,12 @@ export default function UsersTable() {
         e.preventDefault();
 
         // console.log(data);
-        patch(route("admin.users.update", selectedUser.id));
+        patch(route("admin.users.update", selectedUser.id), {
+            onSuccess: () => {
+                toast.success("User updated successfully");
+                closeModal();
+            },
+        });
     };
 
     const submitRemovePhoto = (e) => {
@@ -111,7 +117,10 @@ export default function UsersTable() {
 
         // console.log(data);
         patch(route("admin.users.removephoto", selectedUser.id), {
-            onSuccess: () => closeModalRemove(),
+            onSuccess: () => {
+                closeModalRemove();
+                toast.success("User photo removed !");
+            },
         });
     };
 
@@ -120,7 +129,10 @@ export default function UsersTable() {
 
         // console.log(data);
         patch(route("admin.users.ban", selectedUser.id), {
-            onSuccess: () => closeModalBan(),
+            onSuccess: () => {
+                closeModalBan();
+                toast.success("User banned !");
+            },
         });
     };
 

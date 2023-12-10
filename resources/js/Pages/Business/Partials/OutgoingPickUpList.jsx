@@ -6,6 +6,7 @@ import NoDataFoundIcon from "@/Components/NoDataFoundIcon";
 import TextInput from "@/Components/TextInput";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Fragment, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function OutgoingPickUpList() {
     const outgoingPickups = usePage().props.auth.outgoingPickups;
@@ -190,6 +191,7 @@ export default function OutgoingPickUpList() {
             {
                 onSuccess: () => {
                     closeDecline();
+                    toast.success("Order declined successfully");
                 },
             }
         );
@@ -203,6 +205,7 @@ export default function OutgoingPickUpList() {
             {
                 onSuccess: () => {
                     setSelectedOrder(null);
+                    toast.success("Order OTW successfully");
                 },
             }
         );
@@ -214,6 +217,7 @@ export default function OutgoingPickUpList() {
         post(route("business.outgoing-pickup.complete", { order : selectedOrder.id }), {
             onSuccess: () => {
                 closeComplete();
+                toast.success("Order completed!");
             },
         });
     };

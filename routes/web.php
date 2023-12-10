@@ -66,6 +66,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/panel/wait-list', [UserOrderController::class, 'waitList'])->name('order.waitlist');
     Route::patch('/panel/wait-list/cancel/{id}', [UserOrderController::class, 'cancelOrder'])->name('order.waitlist.cancel');
     Route::get('/panel/canceled-list', [UserOrderController::class, 'canceledList'])->name('order.canceledlist');
+    Route::get('/panel/otw-list', [UserOrderController::class, 'otwList'])->name('order.otwlist');
+    Route::get('/panel/completed-list', [UserOrderController::class, 'completedList'])->name('order.completedlist');
+
+
 
     Route::get('/user={user}/profile', [ProfileController::class, 'userProfile'])->name('user.profile');
     Route::get('/business={business}/profile', [BusinessController::class, 'businessPublicProfile'])->name('business.public.profile');

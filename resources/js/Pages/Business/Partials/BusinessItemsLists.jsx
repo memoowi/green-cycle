@@ -3,6 +3,7 @@ import FeaturedTable from "@/Components/FeaturedTable";
 import TrashIconButton from "@/Components/TrashIconButton";
 import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function BusinessItemsLists() {
     const { items, businessItems } = usePage().props.auth;
@@ -48,7 +49,7 @@ export default function BusinessItemsLists() {
         e.preventDefault();
         // console.log(selectedItem);
         destroy(route("business.items.delete", selectedItem.id), {
-            onSuccess: () => closeDelete(),
+            onSuccess: () => {closeDelete(); toast.success("Item deleted successfully");},
         });
     };
 

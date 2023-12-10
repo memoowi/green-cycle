@@ -1,17 +1,17 @@
 import Footer from "@/Layouts/Partials/Footer";
 import LandingLayout from "@/Layouts/LandingLayout";
-import { Head, Link, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import { Fragment, useEffect, useState } from "react";
 import FormModal from "@/Components/FormModal";
 import OrderPanelNav from "./Partials/OrderPanelNav";
 import NoDataFoundIcon from "@/Components/NoDataFoundIcon";
 
-export default function CanceledList({ auth }) {
-    const pickupCanceledList = usePage().props.auth.pickupCanceledList;
-    // console.log(pickupCanceledList);
+export default function OtwList({ auth }) {
+    const pickupOnTheWayList = usePage().props.auth.pickupOnTheWayList;
+    // console.log(pickupOnTheWayList);
 
-    const sortedpickupCanceledList = pickupCanceledList.sort((a, b) => {
-        return new Date(b.updated_at) - new Date(a.updated_at);
+    const sortedpickupOnTheWayList = pickupOnTheWayList.sort((a, b) => {
+        return new Date(b.created_at) - new Date(a.created_at);
     });
 
     const formatDateTime = (dateTimeString) => {
@@ -53,7 +53,7 @@ export default function CanceledList({ auth }) {
         const fetchProvinceNames = async () => {
             const provinceNamesMap = {};
 
-            for (const pickup of pickupCanceledList) {
+            for (const pickup of pickupOnTheWayList) {
                 try {
                     const response = await fetch(
                         `https://api.binderbyte.com/wilayah/provinsi?api_key=${apiKey}`
@@ -76,13 +76,13 @@ export default function CanceledList({ auth }) {
         };
 
         fetchProvinceNames();
-    }, [pickupCanceledList, apiKey]);
+    }, [pickupOnTheWayList, apiKey]);
 
     useEffect(() => {
         const fetchRegencyNames = async () => {
             const regencyNamesMap = {};
 
-            for (const pickup of pickupCanceledList) {
+            for (const pickup of pickupOnTheWayList) {
                 try {
                     const response = await fetch(
                         `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${pickup.location.province}`
@@ -105,13 +105,13 @@ export default function CanceledList({ auth }) {
         };
 
         fetchRegencyNames();
-    }, [pickupCanceledList, apiKey]);
+    }, [pickupOnTheWayList, apiKey]);
 
     useEffect(() => {
         const fetchDistrictNames = async () => {
             const districtNamesMap = {};
 
-            for (const pickup of pickupCanceledList) {
+            for (const pickup of pickupOnTheWayList) {
                 try {
                     const response = await fetch(
                         `https://api.binderbyte.com/wilayah/kecamatan?api_key=${apiKey}&id_kabupaten=${pickup.location.regency}`
@@ -134,7 +134,7 @@ export default function CanceledList({ auth }) {
         };
 
         fetchDistrictNames();
-    }, [pickupCanceledList, apiKey]);
+    }, [pickupOnTheWayList, apiKey]);
 
     const openDetails = (order) => {
         setSelectedOrder(order);
@@ -161,7 +161,7 @@ export default function CanceledList({ auth }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center">
                     <div className="bg-white dark:bg-slate-700 w-full md:w-5/6 lg:w-2/3 text-gray-800 dark:text-gray-200">
                         <div className="p-8 space-y-6">
-                            {sortedpickupCanceledList.map((order) => (
+                            {sortedpickupOnTheWayList.map((order) => (
                                 <div
                                     key={order.id}
                                     className="border-2 border-slate-500"
@@ -180,10 +180,7 @@ export default function CanceledList({ auth }) {
                                         </div>
                                         <div className="col-span-2 flex flex-col justify-between items-end">
                                             <p className="text-sm italic">
-                                                {order.status == 2 &&
-                                                    "Canceled"}
-                                                {order.status == 4 &&
-                                                    "Declined"}
+                                                {order.status == 5 && "They're on their way to you"}
                                             </p>
                                             <div className="text-end">
                                                 <span className="text-sm">
@@ -210,11 +207,11 @@ export default function CanceledList({ auth }) {
                                     </div>
                                 </div>
                             ))}
-                            {sortedpickupCanceledList.length == 0 && (
+                            {sortedpickupOnTheWayList.length == 0 && (
                                 <div className="flex flex-col justify-center py-12 items-center font-bold text-lg">
                                     <NoDataFoundIcon className="w-80 h-80" />
                                     <p className="pt-4">
-                                        No canceled / declined orders yet
+                                        No orders on the way.
                                     </p>
                                 </div>
                             )}
@@ -230,27 +227,20 @@ export default function CanceledList({ auth }) {
                 onClose={closeDetails}
                 hideFooter={true}
             >
-                {selectedOrder
-                    ? selectedOrder.status == 4 && (
-                          <div className="col-span-12 flex justify-between dark:text-white border-2 border-slate-500 p-3">
-                              <h5 className="font-bold">Declined By : </h5>
-                              <p className="text-sm">
-                                  <Link
-                                      href={route("business.public.profile", {
-                                          business: selectedOrder
-                                              ? selectedOrder.business.id
-                                              : "Loading",
-                                      })}
-                                      className="hover:text-emerald-600 hover:underline"
-                                  >
-                                      {selectedOrder
-                                          ? selectedOrder.business.business_name
-                                          : "Loading"}
-                                  </Link>
-                              </p>
-                          </div>
-                      )
-                    : null}
+                {selectedOrder ? selectedOrder.status == 5 && (
+                <div className="col-span-12 flex justify-between dark:text-white border-2 border-slate-500 p-3">
+                    <h5 className="font-bold">Accepeted By : </h5>
+                    <p className="text-sm italic">
+                        <Link
+                            href={route("business.public.profile", {business: selectedOrder ? selectedOrder.business.id : 'Loading',})}
+                            className="hover:text-emerald-600 hover:underline"
+                        >
+                        {selectedOrder ? selectedOrder.business.business_name : "Loading"}
+                        </Link>
+                        {" - "} is coming...
+                    </p>
+                </div>
+                ) : null}
                 <div className="col-span-6 space-y-2 dark:text-white">
                     <h5 className="font-bold">Order ID : </h5>
                     <p className="text-sm">
@@ -381,6 +371,7 @@ export default function CanceledList({ auth }) {
                     </p>
                 </div>
             </FormModal>
+
         </LandingLayout>
     );
 }

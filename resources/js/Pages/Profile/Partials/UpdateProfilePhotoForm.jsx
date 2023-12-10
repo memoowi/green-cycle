@@ -4,6 +4,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
+import { toast } from "react-toastify";
 
 export default function UpdateProfilePhoto({ className = '' }) {
     const user = usePage().props.auth.user;
@@ -17,7 +18,11 @@ export default function UpdateProfilePhoto({ className = '' }) {
         
         // console.log(data);
         // console.log(data.profile_photo);
-        post(route('profile.updatephoto'));
+        post(route('profile.updatephoto'),{
+            onSuccess: () => {
+                toast.success('Profile photo updated!');
+            },
+        });
 
         e.target.reset(); // Reset the form
     };
@@ -29,9 +34,9 @@ export default function UpdateProfilePhoto({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Update Profile Photo</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Update Profile Photo</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Add or change your profile photo.<br />
                     For better results, use an image with 1x1 aspect ratio.
                 </p>
@@ -56,7 +61,7 @@ export default function UpdateProfilePhoto({ className = '' }) {
                         file:rounded-lg file:border-0
                         file:text-sm file:font-semibold
                         file:bg-emerald-100 file:text-emerald-700
-                        hover:file:bg-emerald-200"
+                        hover:file:bg-emerald-200 dark:text-gray-100"
                         // value={data.profile_photo || ''}
                         onChange={handleFileChange}
                     />

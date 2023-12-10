@@ -8,6 +8,7 @@ import DarkModeToggle from '@/Components/DarkModeToggle';
 import ResponsiveButton from '@/Components/ResponsiveButton';
 import NavDropdown from '@/Components/NavDropdown';
 import ResponsiveUserInformation from '@/Components/ResponsiveUserInformation';
+import { ToastContainer } from 'react-toastify';
 
 export default function Landing({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);

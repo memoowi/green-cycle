@@ -6,6 +6,7 @@ import TextInput from "@/Components/TextInput";
 import AdminPanelLayout from "@/Layouts/AdminPanelLayout";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function EditFacility({ auth, business }) {
 
@@ -93,7 +94,11 @@ export default function EditFacility({ auth, business }) {
 
     const submit = (e) => {
         e.preventDefault();
-        patch(route("admin.facilities.update", business.id));
+        patch(route("admin.facilities.update", business.id),{
+            onSuccess: () => {
+                toast.success("Facility updated successfully");
+            },
+        });
     };
 
     return (
