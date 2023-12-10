@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Chart, DoughnutController, ArcElement } from "chart.js/auto"; // Import "arc" element explicitly
+import { Chart, DoughnutController, ArcElement } from "chart.js/auto"; 
 
 Chart.register(DoughnutController, ArcElement);
 
@@ -16,8 +16,8 @@ const UsersDoughnutCharts = ({ data }) => {
                 datasets: [
                     {
                         data: [
-                            data.filter((user) => user.type === 1).length, // Business accounts
-                            data.filter((user) => user.type === 0).length, // Basic accounts
+                            data.filter((user) => user.type === 1).length, 
+                            data.filter((user) => user.type === 0).length, 
                         ],
                         backgroundColor: [
                             "rgba(202, 138, 4, 1)",
