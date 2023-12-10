@@ -22,7 +22,7 @@ export default function UsersTable() {
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 2;
+    const pageSize = 10;
 
     // Search state
     const [searchTerm, setSearchTerm] = useState("");

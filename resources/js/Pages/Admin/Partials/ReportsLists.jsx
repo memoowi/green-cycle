@@ -1,12 +1,41 @@
+import DetailsIconButton from "@/Components/DetailsIconButton";
+import FeaturedTable from "@/Components/FeaturedTable";
 import FormModal from "@/Components/FormModal";
-import NoDataFoundIcon from "@/Components/NoDataFoundIcon";
 import { Link, usePage } from "@inertiajs/react";
 import { Fragment, useEffect, useState } from "react";
 
-export default function TakenOrderLists() {
-    const takenOrders = usePage().props.auth.takenOrders;
-    // const business = usePage().props.auth.business;
-    // console.log(takenOrders);
+export default function ReportsLists() {
+    const reportsAdmin = usePage().props.auth.reportsAdmin;
+    // console.log(reportsAdmin);
+
+    // sort based on date created
+    const sortedreportsAdmin = reportsAdmin.sort((a, b) => {
+        return new Date(b.created_at) - new Date(a.created_at);
+    });
+
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 10;
+
+    // Search State
+    const [searchTerm, setSearchTerm] = useState("");
+
+    // Calculate the start and end indices for the current page
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    // Filter and paginate the reportsAdmin array based on the search term
+    const filteredreportsAdmin = sortedreportsAdmin.filter((report) =>
+        report.user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        report.user.email.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        (report.business_id && report.business.business_name.toLowerCase().includes(searchTerm.toLowerCase()) ) || 
+        (report.business_id && report.business.business_email.toLowerCase().includes(searchTerm.toLowerCase()) )
+    );
+    const paginatedreportsAdmin = filteredreportsAdmin.slice(
+        startIndex,
+        endIndex
+    );
+
     const formatDateTime = (dateTimeString) => {
         const options = {
             year: "numeric",
@@ -34,15 +63,14 @@ export default function TakenOrderLists() {
         }).format(amount);
     };
 
-    const calculateTotalApproxEarn = (takenOrder) => {
-        const pickupItems = takenOrder.pickupitem;
+    const calculateTotalApproxEarn = (report) => {
+        const pickupItems = report.pickupitem;
         // console.log(pickupItems);
         return pickupItems.reduce(
             (total, item) => total + (item.approx_earn || 0),
             0
         );
     };
-
     const [showDeatils, setShowDetails] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [provinceNames, setProvinceNames] = useState({});
@@ -54,7 +82,7 @@ export default function TakenOrderLists() {
         const fetchProvinceNames = async () => {
             const provinceNamesMap = {};
 
-            for (const takenOrder of takenOrders) {
+            for (const report of reportsAdmin) {
                 try {
                     const response = await fetch(
                         `https://api.binderbyte.com/wilayah/provinsi?api_key=${apiKey}`
@@ -62,15 +90,15 @@ export default function TakenOrderLists() {
                     const responseData = await response.json();
                     const provinceData = responseData.value.find(
                         (province) =>
-                            province.id === takenOrder.location.province
+                            province.id === report.location.province
                     );
                     const provinceName = provinceData
                         ? provinceData.name
                         : "Unknown";
-                    provinceNamesMap[takenOrder.id] = provinceName;
+                    provinceNamesMap[report.id] = provinceName;
                 } catch (error) {
                     console.error(
-                        `Error fetching province for takenOrder with ID ${takenOrder.id}: ${error.message}`
+                        `Error fetching province for report with ID ${report.id}: ${error.message}`
                     );
                 }
             }
@@ -78,28 +106,28 @@ export default function TakenOrderLists() {
         };
 
         fetchProvinceNames();
-    }, [takenOrders, apiKey]);
+    }, [reportsAdmin, apiKey]);
 
     useEffect(() => {
         const fetchRegencyNames = async () => {
             const regencyNamesMap = {};
 
-            for (const takenOrder of takenOrders) {
+            for (const report of reportsAdmin) {
                 try {
                     const response = await fetch(
-                        `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${takenOrder.location.province}`
+                        `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${report.location.province}`
                     );
                     const responseData = await response.json();
                     const regencyData = responseData.value.find(
-                        (regency) => regency.id === takenOrder.location.regency
+                        (regency) => regency.id === report.location.regency
                     );
                     const regencyName = regencyData
                         ? regencyData.name
                         : "Unknown";
-                    regencyNamesMap[takenOrder.id] = regencyName;
+                    regencyNamesMap[report.id] = regencyName;
                 } catch (error) {
                     console.error(
-                        `Error fetching regency for takenOrder with ID ${takenOrder.id}: ${error.message}`
+                        `Error fetching regency for report with ID ${report.id}: ${error.message}`
                     );
                 }
             }
@@ -107,29 +135,29 @@ export default function TakenOrderLists() {
         };
 
         fetchRegencyNames();
-    }, [takenOrders, apiKey]);
+    }, [reportsAdmin, apiKey]);
 
     useEffect(() => {
         const fetchDistrictNames = async () => {
             const districtNamesMap = {};
 
-            for (const takenOrder of takenOrders) {
+            for (const report of reportsAdmin) {
                 try {
                     const response = await fetch(
-                        `https://api.binderbyte.com/wilayah/kecamatan?api_key=${apiKey}&id_kabupaten=${takenOrder.location.regency}`
+                        `https://api.binderbyte.com/wilayah/kecamatan?api_key=${apiKey}&id_kabupaten=${report.location.regency}`
                     );
                     const responseData = await response.json();
                     const districtData = responseData.value.find(
                         (district) =>
-                            district.id === takenOrder.location.district
+                            district.id === report.location.district
                     );
                     const districtName = districtData
                         ? districtData.name
                         : "Unknown";
-                    districtNamesMap[takenOrder.id] = districtName;
+                    districtNamesMap[report.id] = districtName;
                 } catch (error) {
                     console.error(
-                        `Error fetching district for takenOrder with ID ${takenOrder.id}: ${error.message}`
+                        `Error fetching district for report with ID ${report.id}: ${error.message}`
                     );
                 }
             }
@@ -137,7 +165,7 @@ export default function TakenOrderLists() {
         };
 
         fetchDistrictNames();
-    }, [takenOrders, apiKey]);
+    }, [reportsAdmin, apiKey]);
 
     const openDetails = (order) => {
         setSelectedOrder(order);
@@ -148,72 +176,120 @@ export default function TakenOrderLists() {
         setShowDetails(false);
     };
 
+
     return (
         <div>
-            <div className="space-y-5">
-                {takenOrders.map((takenOrder) => (
-                    <div
-                        key={takenOrder.id}
-                        className="border-2 border-gray-300"
-                    >
-                        <div className="grid grid-cols-12 p-4">
-                            <div className="col-span-6 self-center">
-                                <h3 className="uppercase text-lg font-bold">
-                                    Order ID : P - {takenOrder.id}
-                                </h3>
-                                <p className="text-sm">
-                                    Order By : {takenOrder.user.name}
-                                </p>
-                                <p className="text-sm">
-                                    Order Date :{" "}
-                                    {formatDateTime(takenOrder.created_at)}
-                                </p>
-                                {takenOrder.status == 6 && (
-                                    <p className="text-sm">
-                                        Completed Date :{" "}
-                                        {formatDate(takenOrder.completed_at)}
-                                    </p>
-                                )}
-                            </div>
-                            <div className="col-span-6 self-center text-end">
-                                <p className="text-sm italic font-bold">
-                                    Status :
-                                    <span className={takenOrder.status == 6 ? "text-green-500" : "text-red-500"}>
-                                    {takenOrder.status == 6
-                                        ? " Completed"
-                                        : " Declined"}
-                                    </span>
-                                </p>
-                                <p className="text-sm uppercase">
-                                    {takenOrder.status == 6
-                                        ? takenOrder.paymentmethod.type
-                                        : " - "}
-                                </p>
-                                <p className="text-lg font-bold">
-                                    <span className="text-sm">Paid : </span>
-                                    {formatCurrency(takenOrder.amount_paid)}
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex justify-end border-t-2 border-gray-300 p-3 gap-3">
-                            <button
-                                onClick={() => openDetails(takenOrder)}
-                                className="border-2 border-gray-700 dark:border-gray-300 text-gray-700 dark:text-gray-300 hover:bg-gray-700 hover:text-white font-bold py-2 px-4 rounded"
-                            >
-                                View Details
-                            </button>
-                        </div>
-                    </div>
-                ))}
-                {takenOrders.length == 0 && (
-                    <div className="w-full h-full p-20 flex flex-col items-center justify-center gap-5">
-                        <NoDataFoundIcon className="w-80 h-80" />
-                        <h1 className="text-2xl font-bold">
-                            You haven't taken any order
-                        </h1>
-                    </div>
-                )}
-            </div>
+            <FeaturedTable
+                placeholderSearch="Search facilities..."
+                valueInputSearch={searchTerm || ""}
+                onChangeSearch={(e) => setSearchTerm(e.target.value)}
+                previousClick={() => setCurrentPage(currentPage - 1)}
+                disabledPrevious={currentPage === 1}
+                nextClick={() => setCurrentPage(currentPage + 1)}
+                disabledNext={filteredreportsAdmin.length <= pageSize}
+                paginationInfo={
+                    "Page " +
+                    currentPage +
+                    " of " +
+                    Math.ceil(filteredreportsAdmin.length / pageSize)
+                }
+            >
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">
+                            User
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Business
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Order / Completed Date
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Status
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {paginatedreportsAdmin.map((report) => (
+                        <tr
+                            key={report.id}
+                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        >
+                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <div>
+                                    <div className="text-base font-semibold">
+                                        {report.user.name}
+                                    </div>
+                                    <div className="font-normal text-gray-500">
+                                        {report.user.email}
+                                    </div>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4 font-medium text-gray-900  dark:text-white">
+                                <div>
+                                    <div className="text-base font-semibold">
+                                        {report.business_id ? report.business.business_name : "-"}
+                                    </div>
+                                    <div className="font-normal text-gray-500">
+                                        {report.business_id && report.business.business_email}
+                                    </div>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4 font-medium text-gray-900  dark:text-white">
+                                <div>
+                                    <div className="text-base font-semibold">
+                                        {formatDate(report.created_at)} / {report.completed_at ? formatDate(report.completed_at) : "-"}
+                                    </div>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4">
+                                <div
+                                    className={
+                                        "px-2.5 py-1 w-fit rounded-xl text-white font-semibold select-none " +
+                                        (report.status === 2
+                                            ? "bg-yellow-600"
+                                            : report.status === 3
+                                            ? "bg-sky-600"
+                                            : report.status === 4
+                                            ? "bg-red-600"
+                                            : report.status === 5
+                                            ? "bg-cyan-600"
+                                            : report.status === 6
+                                            ? "bg-emerald-600" : "bg-gray-600")
+                                    }
+                                >
+                                    {report.status === 2
+                                        ? "Canceled" : report.status === 3
+                                        ? "Acceped" : report.status === 4
+                                        ? "Declined" : report.status === 5
+                                        ? "OTW" : report.status === 6
+                                        ? "Completed" : "Pending"}
+                                </div>
+                            </td>
+                            <td className="px-6 py-4">
+                                <div className="flex items-center gap-1">
+                                    <DetailsIconButton
+                                        onClick={() => openDetails(report)}
+                                        className="text-white bg-teal-600 hover:bg-teal-700"
+                                        title="Edit"
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
+                    {paginatedreportsAdmin.length === 0 && (
+                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td colSpan={5} className="px-6 py-4 text-center">
+                                No results found
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </FeaturedTable>
             <FormModal
                 title="Order Details"
                 show={showDeatils}
@@ -242,6 +318,19 @@ export default function TakenOrderLists() {
                         </Link>
                     </div>
                 </div>
+                {selectedOrder ? selectedOrder.business_id && (
+                    <div className="col-span-12 flex justify-between dark:text-white border-2 border-slate-500 p-3">
+                        <h5 className="font-bold">Handled By : </h5>
+                        <p className="text-sm">
+                            <Link
+                                href={route("business.public.profile", {business: selectedOrder ? selectedOrder.business.id : 'Loading',})}
+                                className="hover:text-emerald-600 hover:underline"
+                            >
+                            {selectedOrder ? selectedOrder.business.business_name : "Loading"}
+                            </Link>
+                        </p>
+                    </div>
+                    ) : null}
                 <div className="col-span-6 space-y-2 dark:text-white">
                     <h5 className="font-bold">Order ID : </h5>
                     <p className="text-sm">
@@ -400,14 +489,14 @@ export default function TakenOrderLists() {
                             : "Loading"}
                     </p>
                 </div>
+                {selectedOrder ? selectedOrder.status == 6 && (
                 <div className="col-span-12 text-end dark:text-white">
                     <h5 className="font-bold inline me-10"> Paid : </h5>
                     <p className="text-sm inline">
-                        {selectedOrder
-                            ? formatCurrency(selectedOrder.amount_paid)
-                            : "Loading"}
+                        {formatCurrency(selectedOrder.amount_paid)}
                     </p>
                 </div>
+                ) : "Loading"}
             </FormModal>
         </div>
     );

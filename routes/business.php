@@ -12,6 +12,7 @@ Route::get('/take-order', [BusinessController::class, 'takeOrder'])->name('take-
 Route::get('/outgoing-pickup', [BusinessController::class, 'outgoingPickUp'])->name('outgoing-pickup');
 Route::get('/taken-order-history', [BusinessController::class, 'takenOrderHistory'])->name('taken-order-history');
 
+
 // only not-banned business can access
 Route::middleware('business.is.ban')->group(function () {
     Route::post('/items/store/', [BusinessController::class, 'storeItem'])->name('items.store');

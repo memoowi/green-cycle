@@ -50,6 +50,9 @@ class HandleInertiaRequests extends Middleware
             'takeOrders' => [],
             'outgoingPickups' => [],
             'takenOrders' => [],
+            'pickupOnTheWayList' => [],
+            'pickupCompletedList' => [],
+            'reportsAdmin' => [],
             
             
         ];
@@ -62,6 +65,8 @@ class HandleInertiaRequests extends Middleware
             $pickupCanceledList = PickUp::with('business','pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [2,4])->get();
             $pickupOnTheWayList = PickUp::with('business','pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [5])->get();
             $pickupCompletedList = PickUp::with('business','pickupitem.item', 'location', 'paymentmethod')->where('user_id', $user->id)->whereIn('status', [6])->get();
+
+            $reportsAdmin = PickUp::with('user','business','pickupitem.item', 'location', 'paymentmethod')->whereIn('status', [2,3,4,5,6])->get();
             
             
             // Check if location is not null
@@ -82,7 +87,6 @@ class HandleInertiaRequests extends Middleware
                 $authData['takenOrders'] = $takenOrders;
             }
 
-            // Check if pickup is not null
             if ($pickupWaitList) {
                 $authData['pickupWaitList'] = $pickupWaitList;
             }
@@ -97,6 +101,10 @@ class HandleInertiaRequests extends Middleware
 
             if ($pickupCompletedList) {
                 $authData['pickupCompletedList'] = $pickupCompletedList;
+            }
+            
+            if ($reportsAdmin) {
+                $authData['reportsAdmin'] = $reportsAdmin;
             }
         }
 

@@ -171,4 +171,8 @@ class AdminController extends Controller
 
         return Redirect::route('admin.recycle-facilities');
     }
+    public function recycledReports(): Response
+    {
+        return Inertia::render('Admin/RecycledReportsAdmin');
+    }
 }
