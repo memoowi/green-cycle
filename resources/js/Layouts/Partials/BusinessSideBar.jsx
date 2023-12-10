@@ -64,7 +64,7 @@ export default function BusinessSideBar({ className='', handleClick, username, e
                     </SidebarLink>
                 </li>
                 <li>
-                    <SidebarLink href={route('business.items')} active={route().current('business.items') || route().current('business.items.add')}>
+                    <SidebarLink href={route('business.taken-order-history')} active={route().current('business.taken-order-history')}>
                         Taken Order History
                     </SidebarLink>
                 </li>

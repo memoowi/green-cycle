@@ -213,4 +213,9 @@ class BusinessController extends Controller
             'total_earned' => $selectedUser->total_earned + $request->amount_paid
          ]);
     }
+
+    public function takenOrderHistory(): Response
+    {
+        return Inertia::render('Business/TakenOrderHistory');
+    }
 }

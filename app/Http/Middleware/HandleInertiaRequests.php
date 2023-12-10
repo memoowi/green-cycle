@@ -49,6 +49,8 @@ class HandleInertiaRequests extends Middleware
             'pickupCanceledList' => [],
             'takeOrders' => [],
             'outgoingPickups' => [],
+            'takenOrders' => [],
+            
             
         ];
 
@@ -72,10 +74,12 @@ class HandleInertiaRequests extends Middleware
                 $businessItems = BusinessItem::where('business_id', $business->id)->get();
                 $takeOrders = PickUp::with('user', 'pickupitem.item', 'location', 'paymentmethod')->where('business_id', null)->whereIn('status', [1])->whereHas('location', function($q) use ($business) {$q->where('regency', $business->regency);})->get();
                 $outgoingPickups = PickUp::with('user', 'pickupitem.item', 'location', 'paymentmethod')->where('business_id', $business->id)->whereIn('status', [3,5])->get();
+                $takenOrders = PickUp::with('user', 'pickupitem.item', 'location', 'paymentmethod')->where('business_id', $business->id)->whereIn('status', [4,6])->get();
                 $authData['business'] = $business;
                 $authData['businessItems'] = $businessItems;
                 $authData['takeOrders'] = $takeOrders;
                 $authData['outgoingPickups'] = $outgoingPickups;
+                $authData['takenOrders'] = $takenOrders;
             }
 
             // Check if pickup is not null
