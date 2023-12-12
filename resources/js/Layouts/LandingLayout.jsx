@@ -60,7 +60,7 @@ export default function Landing({ user, header, children }) {
                             >
                                 How it works
                             </NavLink>
-                            <NavLink href="/">Blog</NavLink>
+                            <NavLink href="#">Blog</NavLink>
                             <NavLink
                                 href={route("about-us")}
                                 active={route().current("about-us")}
@@ -129,6 +129,40 @@ export default function Landing({ user, header, children }) {
                         " md:hidden fixed right-0 min-w-[250px] h-screen mt-20 bg-white dark:bg-slate-800 bg-opacity-90 backdrop-blur-sm transition duration-700 ease-in-out"
                     }
                 >
+                    <div className="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink
+                            href={route("recycle-an-item")}
+                            active={
+                                route().current("recycle-an-item") ||
+                                route().current("user.pick-up.*")
+                            }
+                        >
+                            Recycle an Item
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("where-to-recycle")}
+                            active={route().current("where-to-recycle")}
+                        >
+                            Where to Recycle
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("how-it-works")}
+                            active={route().current("how-it-works")}
+                        >
+                            How it works
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href='#'
+                        >
+                            Blog
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("about-us")}
+                            active={route().current("about-us")}
+                        >
+                            About GreenCycle
+                        </ResponsiveNavLink>
+                    </div>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
                             href={route("location.edit")}
