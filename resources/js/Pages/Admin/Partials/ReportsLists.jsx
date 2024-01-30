@@ -25,11 +25,20 @@ export default function ReportsLists() {
     const endIndex = startIndex + pageSize;
 
     // Filter and paginate the reportsAdmin array based on the search term
-    const filteredreportsAdmin = sortedreportsAdmin.filter((report) =>
-        report.user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        report.user.email.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        (report.business_id && report.business.business_name.toLowerCase().includes(searchTerm.toLowerCase()) ) || 
-        (report.business_id && report.business.business_email.toLowerCase().includes(searchTerm.toLowerCase()) )
+    const filteredreportsAdmin = sortedreportsAdmin.filter(
+        (report) =>
+            report.user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            report.user.email
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+            (report.business_id &&
+                report.business.business_name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())) ||
+            (report.business_id &&
+                report.business.business_email
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()))
     );
     const paginatedreportsAdmin = filteredreportsAdmin.slice(
         startIndex,
@@ -89,8 +98,7 @@ export default function ReportsLists() {
                     );
                     const responseData = await response.json();
                     const provinceData = responseData.value.find(
-                        (province) =>
-                            province.id === report.location.province
+                        (province) => province.id === report.location.province
                     );
                     const provinceName = provinceData
                         ? provinceData.name
@@ -148,8 +156,7 @@ export default function ReportsLists() {
                     );
                     const responseData = await response.json();
                     const districtData = responseData.value.find(
-                        (district) =>
-                            district.id === report.location.district
+                        (district) => district.id === report.location.district
                     );
                     const districtName = districtData
                         ? districtData.name
@@ -175,7 +182,6 @@ export default function ReportsLists() {
         setSelectedOrder(null);
         setShowDetails(false);
     };
-
 
     return (
         <div>
@@ -232,17 +238,23 @@ export default function ReportsLists() {
                             <td className="px-6 py-4 font-medium text-gray-900  dark:text-white">
                                 <div>
                                     <div className="text-base font-semibold">
-                                        {report.business_id ? report.business.business_name : "-"}
+                                        {report.business_id
+                                            ? report.business.business_name
+                                            : "-"}
                                     </div>
                                     <div className="font-normal text-gray-500">
-                                        {report.business_id && report.business.business_email}
+                                        {report.business_id &&
+                                            report.business.business_email}
                                     </div>
                                 </div>
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900  dark:text-white">
                                 <div>
                                     <div className="text-base font-semibold">
-                                        {formatDate(report.created_at)} / {report.completed_at ? formatDate(report.completed_at) : "-"}
+                                        {formatDate(report.created_at)} /{" "}
+                                        {report.completed_at
+                                            ? formatDate(report.completed_at)
+                                            : "-"}
                                     </div>
                                 </div>
                             </td>
@@ -259,15 +271,21 @@ export default function ReportsLists() {
                                             : report.status === 5
                                             ? "bg-cyan-600"
                                             : report.status === 6
-                                            ? "bg-emerald-600" : "bg-gray-600")
+                                            ? "bg-emerald-600"
+                                            : "bg-gray-600")
                                     }
                                 >
                                     {report.status === 2
-                                        ? "Canceled" : report.status === 3
-                                        ? "Acceped" : report.status === 4
-                                        ? "Declined" : report.status === 5
-                                        ? "OTW" : report.status === 6
-                                        ? "Completed" : "Pending"}
+                                        ? "Canceled"
+                                        : report.status === 3
+                                        ? "Acceped"
+                                        : report.status === 4
+                                        ? "Declined"
+                                        : report.status === 5
+                                        ? "OTW"
+                                        : report.status === 6
+                                        ? "Completed"
+                                        : "Pending"}
                                 </div>
                             </td>
                             <td className="px-6 py-4">
@@ -318,19 +336,27 @@ export default function ReportsLists() {
                         </Link>
                     </div>
                 </div>
-                {selectedOrder ? selectedOrder.business_id && (
-                    <div className="col-span-12 flex justify-between dark:text-white border-2 border-slate-500 p-3">
-                        <h5 className="font-bold">Handled By : </h5>
-                        <p className="text-sm">
-                            <Link
-                                href={route("business.public.profile", {business: selectedOrder ? selectedOrder.business.id : 'Loading',})}
-                                className="hover:text-emerald-600 hover:underline"
-                            >
-                            {selectedOrder ? selectedOrder.business.business_name : "Loading"}
-                            </Link>
-                        </p>
-                    </div>
-                    ) : null}
+                {selectedOrder
+                    ? selectedOrder.business_id && (
+                          <div className="col-span-12 flex justify-between dark:text-white border-2 border-slate-500 p-3">
+                              <h5 className="font-bold">Handled By : </h5>
+                              <p className="text-sm">
+                                  <Link
+                                      href={route("business.public.profile", {
+                                          business: selectedOrder
+                                              ? selectedOrder.business.id
+                                              : "Loading",
+                                      })}
+                                      className="hover:text-emerald-600 hover:underline"
+                                  >
+                                      {selectedOrder
+                                          ? selectedOrder.business.business_name
+                                          : "Loading"}
+                                  </Link>
+                              </p>
+                          </div>
+                      )
+                    : null}
                 <div className="col-span-6 space-y-2 dark:text-white">
                     <h5 className="font-bold">Order ID : </h5>
                     <p className="text-sm">
@@ -489,14 +515,19 @@ export default function ReportsLists() {
                             : "Loading"}
                     </p>
                 </div>
-                {selectedOrder ? selectedOrder.status == 6 && (
-                <div className="col-span-12 text-end dark:text-white">
-                    <h5 className="font-bold inline me-10"> Paid : </h5>
-                    <p className="text-sm inline">
-                        {formatCurrency(selectedOrder.amount_paid)}
-                    </p>
-                </div>
-                ) : "Loading"}
+                {selectedOrder
+                    ? selectedOrder.status == 6 && (
+                          <div className="col-span-12 text-end dark:text-white">
+                              <h5 className="font-bold inline me-10">
+                                  {" "}
+                                  Paid :{" "}
+                              </h5>
+                              <p className="text-sm inline">
+                                  {formatCurrency(selectedOrder.amount_paid)}
+                              </p>
+                          </div>
+                      )
+                    : "Loading"}
             </FormModal>
         </div>
     );

@@ -22,7 +22,7 @@ export default function WhereToRecycle({ auth }) {
                             </p>
                             <div className="flex justify-center mt-10">
                                 <CTA
-                                    // href={route("recycle-item")}
+                                    href={route("user.drop-off.choose-facility")}
                                     className="bg-cyan-600 hover:bg-cyan-700"
                                 >
                                     Drop Off

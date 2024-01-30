@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
-import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
@@ -8,7 +7,6 @@ import DarkModeToggle from "@/Components/DarkModeToggle";
 import ResponsiveButton from "@/Components/ResponsiveButton";
 import NavDropdown from "@/Components/NavDropdown";
 import ResponsiveUserInformation from "@/Components/ResponsiveUserInformation";
-import { ToastContainer } from "react-toastify";
 
 export default function Landing({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -50,7 +48,10 @@ export default function Landing({ user, header, children }) {
                             </NavLink>
                             <NavLink
                                 href={route("where-to-recycle")}
-                                active={route().current("where-to-recycle")}
+                                active={
+                                    route().current("where-to-recycle") ||
+                                    route().current("user.drop-off.*")
+                                }
                             >
                                 Where to Recycle
                             </NavLink>
@@ -141,7 +142,10 @@ export default function Landing({ user, header, children }) {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("where-to-recycle")}
-                            active={route().current("where-to-recycle")}
+                            active={
+                                route().current("where-to-recycle") ||
+                                route().current("user.drop-off.*")
+                            }
                         >
                             Where to Recycle
                         </ResponsiveNavLink>
@@ -151,11 +155,7 @@ export default function Landing({ user, header, children }) {
                         >
                             How it works
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href='#'
-                        >
-                            Blog
-                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href="#">Blog</ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("about-us")}
                             active={route().current("about-us")}

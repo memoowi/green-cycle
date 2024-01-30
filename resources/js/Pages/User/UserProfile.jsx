@@ -29,8 +29,12 @@ export default function UserProfile({ auth, user }) {
                                 <div className="font-bold text-3xl">
                                     {user.name}
                                 </div>
-                                <div className="text-sm text-gray-500 dark:text-gray-400">{user.email}</div>
-                                <div>{formatCurrency(user.total_earned)} Earned</div>
+                                <div className="text-sm text-gray-500 dark:text-gray-400">
+                                    {user.email}
+                                </div>
+                                <div>
+                                    {formatCurrency(user.total_earned)} Earned
+                                </div>
                                 <div className="w-3/12 h-1 bg-emerald-600 my-4"></div>
                             </div>
                             <div className="grid grid-cols-12 py-10">

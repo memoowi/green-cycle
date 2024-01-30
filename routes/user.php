@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DropOffController;
 use App\Http\Controllers\PickUpController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,6 @@ Route::post('/pick-up/{pickUpId}/uploading-photo',[PickUpController::class,'stor
 Route::get('/pick-up/{pickUpId}/choose-payment',[PickUpController::class,'choosePayment'])->name('pick-up.choose-payment');
 Route::post('/pick-up/{pickUpId}/set-payment',[PickUpController::class,'payment'])->name('pick-up.set-payment');
 Route::get('/pick-up/{pickUpId}/complete',[PickUpController::class,'successPickUp'])->name('pick-up.success');
+
+//DROPOFF
+Route::get('/drop-off',[DropOffController::class,'dropOff'])->name('drop-off.choose-facility');
