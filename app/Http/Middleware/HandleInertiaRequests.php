@@ -44,6 +44,7 @@ class HandleInertiaRequests extends Middleware
             'business' => null,
             'businesses' => Business::all(),
             'items' => Item::all(),
+            'businessItemsAll' => BusinessItem::all(),
             'businessItems' => [],
             'pickupWaitList' => [],
             'pickupCanceledList' => [],

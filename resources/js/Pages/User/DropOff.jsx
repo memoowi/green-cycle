@@ -5,9 +5,11 @@ import CTA from "@/Components/CTA";
 import { useEffect, useState } from "react";
 import FeaturedTable from "@/Components/FeaturedTable";
 import DetailsIconButton from "@/Components/DetailsIconButton";
+import FormModal from "@/Components/FormModal";
+import CardLandingItems from "@/Components/CardLandingItems";
 
 export default function DropOff({ auth }) {
-    const businesses = usePage().props.auth.businesses;
+    const  {businesses, businessItemsAll, items } = usePage().props.auth;
 
     const sortedBusinesses = businesses.sort((a, b) => {
         return a.business_name.localeCompare(b.business_name);
@@ -130,6 +132,19 @@ export default function DropOff({ auth }) {
         fetchDistrictNames();
     }, [businesses, apiKey]);
 
+    const [selectedBusiness, setSelectedBusiness] = useState(null);
+    const [showAvailableItems, setShowAvailableItems] = useState(false);
+
+    const openAvailableItems = (business) => {
+        setSelectedBusiness(business);
+        setShowAvailableItems(true);
+    }
+
+    const closeAvailableItems = () => {
+        setSelectedBusiness(null);
+        setShowAvailableItems(false);
+    }
+
     return (
         <LandingLayout
             user={auth.user}
@@ -231,9 +246,9 @@ export default function DropOff({ auth }) {
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-center gap-1">
                                                     <DetailsIconButton
-                                                        // onClick={() => openDetails(business)}
+                                                        onClick={() => openAvailableItems(business)}
                                                         className="text-white bg-teal-600 hover:bg-teal-700"
-                                                        // title="Edit"
+                                                        title="Available Items"
                                                     />
                                                 </div>
                                             </td>
@@ -259,6 +274,21 @@ export default function DropOff({ auth }) {
                                     </FeaturedTable>
                                 )}
                                 {option == "location" && <p>Location</p>}
+                                <FormModal
+                                    title="Available Items"
+                                    show={showAvailableItems}
+                                    onClose={closeAvailableItems}
+                                    hideFooter={true}
+                                >
+
+                                {selectedBusiness && businessItemsAll.map((item) => (
+                                    <CardLandingItems
+                                        key={item.id}
+                                        image={item.item_image}
+                                        title={item.name}
+                                    />
+                                ))}
+                                </FormModal>
                             </div>
                         </div>
                     </div>
